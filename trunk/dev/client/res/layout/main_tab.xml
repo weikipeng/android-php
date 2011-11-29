@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="51dip">
+	<ImageButton android:id="@+id/main_tab_home" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0" android:src="@drawable/tab_home_1" android:background="@drawable/tab_bg" />
+	<ImageButton android:id="@+id/main_tab_blog" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0" android:src="@drawable/tab_blog_1" android:background="@drawable/tab_bg" />
+	<ImageButton android:id="@+id/main_tab_conf" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0" android:src="@drawable/tab_conf_1" android:background="@drawable/tab_bg" />
+</LinearLayout>
