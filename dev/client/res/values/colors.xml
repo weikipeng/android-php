@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="bg">#9CE7E7</color>
+	<color name="red">#FF0000</color>
+	<color name="gray">#FFFFEE</color>
+	<color name="black">#000000</color>
+	<color name="white">#FFFFFF</color>
+	
+	<color name="text">#333333</color>
+	
+	<color name="menu1">#EEEEEE</color>
+	<color name="menu2">#BBBBBB</color>
+	<color name="divider">#AAAAAA</color>
+	<color name="loading">#99000000</color>
+</resources>
