@@ -12,6 +12,7 @@ public final class C {
 		public static final String logout			= "/index/logout";
 		public static final String blogList			= "/blog/blogList";
 		public static final String blogView			= "/blog/blogView";
+		public static final String blogCreate		= "/blog/blogCreate";
 	}
 	
 	public static final class web {
@@ -29,21 +30,13 @@ public final class C {
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// client configs (protected)
 	
-	public static final class app {
-		public static final Class<?> AppConf		= com.app.NAMESPACE.app.AppConfig.class;
-		public static final Class<?> AppBlog		= com.app.NAMESPACE.app.AppBlog.class;
-		public static final Class<?> AppBlogs		= com.app.NAMESPACE.app.AppBlogs.class;
-		public static final Class<?> AppEdit		= com.app.NAMESPACE.app.AppEdit.class;
-		public static final Class<?> AppIndex		= com.app.NAMESPACE.app.AppIndex.class;
-		public static final Class<?> AppLogin		= com.app.NAMESPACE.app.AppLogin.class;
-	}
-	
 	public static final class task {
 		public static final int login				= 1001;
 		public static final int logout				= 1002;
 		public static final int welcome				= 1003;
 		public static final int blogList			= 1004;
 		public static final int blogView			= 1005;
+		public static final int blogCreate			= 1006;
 	}
 	
 	public static final class intent {

@@ -5,8 +5,11 @@ import com.app.NAMESPACE.app.AppBlogs;
 import com.app.NAMESPACE.app.AppConfig;
 import com.app.NAMESPACE.app.AppIndex;
 import com.app.NAMESPACE.app.AppLogin;
+import com.app.NAMESPACE.app.AppWrite;
 import com.app.NAMESPACE.base.BaseApp;
 import com.app.NAMESPACE.base.BaseAuth;
+import com.app.NAMESPACE.demo.DemoMap;
+import com.app.NAMESPACE.demo.DemoWeb;
 import com.app.NAMESPACE.model.Customer;
 
 import android.app.AlertDialog;
@@ -19,6 +22,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 public class AuthApp extends BaseApp {
+	
+	private final int MENU_APP_WRITE = 0;
+	private final int MENU_APP_LOGOUT = 1;
+	private final int MENU_APP_ABOUT = 2;
+	private final int MENU_DEMO_WEB = 3;
+	private final int MENU_DEMO_MAP = 4;
 	
 	protected static Customer customer = null;
 	
@@ -46,28 +55,41 @@ public class AuthApp extends BaseApp {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, 1, 0, R.string.menu_logout).setIcon(android.R.drawable.ic_menu_close_clear_cancel);
-		menu.add(0, 2, 0, R.string.menu_about).setIcon(android.R.drawable.ic_menu_info_details);
+		menu.add(0, MENU_APP_WRITE, 0, R.string.menu_app_write).setIcon(android.R.drawable.ic_menu_add);
+		menu.add(0, MENU_APP_LOGOUT, 0, R.string.menu_app_logout).setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		menu.add(0, MENU_APP_ABOUT, 0, R.string.menu_app_about).setIcon(android.R.drawable.ic_menu_info_details);
+		menu.add(0, MENU_DEMO_WEB, 0, R.string.menu_demo_web).setIcon(android.R.drawable.ic_menu_view);
+		menu.add(0, MENU_DEMO_MAP, 0, R.string.menu_demo_map).setIcon(android.R.drawable.ic_menu_view);
 		return true;
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case 1: {
-				doLogout();
-				doFinish();
+			case MENU_APP_WRITE: {
+				overlay(AppWrite.class);
 				break;
 			}
-			case 2:
+			case MENU_APP_LOGOUT: {
+				doLogout(); // do logout first
+				forward(AppLogin.class);
+				break;
+			}
+			case MENU_APP_ABOUT:
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(R.string.menu_about);
+				builder.setTitle(R.string.menu_app_about);
 				String appName = this.getString(R.string.app_name);
 				String appVersion = this.getString(R.string.app_version);
 				builder.setMessage(appName + " " + appVersion);
 				builder.setIcon(R.drawable.bomb_w);
 				builder.setPositiveButton(R.string.btn_cancel, null);
 				builder.show();
+				break;
+			case MENU_DEMO_WEB:
+				forward(DemoWeb.class);
+				break;
+			case MENU_DEMO_MAP:
+				forward(DemoMap.class);
 				break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -91,18 +113,18 @@ public class AuthApp extends BaseApp {
 	}
 	
 	private void bindMainTab () {
-		ImageButton bTabHome = (ImageButton) findViewById(R.id.main_tab_home);
-		ImageButton bTabBlog = (ImageButton) findViewById(R.id.main_tab_blog);
+		ImageButton bTabHome = (ImageButton) findViewById(R.id.main_tab_blog);
+		ImageButton bTabBlog = (ImageButton) findViewById(R.id.main_tab_star);
 		ImageButton bTabConf = (ImageButton) findViewById(R.id.main_tab_conf);
 		if (bTabHome != null && bTabBlog != null && bTabConf != null) {
 			OnClickListener mOnClickListener = new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					switch (v.getId()) {
-						case R.id.main_tab_home:
+						case R.id.main_tab_blog:
 							forward(AppIndex.class);
 							break;
-						case R.id.main_tab_blog:
+						case R.id.main_tab_star:
 							forward(AppBlogs.class);
 							break;
 						case R.id.main_tab_conf:

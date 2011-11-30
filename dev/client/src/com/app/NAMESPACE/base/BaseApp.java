@@ -93,6 +93,21 @@ public class BaseApp extends Activity {
 		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 	}
 	
+	public void overlay (Class<?> classObj) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        intent.setClass(this, classObj);
+        startActivity(intent);
+	}
+	
+	public void overlay (Class<?> classObj, Bundle params) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        intent.setClass(this, classObj);
+        intent.putExtras(params);
+        startActivity(intent);
+	}
+	
 	public void forward (Class<?> classObj) {
 		Intent intent = new Intent();
 		intent.setClass(this, classObj);
@@ -108,21 +123,6 @@ public class BaseApp extends Activity {
 		intent.putExtras(params);
 		this.startActivity(intent);
 		this.finish();
-	}
-	
-	public void openWindow (Class<?> classObj) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        intent.setClass(this, classObj);
-        startActivity(intent);
-	}
-	
-	public void openWindow (Class<?> classObj, Bundle params) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        intent.setClass(this, classObj);
-        intent.putExtras(params);
-        startActivity(intent);
 	}
 	
 	public Context getContext () {
@@ -271,6 +271,7 @@ public class BaseApp extends Activity {
 	
 	public class BitmapViewBinder implements ViewBinder {
 		// 
+		@Override
 		public boolean setViewValue(View view, Object data, String textRepresentation) {
 			if ((view instanceof ImageView) & (data instanceof Bitmap)) {
 				ImageView iv = (ImageView) view;

@@ -38,6 +38,7 @@ public class BasicDialog {
 		
 		mImageClose = (ImageView) mDialog.findViewById(R.id.cs_main_dialog_close);
 		mImageClose.setOnClickListener(new ImageView.OnClickListener() {
+			@Override
 			public void onClick(View arg0) {
 				mDialog.dismiss();
 			}

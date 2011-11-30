@@ -59,6 +59,7 @@ public class BaseTaskPool {
 			this.baseTask = baseTask;
 			this.delayTime = delayTime;
 		}
+		@Override
 		public void run() {
 			try {
 //				Looper.prepare();
