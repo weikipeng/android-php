@@ -1,6 +1,8 @@
 package com.app.NAMESPACE.app;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.auth.AuthApp;
 import com.app.NAMESPACE.base.BaseMessage;
@@ -15,7 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class AppBlogs extends AuthApp {
@@ -28,18 +29,19 @@ public class AppBlogs extends AuthApp {
 		
 		setContentView(R.layout.app_blogs);
 		
-		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_blog);
-		ib.setImageResource(R.drawable.tab_blog_2);
-		
-		TextView textBlogHello = (TextView) this.findViewById(R.id.app_blogs_text_hello);
-		textBlogHello.setText("This is blog list page.");
+		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_star);
+		ib.setImageResource(R.drawable.tab_star_2);
 	}
 	
 	@Override
 	public void onStart() {
 		super.onStart();
 		
-		this.doTaskAsync(C.task.blogList, C.api.blogList);
+		// show my blog list
+		HashMap<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("typeId", "1");
+		urlParams.put("pageId", "0");
+		this.doTaskAsync(C.task.blogList, C.api.blogList, urlParams);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,13 +73,14 @@ public class AppBlogs extends AuthApp {
 						public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 							Bundle params = new Bundle();
 							params.putString("blogId", blogList.get(pos).getId());
-							forward(AppBlog.class, params);
+							overlay(AppBlog.class, params);
 						}
 					});
 				} catch (Exception e) {
 					e.printStackTrace();
 					toast(e.getMessage());
 				}
+				break;
 		}
 	}
 	

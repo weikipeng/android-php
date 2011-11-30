@@ -11,7 +11,6 @@ import com.app.NAMESPACE.model.Customer;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class AppBlog extends AuthApp {
@@ -21,9 +20,6 @@ public class AppBlog extends AuthApp {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.app_blog);
-		
-		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_blog);
-		ib.setImageResource(R.drawable.tab_blog_2);
 	}
 	
 	@Override
@@ -53,9 +49,9 @@ public class AppBlog extends AuthApp {
 					textContent.setText(blog.getContent());
 					Customer customer = (Customer) message.getResult("Customer");
 					TextView textCustomerName = (TextView) this.findViewById(R.id.app_blog_text_customer_name);
-					TextView textCustomerSign = (TextView) this.findViewById(R.id.app_blog_text_customer_sign);
+					TextView testCustomerInfo = (TextView) this.findViewById(R.id.app_blog_text_customer_info);
 					textCustomerName.setText(customer.getName());
-					textCustomerSign.setText(customer.getSign());
+					testCustomerInfo.setText(getResources().getString(R.string.blog_fans) + " : " + customer.getFanscount());
 				} catch (Exception e) {
 					e.printStackTrace();
 					toast(e.getMessage());
@@ -66,7 +62,7 @@ public class AppBlog extends AuthApp {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			this.forward(AppBlogs.class);
+			doFinish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

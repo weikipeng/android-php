@@ -135,7 +135,7 @@ public class AppLogin extends BaseApp {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			this.finish();
+			doFinish();
 		}
 		return super.onKeyDown(keyCode, event);
 	}

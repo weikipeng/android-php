@@ -8,6 +8,7 @@ import com.app.NAMESPACE.base.BaseMessage;
 import com.app.NAMESPACE.base.C;
 import com.app.NAMESPACE.list.BasicList;
 import com.app.NAMESPACE.model.Config;
+import com.app.NAMESPACE.model.Customer;
 import com.app.NAMESPACE.util.AppUtil;
 
 import android.os.Bundle;
@@ -31,9 +32,6 @@ public class AppConfig extends AuthApp {
 		
 		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_conf);
 		ib.setImageResource(R.drawable.tab_conf_2);
-		
-		TextView textConfigHello = (TextView) this.findViewById(R.id.app_config_text_hello);
-		textConfigHello.setText("This is config page.");
 	}
 	
 	@Override
@@ -54,6 +52,8 @@ public class AppConfig extends AuthApp {
 				doEdit(C.action.edit.CONF, dataList.get(pos).getValue());
 			}
 		});
+		
+		this.doTaskAsync(C.task.welcome, C.api.index);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,7 +62,20 @@ public class AppConfig extends AuthApp {
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		super.onTaskComplete(taskId, message);
-		
+		switch (taskId) {
+			case C.task.welcome:
+				try {
+					Customer customer = (Customer) message.getResult("Customer");
+					TextView mTextTop = (TextView) this.findViewById(R.id.tpl_list_info_text_top);
+					TextView mTextBottom = (TextView) this.findViewById(R.id.tpl_list_info_text_bottom);
+					mTextTop.setText(customer.getSign());
+					mTextBottom.setText("Blog(" + customer.getBlogcount() + ") Fans(" + customer.getFanscount() + ").");
+				} catch (Exception e) {
+					e.printStackTrace();
+					toast(e.getMessage());
+				}
+				break;
+		}
 	}
 	
 	@Override

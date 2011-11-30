@@ -38,9 +38,19 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".app.AppEdit" android:theme="@style/com.app.NAMESPACE.theme.light"
-			android:windowSoftInputMode="stateVisible|adjustResize">
+			android:windowSoftInputMode="stateVisible|adjustResize"
+			android:launchMode="singleTop">
 			<intent-filter>
 				<action android:name="com.app.NAMESPACE.EDIT" />
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".app.AppWrite" android:theme="@style/com.app.NAMESPACE.theme.light"
+			android:windowSoftInputMode="stateVisible|adjustResize"
+			android:launchMode="singleTop">
+			<intent-filter>
+				<action android:name="com.app.NAMESPACE.WRITE" />
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
