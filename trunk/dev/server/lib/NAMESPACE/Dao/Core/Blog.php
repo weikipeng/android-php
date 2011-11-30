@@ -39,6 +39,31 @@ class Core_Blog extends NAMESPACE_Dao_Core
 	}
 	
 	/**
+	 * Get all blog list 
+	 */
+	public function getListByPage ($pageId = 0)
+	{
+		$list = array();
+		$sql = $this->dbr()->select()
+			->from($this->t1, "*")
+			->order("{$this->t1}.uptime desc");
+		
+		$res = $this->dbr()->fetchAll($sql);
+		foreach ($res as $row) {
+			$customerDao = new Core_Customer();
+			$customer = $customerDao->read($row['customerid']);
+			$blog = array(
+				'id'		=> $row['id'],
+				'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
+				'comment'	=> '评论('.$row['commentcount'].')',
+				'uptime'	=> $row['uptime'],
+			);
+			array_push($list, $blog);
+		}
+		return $list;
+	}
+	
+	/**
 	 * Get blog list 
 	 * @param string $customerId Customer ID
 	 */
@@ -60,7 +85,7 @@ class Core_Blog extends NAMESPACE_Dao_Core
 				'comment'	=> '评论('.$row['commentcount'].')',
 				'uptime'	=> $row['uptime'],
 			);
-			array_push($list, M('Blog', $blog));
+			array_push($list, $blog);
 		}
 		return $list;
 	}

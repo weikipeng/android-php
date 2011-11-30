@@ -76,10 +76,6 @@ class Core_Customer extends NAMESPACE_Dao_Core
 			->from($this->t1, "*")
 			->order("{$this->t1}.uptime desc");
 		
-		$res = $this->dbr()->fetchAll($sql);
-		foreach ($res as $row) {
-			array_push($list, M('Customer', $row));
-		}
-		return $list;
+		return $this->dbr()->fetchAll($sql);
 	}
 }
