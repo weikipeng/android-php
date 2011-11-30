@@ -123,8 +123,8 @@ CREATE TABLE IF NOT EXISTS `customer` (
 --
 
 INSERT INTO `customer` (`id`, `name`, `pass`, `sign`, `face`, `blogcount`, `fanscount`, `uptime`) VALUES
-(1, 'james', 'james', 'Happying', '1', 5, 0, '2011-11-29 18:11:24'),
-(2, 'huang', 'huang', 'Unhappy', '1', 3, 0, '2011-11-29 18:17:12');
+(1, 'james', 'james', 'Happying', '1', 0, 0, '2011-11-29 18:11:24'),
+(2, 'huang', 'huang', 'Unhappy', '1', 0, 0, '2011-11-29 18:17:12');
 
 -- --------------------------------------------------------
 
