@@ -30,7 +30,7 @@ public class AppConfig extends AuthApp {
 		
 		setContentView(R.layout.app_config);
 		
-		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_conf);
+		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_3);
 		ib.setImageResource(R.drawable.tab_conf_2);
 	}
 	

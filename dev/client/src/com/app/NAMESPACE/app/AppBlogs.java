@@ -29,8 +29,8 @@ public class AppBlogs extends AuthApp {
 		
 		setContentView(R.layout.app_blogs);
 		
-		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_star);
-		ib.setImageResource(R.drawable.tab_star_2);
+		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_2);
+		ib.setImageResource(R.drawable.tab_heart_2);
 	}
 	
 	@Override

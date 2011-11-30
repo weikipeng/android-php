@@ -29,7 +29,7 @@ public class AppIndex extends AuthApp {
 		
 		setContentView(R.layout.app_index);
 		
-		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_blog);
+		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_1);
 		ib.setImageResource(R.drawable.tab_blog_2);
 	}
 	
