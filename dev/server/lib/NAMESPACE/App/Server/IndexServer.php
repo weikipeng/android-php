@@ -47,9 +47,6 @@ class IndexServer extends NAMESPACE_App_Server
 	{
 		$this->doAuth();
 		
-		// simulate data loading
-		sleep(1);
-		
 		// get extra customer info
 		$customerDao = $this->dao->load('Core_Customer');
 		$customerItem = $customerDao->read($this->customer['id']);

@@ -121,8 +121,18 @@ class NAMESPACE_App_Server extends Hush_Service
 	{
 		// filter by datamap
 		if (is_array($result)) {
-			foreach ((array) $result as $model => $data) {
-				$result[$model] = M($model, $data);
+			foreach ((array) $result as $name => $data) {
+				// Object list
+				if (strpos($name, '.list')) {
+					$model = trim(str_replace('.list', '', $name));
+					foreach ($data as $k => $v) {
+						$result[$name][$k] = M($model, $v);
+					}
+				// Object
+				} else {
+					$model = trim($name);
+					$result[$name] = M($model, $data);
+				}
 			}
 		}
 		// print json code

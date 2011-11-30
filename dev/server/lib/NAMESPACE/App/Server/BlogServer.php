@@ -41,17 +41,37 @@ class BlogServer extends NAMESPACE_App_Server
 	 * ---------------------------------------------------------------------------------------------
 	 * @title 测试接口
 	 * @action /blog/blogList
+	 * @params typeId 0 0：全部，1：自己，2：关注
+	 * @params pageId 0 INT
 	 * @method get
 	 */
 	public function blogListAction ()
 	{
 		$this->doAuth();
 		
-		$blogDao = $this->dao->load('Core_Blog');
-		$blogList = $blogDao->getListByCustomer($this->customer['id']);
-		$this->render('10000', 'Get blog list ok', array(
-			'Blog.list' => $blogList
-		));
+		$typeId = intval($this->param('typeId'));
+		$pageId = intval($this->param('pageId'));
+		
+		$blogList = array();
+		switch ($typeId) {
+			case 0:
+				$blogDao = $this->dao->load('Core_Blog');
+				$blogList = $blogDao->getListByPage();
+				break;
+			case 1:
+				$blogDao = $this->dao->load('Core_Blog');
+				$blogList = $blogDao->getListByCustomer($this->customer['id']);
+				break;
+			case 2:
+				break;
+		}
+
+		if ($blogList) {
+			$this->render('10000', 'Get blog list ok', array(
+				'Blog.list' => $blogList
+			));
+		}
+		$this->render('10006', 'Get blog list failed');
 	}
 	
 	/**
