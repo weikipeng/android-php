@@ -46,13 +46,14 @@ INSERT INTO `admin` (`id`, `name`, `pass`, `uptime`) VALUES
 
 CREATE TABLE IF NOT EXISTS `blog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customerid` int(11) NOT NULL DEFAULT '0',
   `desc` varchar(255) NOT NULL DEFAULT '',
   `title` varchar(255) NOT NULL DEFAULT '',
   `content` varchar(1000) NOT NULL DEFAULT '',
   `commentcount` int(11) NOT NULL DEFAULT '0',
   `uptime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 转存表中的数据 `blog`
@@ -66,11 +67,13 @@ CREATE TABLE IF NOT EXISTS `blog` (
 --
 
 CREATE TABLE IF NOT EXISTS `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `blogid` int(11) NOT NULL DEFAULT '0',
   `customerid` int(11) NOT NULL DEFAULT '0',
   `content` varchar(1000) NOT NULL DEFAULT '',
-  `uptime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `uptime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 转存表中的数据 `comment`
@@ -84,11 +87,13 @@ CREATE TABLE IF NOT EXISTS `comment` (
 --
 
 CREATE TABLE IF NOT EXISTS `config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `customerid` int(11) NOT NULL DEFAULT '0',
   `name` varchar(100) NOT NULL DEFAULT '',
   `value` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   KEY `cid` (`customerid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 转存表中的数据 `config`
@@ -107,14 +112,19 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `pass` varchar(100) NOT NULL DEFAULT '',
   `sign` varchar(100) NOT NULL DEFAULT '',
   `face` varchar(100) NOT NULL DEFAULT '',
+  `blogcount` int(11) NOT NULL DEFAULT '0',
+  `fanscount` int(11) NOT NULL DEFAULT '0',
   `uptime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- 转存表中的数据 `customer`
 --
 
+INSERT INTO `customer` (`id`, `name`, `pass`, `sign`, `face`, `blogcount`, `fanscount`, `uptime`) VALUES
+(1, 'james', 'james', 'Happying', '1', 5, 0, '2011-11-29 18:11:24'),
+(2, 'huang', 'huang', 'Unhappy', '1', 3, 0, '2011-11-29 18:17:12');
 
 -- --------------------------------------------------------
 
@@ -122,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `customer` (
 -- 表的结构 `fans`
 --
 
-CREATE TABLE IF NOT EXISTS `fans` (
+CREATE TABLE IF NOT EXISTS `customer_fans` (
   `customerid` int(11) NOT NULL DEFAULT '0',
   `fansid` int(11) NOT NULL DEFAULT '0',
   `uptime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
