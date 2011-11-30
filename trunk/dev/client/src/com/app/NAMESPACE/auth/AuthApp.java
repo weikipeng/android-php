@@ -113,22 +113,26 @@ public class AuthApp extends BaseApp {
 	}
 	
 	private void bindMainTab () {
-		ImageButton bTabHome = (ImageButton) findViewById(R.id.main_tab_blog);
-		ImageButton bTabBlog = (ImageButton) findViewById(R.id.main_tab_star);
-		ImageButton bTabConf = (ImageButton) findViewById(R.id.main_tab_conf);
+		ImageButton bTabHome = (ImageButton) findViewById(R.id.main_tab_1);
+		ImageButton bTabBlog = (ImageButton) findViewById(R.id.main_tab_2);
+		ImageButton bTabConf = (ImageButton) findViewById(R.id.main_tab_3);
+		ImageButton bTabWrite = (ImageButton) findViewById(R.id.main_tab_4);
 		if (bTabHome != null && bTabBlog != null && bTabConf != null) {
 			OnClickListener mOnClickListener = new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					switch (v.getId()) {
-						case R.id.main_tab_blog:
+						case R.id.main_tab_1:
 							forward(AppIndex.class);
 							break;
-						case R.id.main_tab_star:
+						case R.id.main_tab_2:
 							forward(AppBlogs.class);
 							break;
-						case R.id.main_tab_conf:
+						case R.id.main_tab_3:
 							forward(AppConfig.class);
+							break;
+						case R.id.main_tab_4:
+							overlay(AppWrite.class);
 							break;
 					}
 				}
@@ -136,6 +140,7 @@ public class AuthApp extends BaseApp {
 			bTabHome.setOnClickListener(mOnClickListener);
 			bTabBlog.setOnClickListener(mOnClickListener);
 			bTabConf.setOnClickListener(mOnClickListener);
+			bTabWrite.setOnClickListener(mOnClickListener);
 		}
 	}
 }

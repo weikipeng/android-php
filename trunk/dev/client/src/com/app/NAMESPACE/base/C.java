@@ -6,7 +6,7 @@ public final class C {
 	// server configs (editable)
 	
 	public static final class api {
-		public static final String base				= "http://192.168.41.37:8001";
+		public static final String base				= "http://192.168.1.3:8001";
 		public static final String index			= "/index/index";
 		public static final String login			= "/index/login";
 		public static final String logout			= "/index/logout";
@@ -16,7 +16,7 @@ public final class C {
 	}
 	
 	public static final class web {
-		public static final String base				= "http://192.168.41.37:8002";
+		public static final String base				= "http://192.168.1.3:8002";
 		public static final String index			= base + "/index.php";
 		public static final String gomap			= base + "/gomap.php";
 	}
