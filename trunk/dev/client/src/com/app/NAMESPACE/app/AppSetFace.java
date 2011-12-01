@@ -3,7 +3,9 @@ package com.app.NAMESPACE.app;
 import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.auth.AuthApp;
 import com.app.NAMESPACE.base.BaseMessage;
-import com.app.NAMESPACE.list.ImageList;
+import com.app.NAMESPACE.base.C;
+import com.app.NAMESPACE.list.LocalImageList;
+import com.app.NAMESPACE.list.RemoteImageList;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -21,8 +23,23 @@ public class AppSetFace extends AuthApp {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.app_face);
 		
+		
+		
+		Integer[] imageIds = {
+			R.drawable.arrow_1,
+			R.drawable.blog_1,
+			R.drawable.body_1,
+			R.drawable.bomb_r
+		};
+		String[] imageUrls = {
+			C.web.base + "/faces/default/face_1.png",
+			C.web.base + "/faces/default/face_2.png",
+			C.web.base + "/faces/default/face_3.png",
+			C.web.base + "/faces/default/face_4.png"
+		};
 		faceGridView = (GridView) this.findViewById(R.id.app_face_grid);
-		faceGridView.setAdapter(new ImageList(this));
+//		faceGridView.setAdapter(new LocalImageList(this, imageIds));
+		faceGridView.setAdapter(new RemoteImageList(this, imageUrls));
 		faceGridView.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
