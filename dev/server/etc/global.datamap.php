@@ -1,13 +1,6 @@
 <?php 
 
 $_DataMap = array(
-	'Blog'	=> array(
-		'id' => 'id',
-		'author' => 'author',
-		'content' => 'content',
-		'comment' => 'comment',
-		'uptime' => 'uptime',
-	),
 	'Customer' => array(
 		'id' => 'id',
 		'sid' => 'sid',
@@ -17,6 +10,23 @@ $_DataMap = array(
 		'blogcount' => 'blogcount',
 		'fanscount' => 'fanscount',
 		'uptime' => 'uptime',
+	),
+	'Blog' => array(
+		'id' => 'id',
+		'author' => 'author',
+		'content' => 'content',
+		'comment' => 'comment',
+		'uptime' => 'uptime',
+	),
+	'Comment' => array(
+		'id' => 'id',
+		'content' => 'content',
+		'uptime' => 'uptime',
+	),
+	'Image' => array(
+		'id' => 'id',
+		'url' => 'url',
+		'type' => 'type',
 	)
 );
 

@@ -58,6 +58,43 @@ class CustomerServer extends NAMESPACE_App_Server
 	 * ---------------------------------------------------------------------------------------------
 	 * > 接口说明：测试登录接口
 	 * <code>
+	 * URL地址：/customer/customerEdit
+	 * 提交方式：POST
+	 * 参数#1：key，类型：STRING，必须：YES
+	 * 参数#2：val，类型：STRING，必须：YES
+	 * </code>
+	 * ---------------------------------------------------------------------------------------------
+	 * @title 测试接口
+	 * @action /customer/customerEdit
+	 * @params key '' STRING
+	 * @params val '' STRING
+	 * @method post
+	 */
+	public function customerEditAction ()
+	{
+		$this->doAuth();
+		
+		$key = $this->param('key');
+		$val = $this->param('val');
+		if ($key && $val) {
+			$customerDao = $this->dao->load('Core_Customer');
+			try {
+				$customerDao->update(array(
+					'id'	=> $this->customer['id'],
+					$key	=> $val,
+				));
+			} catch (Exception $e) {
+				$this->render('10004', 'Update customer failed');
+			}
+			$this->render('10000', 'Update customer ok');
+		}
+		$this->render('10004', 'Update customer failed');
+	}
+	
+	/**
+	 * ---------------------------------------------------------------------------------------------
+	 * > 接口说明：测试登录接口
+	 * <code>
 	 * URL地址：/customer/customerCreate
 	 * 提交方式：POST
 	 * 参数#1：name，类型：STRING，必须：YES
@@ -71,7 +108,7 @@ class CustomerServer extends NAMESPACE_App_Server
 	 * @params name '' STRING
 	 * @params pass '' STRING
 	 * @params sign '' STRING
-	 * @params face '' STRING
+	 * @params face '0' STRING
 	 * @method post
 	 */
 	public function customerCreateAction ()
