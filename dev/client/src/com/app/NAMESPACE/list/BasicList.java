@@ -3,10 +3,9 @@ package com.app.NAMESPACE.list;
 import java.util.List;
 import java.util.Map;
 
-import com.app.NAMESPACE.R;
+import com.app.NAMESPACE.filter.BasicFilter;
 
 import android.content.Context;
-import android.text.Html;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -18,13 +17,6 @@ public class BasicList extends SimpleAdapter {
 
 	@Override
 	public void setViewText(TextView v, String text) {
-		// filter html text
-		if (v.getId() == R.id.tpl_list_blog_text_content ||
-			v.getId() == R.id.tpl_list_blog_text_comment) {
-			v.setText(Html.fromHtml(text));
-		// default text
-		} else {
-			super.setViewText(v, text);
-		}
+		BasicFilter.setHtml(v, text);
 	}
 }

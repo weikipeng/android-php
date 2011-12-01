@@ -30,21 +30,18 @@ public class AppLogin extends BaseApp {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		// check if login
 		if (BaseAuth.isLogin()) {
 			this.forward(AppIndex.class);
 		}
 		
+		// set view after check login
 		setContentView(R.layout.app_login);
+		
+		// remember password
 		mEditName = (EditText) this.findViewById(R.id.app_login_edit_name);
 		mEditPass = (EditText) this.findViewById(R.id.app_login_edit_pass);
 		mCheckBox = (CheckBox) this.findViewById(R.id.app_login_check_remember);
-	}
-	
-	@Override
-	public void onStart() {
-		super.onStart();
-		
-		// remember password
 		settings = getPreferences(Context.MODE_PRIVATE);
 		if (settings.getBoolean("remember", false)) {
 			mCheckBox.setChecked(true);
@@ -79,7 +76,6 @@ public class AppLogin extends BaseApp {
 				}
 			}
 		};
-		
 		findViewById(R.id.app_login_btn_submit).setOnClickListener(mOnClickListener);
 	}
 	

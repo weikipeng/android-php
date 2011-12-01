@@ -26,22 +26,17 @@ public class AppIndex extends AuthApp {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.app_index);
 		
+		// tab button
 		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_1);
 		ib.setImageResource(R.drawable.tab_blog_2);
-	}
-	
-	@Override
-	public void onStart() {
-		super.onStart();
 		
 		// show all blog list
-		HashMap<String, String> urlParams = new HashMap<String, String>();
-		urlParams.put("typeId", "0");
-		urlParams.put("pageId", "0");
-		this.doTaskAsync(C.task.blogList, C.api.blogList, urlParams);
+		HashMap<String, String> blogParams = new HashMap<String, String>();
+		blogParams.put("typeId", "0");
+		blogParams.put("pageId", "0");
+		this.doTaskAsync(C.task.blogList, C.api.blogList, blogParams);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@ import com.app.NAMESPACE.app.AppBlogs;
 import com.app.NAMESPACE.app.AppConfig;
 import com.app.NAMESPACE.app.AppIndex;
 import com.app.NAMESPACE.app.AppLogin;
-import com.app.NAMESPACE.app.AppWrite;
+import com.app.NAMESPACE.app.AppEditBlog;
 import com.app.NAMESPACE.base.BaseApp;
 import com.app.NAMESPACE.base.BaseAuth;
 import com.app.NAMESPACE.demo.DemoMap;
@@ -14,6 +14,7 @@ import com.app.NAMESPACE.model.Customer;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,7 +68,7 @@ public class AuthApp extends BaseApp {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case MENU_APP_WRITE: {
-				overlay(AppWrite.class);
+				doEditBlog();
 				break;
 			}
 			case MENU_APP_LOGOUT: {
@@ -132,7 +133,7 @@ public class AuthApp extends BaseApp {
 							forward(AppConfig.class);
 							break;
 						case R.id.main_tab_4:
-							overlay(AppWrite.class);
+							doEditBlog();
 							break;
 					}
 				}
