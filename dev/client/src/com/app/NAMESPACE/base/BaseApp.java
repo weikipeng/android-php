@@ -39,11 +39,13 @@ public class BaseApp extends Activity {
 					String result;
 					switch (msg.what) {
 						case BaseTask.TASK_COMPLETE:
+							hideLoadBar();
 							taskId = msg.getData().getInt("task");
 							result = msg.getData().getString("data");
 							onTaskComplete(taskId, AppUtil.getMessage(result));
 							break;
 						case BaseTask.SHOW_TOAST:
+							hideLoadBar();
 							result = msg.getData().getString("data");
 							toast(result);
 							break;
@@ -151,7 +153,10 @@ public class BaseApp extends Activity {
 	}
 	
 	public void hideLoadBar () {
-		this.findViewById(R.id.main_load_bar).setVisibility(View.GONE);
+		if (showLoadBar) {
+			this.findViewById(R.id.main_load_bar).setVisibility(View.GONE);
+			showLoadBar = false;
+		}
 	}
 	
 	public void openDialog(Bundle params) {
@@ -274,15 +279,11 @@ public class BaseApp extends Activity {
 	}
 	
 	public void onTaskComplete (int taskId) {
-		if (showLoadBar) {
-			hideLoadBar();
-		}
+		
 	}
 	
 	public void onTaskComplete (int taskId, BaseMessage message) {
-		if (showLoadBar) {
-			hideLoadBar();
-		}
+		
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
