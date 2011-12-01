@@ -37,6 +37,8 @@ class BlogServer extends NAMESPACE_App_Server
 	 * <code>
 	 * URL地址：/blog/blogList
 	 * 提交方式：GET
+	 * 参数#1：typeId，类型：INT，必须：YES
+	 * 参数#2：pageId，类型：INT，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
 	 * @title 测试接口
@@ -79,13 +81,13 @@ class BlogServer extends NAMESPACE_App_Server
 	 * > 接口说明：测试首页接口
 	 * <code>
 	 * URL地址：/blog/blogView
-	 * 参数#1：blogId，类型：STRING，必须：YES，示例：1
 	 * 提交方式：POST
+	 * 参数#1：blogId，类型：INT，必须：YES，示例：1
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
 	 * @title 测试接口
 	 * @action /blog/blogView
-	 * @params blogId 1 STRING
+	 * @params blogId 1 INT
 	 * @method post
 	 */
 	public function blogViewAction ()
@@ -125,6 +127,7 @@ class BlogServer extends NAMESPACE_App_Server
 		$this->doAuth();
 		
 		$content = $this->param('content');
+		
 		if ($content) {
 			$blogDao = $this->dao->load('Core_Blog');
 			$blogDao->create(array(

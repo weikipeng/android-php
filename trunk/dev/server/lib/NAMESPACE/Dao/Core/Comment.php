@@ -15,12 +15,12 @@ require_once 'NAMESPACE/Dao/Core/Customer.php';
 /**
  * @package NAMESPACE_Dao_Core
  */
-class Core_Blog extends NAMESPACE_Dao_Core
+class Core_Comment extends NAMESPACE_Dao_Core
 {
 	/**
 	 * @static
 	 */
-	const TABLE_NAME = 'blog';
+	const TABLE_NAME = 'comment';
 	
 	/**
 	 * @static
@@ -39,44 +39,34 @@ class Core_Blog extends NAMESPACE_Dao_Core
 	}
 	
 	/**
-	 * Add commentcount by one
-	 * @param int $id
-	 */
-	public function addCommentcount ($id, $addCount = 1)
-	{
-		$blog = $this->read($id);
-		$blog['commentcount'] = $blog['commentcount'] + $addCount;
-		$this->update($blog);
-	}
-	
-	/**
-	 * Get all blog list 
+	 * Get all blog comment list
+	 * @param int $blogId
 	 * @param int $pageId
 	 */
-	public function getListByPage ($pageId = 0)
+	public function getListByBlog ($blogId, $pageId = 0)
 	{
 		$list = array();
 		$sql = $this->dbr()->select()
 			->from($this->t1, "*")
+			->where("{$this->t1}.blogid = ?", $blogId)
 			->order("{$this->t1}.uptime desc");
 		
 		$res = $this->dbr()->fetchAll($sql);
 		foreach ($res as $row) {
 			$customerDao = new Core_Customer();
 			$customer = $customerDao->read($row['customerid']);
-			$blog = array(
+			$comment = array(
 				'id'		=> $row['id'],
 				'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
-				'comment'	=> '评论('.$row['commentcount'].')',
 				'uptime'	=> $row['uptime'],
 			);
-			array_push($list, $blog);
+			array_push($list, $comment);
 		}
 		return $list;
 	}
 	
 	/**
-	 * Get blog list 
+	 * Get customer comment list 
 	 * @param string $customerId Customer ID
 	 * @param int $pageId
 	 */
@@ -88,18 +78,6 @@ class Core_Blog extends NAMESPACE_Dao_Core
 			->where("{$this->t1}.customerid = ?", $customerId)
 			->order("{$this->t1}.uptime desc");
 		
-		$res = $this->dbr()->fetchAll($sql);
-		foreach ($res as $row) {
-			$customerDao = new Core_Customer();
-			$customer = $customerDao->read($row['customerid']);
-			$blog = array(
-				'id'		=> $row['id'],
-				'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
-				'comment'	=> '评论('.$row['commentcount'].')',
-				'uptime'	=> $row['uptime'],
-			);
-			array_push($list, $blog);
-		}
-		return $list;
+		return $this->dbr()->fetchAll($sql);
 	}
 }
