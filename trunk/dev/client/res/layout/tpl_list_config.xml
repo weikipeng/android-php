@@ -3,7 +3,7 @@
 	android:layout_width="fill_parent" android:layout_height="50dip"
 	android:paddingRight="10dip" android:paddingLeft="10dip" android:paddingTop="1dip"
 	android:paddingBottom="1dip" android:gravity="center_vertical"
-	android:background="@drawable/xml_conf_bg" android:focusable="false">
+	android:background="@drawable/xml_list_config_bg" android:focusable="false">
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:orientation="horizontal" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:focusable="false">

@@ -23,6 +23,7 @@ public class BaseAuth {
 		customer.setSid(mc.getSid());
 		customer.setName(mc.getName());
 		customer.setSign(mc.getSign());
+		customer.setFace(mc.getFace());
 	}
 	
 	static public Customer getCustomer () {

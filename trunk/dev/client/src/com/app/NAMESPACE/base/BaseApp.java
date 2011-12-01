@@ -78,7 +78,6 @@ public class BaseApp extends Activity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		
 	}
 	
 	@Override
@@ -133,8 +132,12 @@ public class BaseApp extends Activity {
 		return (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 	
-	public View getViewById (int layoutId, int itemId) {
-		return getLayout().inflate(layoutId, null).findViewById(itemId);
+	public View getLayout (int layoutId) {
+		return getLayout().inflate(layoutId, null);
+	}
+	
+	public View getLayout (int layoutId, int itemId) {
+		return getLayout(layoutId).findViewById(itemId);
 	}
 	
 	public BaseTaskPool getTaskPool () {
@@ -166,13 +169,29 @@ public class BaseApp extends Activity {
 		BaseAuth.setLogin(false);
 	}
 	
-	public void doEdit (int action, String value) {
-		Bundle b = new Bundle();
-		b.putInt("action", action);
-		b.putString("value", value);
+	public void doEditText () {
 		Intent intent = new Intent();
-		intent.setAction(C.intent.action.EDIT);
-		intent.putExtras(b);
+		intent.setAction(C.intent.action.EDITTEXT);
+		this.startActivity(intent);
+	}
+	
+	public void doEditText (Bundle data) {
+		Intent intent = new Intent();
+		intent.setAction(C.intent.action.EDITTEXT);
+		intent.putExtras(data);
+		this.startActivity(intent);
+	}
+	
+	public void doEditBlog () {
+		Intent intent = new Intent();
+		intent.setAction(C.intent.action.EDITBLOG);
+		this.startActivity(intent);
+	}
+	
+	public void doEditBlog (Bundle data) {
+		Intent intent = new Intent();
+		intent.setAction(C.intent.action.EDITBLOG);
+		intent.putExtras(data);
 		this.startActivity(intent);
 	}
 	

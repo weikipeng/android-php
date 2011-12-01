@@ -7,9 +7,10 @@
 	<color name="white">#FFFFFF</color>
 	
 	<color name="text">#333333</color>
-	
+	<color name="body1">#FFFFFF</color>
+	<color name="body2">#F9F9F9</color>
 	<color name="menu1">#EEEEEE</color>
 	<color name="menu2">#BBBBBB</color>
-	<color name="divider">#AAAAAA</color>
+	<color name="divider">#CCCCCC</color>
 	<color name="loading">#99000000</color>
 </resources>

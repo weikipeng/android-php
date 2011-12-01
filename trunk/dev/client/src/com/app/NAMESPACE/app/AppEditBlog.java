@@ -14,21 +14,17 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-public class AppWrite extends AuthApp {
+public class AppEditBlog extends AuthApp {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.app_write);
+		
 		// show keyboard
 		((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-	}
-	
-	@Override
-	public void onStart() {
-		super.onStart();
 		
+		// bind action logic
 		findViewById(R.id.app_write_submit).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

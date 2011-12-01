@@ -26,22 +26,17 @@ public class AppBlogs extends AuthApp {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.app_blogs);
 		
+		// tab button
 		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_2);
 		ib.setImageResource(R.drawable.tab_heart_2);
-	}
-	
-	@Override
-	public void onStart() {
-		super.onStart();
 		
 		// show my blog list
-		HashMap<String, String> urlParams = new HashMap<String, String>();
-		urlParams.put("typeId", "1");
-		urlParams.put("pageId", "0");
-		this.doTaskAsync(C.task.blogList, C.api.blogList, urlParams);
+		HashMap<String, String> blogParams = new HashMap<String, String>();
+		blogParams.put("typeId", "1");
+		blogParams.put("pageId", "0");
+		this.doTaskAsync(C.task.blogList, C.api.blogList, blogParams);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////

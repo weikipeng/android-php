@@ -1,35 +1,66 @@
 package com.app.NAMESPACE.app;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.auth.AuthApp;
 import com.app.NAMESPACE.base.BaseMessage;
 import com.app.NAMESPACE.base.C;
+import com.app.NAMESPACE.list.ExpandList;
 import com.app.NAMESPACE.model.Blog;
+import com.app.NAMESPACE.model.Comment;
 import com.app.NAMESPACE.model.Customer;
+import com.app.NAMESPACE.util.AppUtil;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class AppBlog extends AuthApp {
-
+	
+	private String blogId = null;
+	private Button commentBtn = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.app_blog);
+		
+		Bundle params = this.getIntent().getExtras();
+		blogId = params.getString("blogId");
+		
+		// do add comment
+		commentBtn = (Button) this.findViewById(R.id.app_blog_btn_comment);
+		commentBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Bundle data = new Bundle();
+				data.putInt("action", C.action.edittext.COMMENT);
+				data.putString("blogId", blogId);
+				doEditText(data);
+			}
+		});
+		
+		// prepare blog data
+		HashMap<String, String> blogParams = new HashMap<String, String>();
+		blogParams.put("blogId", blogId);
+		this.doTaskAsync(C.task.blogView, C.api.blogView, blogParams);
 	}
 	
 	@Override
-	public void onStart() {
+	public void onStart () {
 		super.onStart();
 		
-		Bundle params = this.getIntent().getExtras();
-		HashMap<String, String> urlParams = new HashMap<String, String>();
-		urlParams.put("blogId", params.getString("blogId"));
-		this.doTaskAsync(C.task.blogView, C.api.blogView, urlParams);
+		// prepare comment data
+		HashMap<String, String> commentParams = new HashMap<String, String>();
+		commentParams.put("blogId", blogId);
+		commentParams.put("pageId", "0");
+		this.doTaskAsync(C.task.commentList, C.api.commentList, commentParams);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,6 +87,28 @@ public class AppBlog extends AuthApp {
 					e.printStackTrace();
 					toast(e.getMessage());
 				}
+				break;
+			case C.task.commentList:
+				try {
+					@SuppressWarnings("unchecked")
+					ArrayList<Comment> commentList = (ArrayList<Comment>) message.getResultList("Comment");
+					String[] from = {
+						Comment.COL_CONTENT,
+						Comment.COL_UPTIME
+					};
+					int[] to = {
+						R.id.tpl_list_comment_content,
+						R.id.tpl_list_comment_uptime,
+					};
+					ExpandList el = new ExpandList(this, AppUtil.dataToList(commentList, from), R.layout.tpl_list_comment, from, to);
+					LinearLayout layout = (LinearLayout) this.findViewById(R.id.app_blog_list_comment);
+					layout.removeAllViews(); // clean first
+					el.render(layout);
+				} catch (Exception e) {
+					e.printStackTrace();
+					toast(e.getMessage());
+				}
+				break;
 		}
 	}
 	

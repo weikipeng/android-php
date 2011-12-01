@@ -4,7 +4,8 @@
 <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
 	<include layout="@layout/main_top" />
 	<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
-	    android:scrollbars="vertical" android:layout_weight="1">
+	    android:scrollbars="vertical" android:layout_weight="1"
+	    android:fillViewport="true">
 		<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" 
 			android:orientation="vertical">
 			<AbsoluteLayout android:layout_width="fill_parent" android:layout_height="50dip">
@@ -23,7 +24,6 @@
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
 				android:background="@drawable/body_1"
-				android:gravity="center_horizontal"
 				android:layout_gravity="center">
 				<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" 
 					android:id="@+id/app_blog_text_content" 
@@ -46,13 +46,13 @@
 				<LinearLayout android:orientation="vertical"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
-					android:background="@drawable/body_2">
+					android:background="@drawable/body_2"
+					android:id="@+id/app_blog_list_comment">
 				</LinearLayout>
-				<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" 
-					android:layout_margin="5dip" android:layout_gravity="center"
-					android:id="@+id/app_blog_text_content" 
-					android:textSize="12dip"
-					android:text="More" />
+				<Button android:layout_width="80dip" android:layout_height="32dip"
+					android:layout_marginLeft="5dip" android:layout_marginTop="5dip" 
+					android:id="@+id/app_blog_btn_comment" android:textSize="12dip"
+					android:text="@string/blog_comment" />
 			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
