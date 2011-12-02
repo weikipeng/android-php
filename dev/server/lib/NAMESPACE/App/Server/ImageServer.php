@@ -10,6 +10,7 @@
  */
 
 require_once 'NAMESPACE/App/Server.php';
+require_once 'NAMESPACE/Util/Image.php';
 
 /**
  * @package NAMESPACE_App_Server
@@ -54,14 +55,14 @@ class ImageServer extends NAMESPACE_App_Server
 		$faceCount = count($faceId);
 		if ($faceCount == 1) {
 			$id = intval($faceId[0]);
-			$faceItem = $this->_getFaceImage($id);
+			$faceItem = NAMESPACE_Util_Image::getFaceImage($id);
 			$this->render('10000', 'Get face ok', array(
 				'Image' => $faceItem
 			));
 		} elseif ($faceCount > 1) {
 			$faceList = array();
 			foreach ($faceId as $id) {
-				$faceList[] = $this->_getFaceImage($id);
+				$faceList[] = NAMESPACE_Util_Image::getFaceImage($id);
 			}
 			$this->render('10000', 'Get face list ok', array(
 				'Image.list' => $faceList
@@ -86,28 +87,14 @@ class ImageServer extends NAMESPACE_App_Server
 	public function faceListAction ()
 	{
 		// valid face ids
-		$faceId = array(0,1,2,3,4,5,6,7,8); 
+		$faceId = array(0,1,2,3,4,5,6,7,8);
 		// get face images
 		$faceList = array();
 		foreach ($faceId as $id) {
-			$faceList[] = $this->_getFaceImage($id);
+			$faceList[] = NAMESPACE_Util_Image::getFaceImage($id);
 		}
 		$this->render('10000', 'Get face list ok', array(
 			'Image.list' => $faceList
 		));
-	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////
-	// protected methods
-	
-	protected function _getFaceImage ($id) 
-	{
-		$facePath = $this->imageHost . '/faces/default';
-		$faceImage = array(
-			'id' => $id,
-			'url' => $facePath . '/face_' . $id . '.png',
-			'type' => 'png',
-		);
-		return $faceImage;
 	}
 }
