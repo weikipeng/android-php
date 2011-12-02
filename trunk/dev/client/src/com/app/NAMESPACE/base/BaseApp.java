@@ -15,9 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.SimpleAdapter.ViewBinder;
 
-import com.app.NAMESPACE.dialog.BasicDialog;
-import com.app.NAMESPACE.util.AppUtil;
-
 public class BaseApp extends Activity {
 	
 	protected BaseHandler handler;
@@ -28,43 +25,10 @@ public class BaseApp extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		// async task handler
-		this.handler = new BaseHandler () {
-			@Override
-			public void handleMessage (Message msg) {
-				super.handleMessage(msg);
-				try {
-					int taskId;
-					String result;
-					switch (msg.what) {
-						case BaseTask.TASK_COMPLETE:
-							hideLoadBar();
-							taskId = msg.getData().getInt("task");
-							result = msg.getData().getString("data");
-							onTaskComplete(taskId, AppUtil.getMessage(result));
-							break;
-						case BaseTask.SHOW_TOAST:
-							hideLoadBar();
-							result = msg.getData().getString("data");
-							toast(result);
-							break;
-						case BaseTask.SHOW_LOADBAR:
-							showLoadBar();
-							break;
-						case BaseTask.HIDE_LOADBAR:
-							hideLoadBar();
-							break;
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					toast(e.getMessage());
-				}
-			}
-		};
-		
 		// init task pool
-		taskPool = new BaseTaskPool();
+		this.taskPool = new BaseTaskPool();
+		// async task handler
+		this.handler = new BaseHandler(this);
 	}
 	
 	@Override
@@ -130,6 +94,14 @@ public class BaseApp extends Activity {
 		return this;
 	}
 	
+	public BaseHandler getHandler () {
+		return this.handler;
+	}
+	
+	public void setHandler (BaseHandler handler) {
+		this.handler = handler;
+	}
+	
 	public LayoutInflater getLayout () {
 		return (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -160,7 +132,7 @@ public class BaseApp extends Activity {
 	}
 	
 	public void openDialog(Bundle params) {
-		new BasicDialog(this, params).show();
+		new BaseDialog(this, params).show();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////

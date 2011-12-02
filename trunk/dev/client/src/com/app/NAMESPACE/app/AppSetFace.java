@@ -1,11 +1,13 @@
 package com.app.NAMESPACE.app;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.auth.AuthApp;
 import com.app.NAMESPACE.base.BaseMessage;
 import com.app.NAMESPACE.base.C;
-import com.app.NAMESPACE.list.LocalImageList;
-import com.app.NAMESPACE.list.RemoteImageList;
+import com.app.NAMESPACE.list.GridImageList;
+import com.app.NAMESPACE.model.Image;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -22,31 +24,16 @@ public class AppSetFace extends AuthApp {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.app_face);
-		
-		
-		
-		Integer[] imageIds = {
-			R.drawable.arrow_1,
-			R.drawable.blog_1,
-			R.drawable.body_1,
-			R.drawable.bomb_r
-		};
-		String[] imageUrls = {
-			C.web.base + "/faces/default/face_1.png",
-			C.web.base + "/faces/default/face_2.png",
-			C.web.base + "/faces/default/face_3.png",
-			C.web.base + "/faces/default/face_4.png"
-		};
-		faceGridView = (GridView) this.findViewById(R.id.app_face_grid);
-//		faceGridView.setAdapter(new LocalImageList(this, imageIds));
-		faceGridView.setAdapter(new RemoteImageList(this, imageUrls));
-		faceGridView.setOnItemClickListener(new OnItemClickListener(){
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				toast("select:"+position);
-			}
-		});
+
+		// get face image list
+		this.doTaskAsync(C.task.faceList, C.api.faceList);
+	}
+	
+	private void doSetFace (String faceId) {
+		HashMap<String, String> urlParams = new HashMap<String, String>();
+		urlParams.put("key", "face");
+		urlParams.put("val", faceId);
+		doTaskAsync(C.task.customerEdit, C.api.customerEdit, urlParams);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +42,35 @@ public class AppSetFace extends AuthApp {
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		super.onTaskComplete(taskId, message);
-		
+		switch (taskId) {
+			case C.task.faceList:
+				try {
+					@SuppressWarnings("unchecked")
+					final ArrayList<Image> imageList = (ArrayList<Image>) message.getResultList("Image");
+					final ArrayList<String> imageUrls = new ArrayList<String>();
+					for (int i = 0; i < imageList.size(); i++) {
+						Image imageItem = imageList.get(i);
+						imageUrls.add(imageItem.getUrl());
+					}
+					faceGridView = (GridView) this.findViewById(R.id.app_face_grid);
+					faceGridView.setAdapter(new GridImageList(this, imageUrls));
+					faceGridView.setOnItemClickListener(new OnItemClickListener(){
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view,
+								int position, long id) {
+							Image face = imageList.get(position);
+							doSetFace(face.getId());
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+					toast(e.getMessage());
+				}
+				break;
+			case C.task.customerEdit:
+				toast("face has changed.");
+				break;
+		}
 	}
 	
 	@Override

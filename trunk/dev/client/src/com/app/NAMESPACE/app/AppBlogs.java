@@ -7,7 +7,7 @@ import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.auth.AuthApp;
 import com.app.NAMESPACE.base.BaseMessage;
 import com.app.NAMESPACE.base.C;
-import com.app.NAMESPACE.list.BasicList;
+import com.app.NAMESPACE.list.SimpleList;
 import com.app.NAMESPACE.model.Blog;
 import com.app.NAMESPACE.util.AppUtil;
 
@@ -62,7 +62,7 @@ public class AppBlogs extends AuthApp {
 						R.id.tpl_list_blog_text_uptime,
 						R.id.tpl_list_blog_text_comment
 					};
-					blogListView.setAdapter(new BasicList(this, AppUtil.dataToList(blogList, from), R.layout.tpl_list_blog, from, to));
+					blogListView.setAdapter(new SimpleList(this, AppUtil.dataToList(blogList, from), R.layout.tpl_list_blog, from, to));
 					blogListView.setOnItemClickListener(new OnItemClickListener(){
 						@Override
 						public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {

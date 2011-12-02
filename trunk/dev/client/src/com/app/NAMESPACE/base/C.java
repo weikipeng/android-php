@@ -5,11 +5,18 @@ public final class C {
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// core settings (important)
 	
+	public static final class dir {
+		public static final String base				= "/sdcard/NAMESPACE";
+		public static final String faces			= base + "/faces";
+		public static final String images			= base + "/images";
+	}
+	
 	public static final class api {
 		public static final String base				= "http://192.168.41.37:8001";
 		public static final String index			= "/index/index";
 		public static final String login			= "/index/login";
 		public static final String logout			= "/index/logout";
+		public static final String faceList 		= "/image/faceList";
 		public static final String blogList			= "/blog/blogList";
 		public static final String blogView			= "/blog/blogView";
 		public static final String blogCreate		= "/blog/blogCreate";
@@ -22,12 +29,13 @@ public final class C {
 		public static final int index				= 1001;
 		public static final int login				= 1002;
 		public static final int logout				= 1003;
-		public static final int blogList			= 1004;
-		public static final int blogView			= 1005;
-		public static final int blogCreate			= 1006;
-		public static final int commentList			= 1007;
-		public static final int commentCreate		= 1008;
-		public static final int customerEdit		= 1009;
+		public static final int faceList			= 1004;
+		public static final int blogList			= 1005;
+		public static final int blogView			= 1006;
+		public static final int blogCreate			= 1007;
+		public static final int commentList			= 1008;
+		public static final int commentCreate		= 1009;
+		public static final int customerEdit		= 1010;
 	}
 	
 	public static final class err {
@@ -41,8 +49,8 @@ public final class C {
 	
 	public static final class intent {
 		public static final class action {
-			public static final String EDITTEXT			= "com.app.NAMESPACE.EDITTEXT";
-			public static final String EDITBLOG			= "com.app.NAMESPACE.EDITBLOG";
+			public static final String EDITTEXT		= "com.app.NAMESPACE.EDITTEXT";
+			public static final String EDITBLOG		= "com.app.NAMESPACE.EDITBLOG";
 		}
 	}
 	

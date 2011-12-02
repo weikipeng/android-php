@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.app.NAMESPACE.R;
-import com.app.NAMESPACE.filter.BasicFilter;
+import com.app.NAMESPACE.util.AppFilter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -48,7 +48,7 @@ public class ExpandList {
 				String dataKey = dataKeys[i];
 				int tplKey = tplKeys[i];
 				TextView tv = (TextView) v.findViewById(tplKey);
-				BasicFilter.setHtml(tv, data.get(dataKey).toString());
+				AppFilter.setHtml(tv, data.get(dataKey).toString());
 			}
 			vg.addView(v);
 			// render divider

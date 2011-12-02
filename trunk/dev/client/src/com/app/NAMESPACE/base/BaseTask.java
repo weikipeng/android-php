@@ -6,18 +6,12 @@ public class BaseTask {
 	public static final int SHOW_TOAST = 1;
 	public static final int SHOW_LOADBAR = 2;
 	public static final int HIDE_LOADBAR = 3;
+	public static final int REFRESH_LISTVIEW = 4;
 	
 	private int id = 0;
 	private String name = "";
-	private BaseHandler handler;
 	
-	public BaseTask() {
-		handler = new BaseHandler();
-	}
-	
-	public BaseTask(BaseHandler bh) {
-		this.handler = bh;
-	}
+	public BaseTask() {}
 	
 	public int getId () {
 		return this.id;
@@ -33,14 +27,6 @@ public class BaseTask {
 	
 	public void setName (String name) {
 		this.name = name;
-	}
-	
-	public BaseHandler getHandler () {
-		return this.handler;
-	}
-	
-	public void setHandler (BaseHandler bh) {
-		this.handler = bh;
 	}
 	
 	public void onStart () {

@@ -1,32 +1,29 @@
 package com.app.NAMESPACE.list;
 
-import com.app.NAMESPACE.util.IOUtil;
+import java.util.List;
 
-import android.R;
+import com.app.NAMESPACE.util.AppCache;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
-import android.widget.Gallery;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-public class RemoteImageList extends BaseAdapter {
+public class GridImageList extends BaseAdapter {
 
 	private Context context;
-	private String[] imageUrls = {};
+	private List<String> imageUrls;
 	
-	public RemoteImageList (Context context, String[] imageUrls) {
+	public GridImageList (Context context, List<String> imageUrls) {
 		this.context = context;
 		this.imageUrls = imageUrls;
 	}
 	
 	@Override
 	public int getCount() {
-		return imageUrls.length;
+		return imageUrls.size();
 	}
 
 	@Override
@@ -46,7 +43,7 @@ public class RemoteImageList extends BaseAdapter {
 		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 		imageView.setPadding(10, 10, 10, 10);
 		// get pic from remote
-		Bitmap bitmap = IOUtil.getBitmapRemote(imageUrls[position]);
+		Bitmap bitmap = AppCache.getCachedImage(imageUrls.get(position));
 		imageView.setImageBitmap(bitmap);
 		return imageView;
 	}

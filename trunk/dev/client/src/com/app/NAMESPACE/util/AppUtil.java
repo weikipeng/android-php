@@ -28,7 +28,7 @@ import com.app.NAMESPACE.model.Customer;
 
 public class AppUtil {
 	
-	/* md5加密 */
+	/* md5 加密 */
 	static public String md5 (String str) {
 		MessageDigest algorithm = null;
 		try {
@@ -58,7 +58,7 @@ public class AppUtil {
 		return str;
 	}
 	
-	/* 为EntityUtils.toString()添加gzip解压功能 */
+	/* 为 EntityUtils.toString() 添加 gzip 解压功能 */
 	public static String gzipToString(final HttpEntity entity, final String defaultCharset) throws IOException, ParseException {
 		if (entity == null) {
 			throw new IllegalArgumentException("HTTP entity may not be null");
@@ -100,6 +100,7 @@ public class AppUtil {
 		return buffer.toString();
 	}
 	
+	/* 为 EntityUtils.toString() 添加 gzip 解压功能 */
 	public static String gzipToString(final HttpEntity entity)
 		throws IOException, ParseException {
 		return gzipToString(entity, null);
@@ -133,7 +134,7 @@ public class AppUtil {
 		return message;
 	}
 	
-	/* */
+	/* Model 数组转化成 Map 列表 */
 	static public List<? extends Map<String,?>> dataToList (List<? extends BaseModel> data, String[] fields) {
 		ArrayList<HashMap<String,?>> list = new ArrayList<HashMap<String,?>>();
 		for (BaseModel item : data) {
@@ -142,6 +143,7 @@ public class AppUtil {
 		return list;
 	}
 	
+	/* Model 转化成 Map */
 	static public Map<String,?> dataToMap (BaseModel data, String[] fields) {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		try {
