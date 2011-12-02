@@ -67,7 +67,6 @@ class BlogServer extends NAMESPACE_App_Server
 			case 2:
 				break;
 		}
-
 		if ($blogList) {
 			$this->render('10000', 'Get blog list ok', array(
 				'Blog.list' => $blogList

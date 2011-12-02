@@ -13,6 +13,7 @@ $_DataMap = array(
 	),
 	'Blog' => array(
 		'id' => 'id',
+		'face' => 'face',
 		'author' => 'author',
 		'content' => 'content',
 		'comment' => 'comment',

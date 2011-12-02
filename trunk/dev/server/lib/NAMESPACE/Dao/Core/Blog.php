@@ -11,6 +11,7 @@
 
 require_once 'NAMESPACE/Dao/Core.php';
 require_once 'NAMESPACE/Dao/Core/Customer.php';
+require_once 'NAMESPACE/Util/Image.php';
 
 /**
  * @package NAMESPACE_Dao_Core
@@ -66,6 +67,7 @@ class Core_Blog extends NAMESPACE_Dao_Core
 			$customer = $customerDao->read($row['customerid']);
 			$blog = array(
 				'id'		=> $row['id'],
+				'face'		=> NAMESPACE_Util_Image::getFaceUrl($customer['face']),
 				'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
 				'comment'	=> '评论('.$row['commentcount'].')',
 				'uptime'	=> $row['uptime'],
