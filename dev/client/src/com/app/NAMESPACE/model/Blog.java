@@ -6,6 +6,7 @@ public class Blog extends BaseModel {
 	
 	// model columns
 	public final static String COL_ID = "id";
+	public final static String COL_FACE = "face";
 	public final static String COL_DESC = "desc";
 	public final static String COL_TITLE = "title";
 	public final static String COL_AUTHOR = "author";
@@ -14,6 +15,7 @@ public class Blog extends BaseModel {
 	public final static String COL_UPTIME = "uptime";
 	
 	private String id;
+	private String face;
 	private String desc;
 	private String title;
 	private String author;
@@ -29,6 +31,14 @@ public class Blog extends BaseModel {
 	
 	public void setId (String id) {
 		this.id = id;
+	}
+	
+	public String getFace () {
+		return this.face;
+	}
+	
+	public void setFace (String face) {
+		this.face = face;
 	}
 	
 	public String getDesc () {

@@ -5,7 +5,6 @@ import com.app.NAMESPACE.app.AppBlogs;
 import com.app.NAMESPACE.app.AppConfig;
 import com.app.NAMESPACE.app.AppIndex;
 import com.app.NAMESPACE.app.AppLogin;
-import com.app.NAMESPACE.app.AppEditBlog;
 import com.app.NAMESPACE.base.BaseApp;
 import com.app.NAMESPACE.base.BaseAuth;
 import com.app.NAMESPACE.demo.DemoMap;
@@ -14,7 +13,6 @@ import com.app.NAMESPACE.model.Customer;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;

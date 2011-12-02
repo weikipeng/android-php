@@ -5,13 +5,18 @@ import java.util.HashMap;
 
 import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.auth.AuthApp;
+import com.app.NAMESPACE.base.BaseApp;
+import com.app.NAMESPACE.base.BaseHandler;
 import com.app.NAMESPACE.base.BaseMessage;
+import com.app.NAMESPACE.base.BaseTask;
 import com.app.NAMESPACE.base.C;
-import com.app.NAMESPACE.list.BasicList;
+import com.app.NAMESPACE.list.BlogList;
 import com.app.NAMESPACE.model.Blog;
-import com.app.NAMESPACE.util.AppUtil;
+import com.app.NAMESPACE.util.AppCache;
 
 import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.KeyEvent;
 import android.widget.AdapterView;
@@ -22,11 +27,15 @@ import android.widget.ListView;
 public class AppIndex extends AuthApp {
 
 	private ListView blogListView;
+	private BlogList blogListAdapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.app_index);
+		
+		// set handler
+		this.setHandler(new IndexHandler(this));
 		
 		// tab button
 		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_1);
@@ -47,36 +56,50 @@ public class AppIndex extends AuthApp {
 		super.onTaskComplete(taskId, message);
 
 		switch (taskId) {
-		case C.task.blogList:
-			try {
-				@SuppressWarnings("unchecked")
-				final ArrayList<Blog> blogList = (ArrayList<Blog>) message.getResultList("Blog");
-				blogListView = (ListView) this.findViewById(R.id.app_index_list_view);
-				String[] from = {
-					Blog.COL_CONTENT,
-					Blog.COL_UPTIME,
-					Blog.COL_COMMENT
-				};
-				int[] to = {
-					R.id.tpl_list_blog_text_content,
-					R.id.tpl_list_blog_text_uptime,
-					R.id.tpl_list_blog_text_comment
-				};
-				blogListView.setAdapter(new BasicList(this, AppUtil.dataToList(blogList, from), R.layout.tpl_list_blog, from, to));
-				blogListView.setOnItemClickListener(new OnItemClickListener(){
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-						Bundle params = new Bundle();
-						params.putString("blogId", blogList.get(pos).getId());
-						overlay(AppBlog.class, params);
+			case C.task.blogList:
+				try {
+					@SuppressWarnings("unchecked")
+					final ArrayList<Blog> blogList = (ArrayList<Blog>) message.getResultList("Blog");
+//					// get image
+					for (Blog blog : blogList) {
+						loadFaceAsync(blog.getFace());
 					}
-				});
-			} catch (Exception e) {
-				e.printStackTrace();
-				toast(e.getMessage());
-			}
-			break;
+					// show text
+					blogListView = (ListView) this.findViewById(R.id.app_index_list_view);
+					blogListAdapter = new BlogList(this, blogList);
+					blogListView.setAdapter(blogListAdapter);
+					blogListView.setOnItemClickListener(new OnItemClickListener(){
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+							Bundle params = new Bundle();
+							params.putString("blogId", blogList.get(pos).getId());
+							overlay(AppBlog.class, params);
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+					toast(e.getMessage());
+				}
+				break;
+		}
 	}
+	
+	/**
+	 * 
+	 * @param url
+	 */
+	private void loadFaceAsync (final String url) {
+		taskPool.addTask(0, new BaseTask(){
+			@Override
+			public void onStart(){
+				AppCache.getCachedImage(url);
+			}
+			@Override
+			public void onComplete(){
+				Log.w("After load image", url);
+				sendMessage(BaseTask.REFRESH_LISTVIEW);
+			}
+		}, 0);
 	}
 	
 	@Override
@@ -87,4 +110,29 @@ public class AppIndex extends AuthApp {
 		return super.onKeyDown(keyCode, event);
 	}
 	
+	/**
+	 * 
+	 * @author huangjuanshi
+	 *
+	 */
+	private class IndexHandler extends BaseHandler {
+		public IndexHandler(BaseApp app) {
+			super(app);
+		}
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			try {
+				switch (msg.what) {
+					case BaseTask.REFRESH_LISTVIEW:
+						blogListAdapter.notifyDataSetChanged();
+						Log.w("REFRESH", "ok");
+						break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				app.toast(e.getMessage());
+			}
+		}
+	}
 }

@@ -3,20 +3,20 @@ package com.app.NAMESPACE.list;
 import java.util.List;
 import java.util.Map;
 
-import com.app.NAMESPACE.filter.BasicFilter;
+import com.app.NAMESPACE.util.AppFilter;
 
 import android.content.Context;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class BasicList extends SimpleAdapter {
+public class SimpleList extends SimpleAdapter {
 
-	public BasicList(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+	public SimpleList(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
 		super(context, data, resource, from, to);
 	}
 
 	@Override
 	public void setViewText(TextView v, String text) {
-		BasicFilter.setHtml(v, text);
+		AppFilter.setHtml(v, text);
 	}
 }

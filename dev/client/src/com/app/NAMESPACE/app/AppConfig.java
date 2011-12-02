@@ -6,13 +6,12 @@ import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.auth.AuthApp;
 import com.app.NAMESPACE.base.BaseMessage;
 import com.app.NAMESPACE.base.C;
-import com.app.NAMESPACE.list.BasicList;
+import com.app.NAMESPACE.list.SimpleList;
 import com.app.NAMESPACE.model.Config;
 import com.app.NAMESPACE.model.Customer;
 import com.app.NAMESPACE.util.AppUtil;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,7 +45,7 @@ public class AppConfig extends AuthApp {
 		String[] from = {Config.COL_NAME};
 		int[] to = {R.id.tpl_list_menu_text_name};
 		mListConfig = (ListView) findViewById(R.id.app_config_list_main);
-		mListConfig.setAdapter(new BasicList(this, AppUtil.dataToList(dataList, from), R.layout.tpl_list_menu, from, to));
+		mListConfig.setAdapter(new SimpleList(this, AppUtil.dataToList(dataList, from), R.layout.tpl_list_menu, from, to));
 		mListConfig.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {

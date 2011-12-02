@@ -14,6 +14,9 @@ import android.util.Log;
 
 public class IOUtil {
 
+	// tag for log
+	private static String TAG = IOUtil.class.getSimpleName();
+	
 	// Load image from local
 	public static Bitmap getBitmapLocal(String url) {
 		try {
@@ -30,7 +33,7 @@ public class IOUtil {
 		URL myFileUrl = null;
 		Bitmap bitmap = null;
 		try {
-			Log.w("URL", url);
+			Log.w(TAG, url);
 			myFileUrl = new URL(url);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

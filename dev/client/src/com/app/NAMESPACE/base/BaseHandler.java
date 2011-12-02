@@ -1,14 +1,17 @@
 package com.app.NAMESPACE.base;
 
+import com.app.NAMESPACE.util.AppUtil;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 
 public class BaseHandler extends Handler {
 	
-	public BaseHandler () {
-		
+	protected BaseApp app;
+	
+	public BaseHandler (BaseApp app) {
+		this.app = app;
 	}
 	
 	public BaseHandler (Looper i) {
@@ -17,7 +20,32 @@ public class BaseHandler extends Handler {
 	
 	@Override
 	public void handleMessage(Message msg) {
-		Log.w("BaseHandler", "msg:" + msg.getData().toString());
+		try {
+			int taskId;
+			String result;
+			switch (msg.what) {
+				case BaseTask.TASK_COMPLETE:
+					app.hideLoadBar();
+					taskId = msg.getData().getInt("task");
+					result = msg.getData().getString("data");
+					app.onTaskComplete(taskId, AppUtil.getMessage(result));
+					break;
+				case BaseTask.SHOW_TOAST:
+					app.hideLoadBar();
+					result = msg.getData().getString("data");
+					app.toast(result);
+					break;
+				case BaseTask.SHOW_LOADBAR:
+					app.showLoadBar();
+					break;
+				case BaseTask.HIDE_LOADBAR:
+					app.hideLoadBar();
+					break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			app.toast(e.getMessage());
+		}
 	}
 	
 }
