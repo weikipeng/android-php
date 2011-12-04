@@ -5,9 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.Proxy;
 import java.net.URL;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -29,7 +32,7 @@ public class IOUtil {
 	}
 
 	// Load image from network
-	public static Bitmap getBitmapRemote(String url) {
+	public static Bitmap getBitmapRemote(Context ctx, String url) {
 		URL myFileUrl = null;
 		Bitmap bitmap = null;
 		try {
@@ -39,8 +42,14 @@ public class IOUtil {
 			e.printStackTrace();
 		}
 		try {
-			HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
-			conn.setConnectTimeout(3);
+			HttpURLConnection conn = null;
+			if (HttpUtil.WAP_INT == HttpUtil.getNetType(ctx)) {
+				Proxy proxy = new Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress("10.0.0.172", 80)); 
+				conn = (HttpURLConnection) myFileUrl.openConnection(proxy);
+			} else {
+				conn = (HttpURLConnection) myFileUrl.openConnection();
+			}
+			conn.setConnectTimeout(10000);
 			conn.setDoInput(true);
 			conn.connect();
 			InputStream is = conn.getInputStream();

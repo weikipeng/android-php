@@ -43,7 +43,7 @@ public class GridImageList extends BaseAdapter {
 		imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 		imageView.setPadding(10, 10, 10, 10);
 		// get pic from remote
-		Bitmap bitmap = AppCache.getCachedImage(imageUrls.get(position));
+		Bitmap bitmap = AppCache.getCachedImage(context, imageUrls.get(position));
 		imageView.setImageBitmap(bitmap);
 		return imageView;
 	}

@@ -17,7 +17,12 @@ public class HttpUtil {
 	
 	static public int getNetType (Context ctx) {
 		// has network
-		ConnectivityManager conn = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager conn = null;
+		try {
+			conn = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (conn == null) {
 			return HttpUtil.NONET_INT;
 		}
