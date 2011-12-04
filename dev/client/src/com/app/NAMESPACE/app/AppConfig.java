@@ -13,14 +13,12 @@ import com.app.NAMESPACE.base.C;
 import com.app.NAMESPACE.list.SimpleList;
 import com.app.NAMESPACE.model.Config;
 import com.app.NAMESPACE.model.Customer;
-import com.app.NAMESPACE.model.Image;
 import com.app.NAMESPACE.util.AppCache;
 import com.app.NAMESPACE.util.AppUtil;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;

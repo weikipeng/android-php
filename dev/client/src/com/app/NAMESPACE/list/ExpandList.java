@@ -4,17 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.app.NAMESPACE.R;
-import com.app.NAMESPACE.app.AppBlog;
 import com.app.NAMESPACE.util.AppFilter;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 public class ExpandList {

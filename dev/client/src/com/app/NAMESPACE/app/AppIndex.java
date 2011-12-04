@@ -12,8 +12,6 @@ import com.app.NAMESPACE.base.BaseTask;
 import com.app.NAMESPACE.base.C;
 import com.app.NAMESPACE.list.BlogList;
 import com.app.NAMESPACE.model.Blog;
-import com.app.NAMESPACE.util.AppCache;
-
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;

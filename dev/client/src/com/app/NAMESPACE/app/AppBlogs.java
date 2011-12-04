@@ -11,7 +11,6 @@ import com.app.NAMESPACE.base.BaseMessage;
 import com.app.NAMESPACE.base.BaseTask;
 import com.app.NAMESPACE.base.C;
 import com.app.NAMESPACE.list.ExpandList;
-import com.app.NAMESPACE.list.SimpleList;
 import com.app.NAMESPACE.model.Blog;
 import com.app.NAMESPACE.model.Customer;
 import com.app.NAMESPACE.util.AppCache;
@@ -20,16 +19,12 @@ import com.app.NAMESPACE.util.AppUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class AppBlogs extends AuthApp {
 	
