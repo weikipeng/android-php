@@ -7,6 +7,7 @@ $_DataMap = array(
 		'name' => 'name',
 		'sign' => 'sign',
 		'face' => 'face',
+		'faceurl' => 'faceurl',
 		'blogcount' => 'blogcount',
 		'fanscount' => 'fanscount',
 		'uptime' => 'uptime',

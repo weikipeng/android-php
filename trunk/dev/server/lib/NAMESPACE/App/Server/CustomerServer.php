@@ -58,6 +58,37 @@ class CustomerServer extends NAMESPACE_App_Server
 	 * ---------------------------------------------------------------------------------------------
 	 * > 接口说明：测试登录接口
 	 * <code>
+	 * URL地址：/customer/customerView
+	 * 提交方式：POST
+	 * 参数#1：customerId，类型：INT，必须：YES
+	 * </code>
+	 * ---------------------------------------------------------------------------------------------
+	 * @title 测试接口
+	 * @action /customer/customerView
+	 * @params customerId 1 INT
+	 * @method post
+	 */
+	public function customerViewAction ()
+	{
+		$this->doAuth();
+		
+		$customerId = $this->param('customerId');
+		
+		// get extra customer info
+		$customerDao = $this->dao->load('Core_Customer');
+		if ($customerDao->exist($customerId)) {
+			$customerItem = $customerDao->getById($customerId);
+			$this->render('10000', 'View customer ok', array(
+				'Customer' => $customerItem
+			));
+		}
+		$this->render('10010', 'View customer failed');
+	}
+	
+	/**
+	 * ---------------------------------------------------------------------------------------------
+	 * > 接口说明：测试登录接口
+	 * <code>
 	 * URL地址：/customer/customerEdit
 	 * 提交方式：POST
 	 * 参数#1：key，类型：STRING，必须：YES
@@ -76,7 +107,7 @@ class CustomerServer extends NAMESPACE_App_Server
 		
 		$key = $this->param('key');
 		$val = $this->param('val');
-		if ($key && $val) {
+		if ($key) {
 			$customerDao = $this->dao->load('Core_Customer');
 			try {
 				$customerDao->update(array(

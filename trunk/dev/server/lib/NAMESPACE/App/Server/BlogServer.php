@@ -99,7 +99,7 @@ class BlogServer extends NAMESPACE_App_Server
 		$blogItem = $blogDao->read($blogId);
 		
 		$customerDao = $this->dao->load('Core_Customer');
-		$customerItem = $customerDao->read($blogItem['customerid']);
+		$customerItem = $customerDao->getById($blogItem['customerid']);
 		
 		$this->render('10000', 'Get blog ok', array(
 			'Customer' => $customerItem,
