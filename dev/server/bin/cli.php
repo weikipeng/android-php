@@ -14,6 +14,10 @@ require_once 'Hush/Util.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants definition
 
+define('__MYSQL_HOST', '127.0.0.1');
+define('__MYSQL_PORT', '3306');
+define('__MYSQL_USER', 'root');
+define('__MYSQL_NAME', 'passwd');
 define('__MYSQL_IMPORT_TOOL', 'mysql');
 define('__MYSQL_DUMPER_TOOL', 'mysqldump');
 define('__MYSQL_IMPORT_COMMAND', __MYSQL_IMPORT_TOOL . ' {PARAMS} < {SQLFILE}');
