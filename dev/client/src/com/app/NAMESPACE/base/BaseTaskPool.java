@@ -4,17 +4,25 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.app.NAMESPACE.util.HttpUtil;
+
 import com.app.NAMESPACE.util.AppClient;
 
 public class BaseTaskPool {
 	
 	static private ExecutorService taskPool;
+	private Context context; // used for HttpUtil.getNetType
 	
-	public BaseTaskPool () {
+	public BaseTaskPool (BaseApp app) {
+		this.context = app.getContext();
 		taskPool = Executors.newCachedThreadPool();
 	}
 	
-	public BaseTaskPool (int size) {
+	public BaseTaskPool (BaseApp app, int size) {
+		this.context = app.getContext();
 		taskPool = Executors.newFixedThreadPool(size);
 	}
 	
@@ -22,7 +30,7 @@ public class BaseTaskPool {
 	public void addTask (int taskId, String taskUrl, HashMap<String, String> taskArg, BaseTask baseTask, int delayTime) {
 		baseTask.setId(taskId);
 		try {
-			taskPool.execute(new TaskThread(taskUrl, taskArg, baseTask, delayTime));
+			taskPool.execute(new TaskThread(context, taskUrl, taskArg, baseTask, delayTime));
 		} catch (Exception e) {
 			taskPool.shutdown();
 		}
@@ -32,7 +40,7 @@ public class BaseTaskPool {
 	public void addTask (int taskId, String taskUrl, BaseTask baseTask, int delayTime) {
 		baseTask.setId(taskId);
 		try {
-			taskPool.execute(new TaskThread(taskUrl, null, baseTask, delayTime));
+			taskPool.execute(new TaskThread(context, taskUrl, null, baseTask, delayTime));
 		} catch (Exception e) {
 			taskPool.shutdown();
 		}
@@ -42,18 +50,20 @@ public class BaseTaskPool {
 	public void addTask (int taskId, BaseTask baseTask, int delayTime) {
 		baseTask.setId(taskId);
 		try {
-			taskPool.execute(new TaskThread(null, null, baseTask, delayTime));
+			taskPool.execute(new TaskThread(context, null, null, baseTask, delayTime));
 		} catch (Exception e) {
 			taskPool.shutdown();
 		}
 	}
 	
 	public static class TaskThread implements Runnable {
+		private Context context;
 		private String taskUrl;
 		private HashMap<String, String> taskArg;
 		private BaseTask baseTask;
 		private int delayTime = 0;
-		public TaskThread(String taskUrl, HashMap<String, String> taskArg, BaseTask baseTask, int delayTime) {
+		public TaskThread(Context context, String taskUrl, HashMap<String, String> taskArg, BaseTask baseTask, int delayTime) {
+			this.context = context;
 			this.taskUrl = taskUrl;
 			this.taskArg = taskArg;
 			this.baseTask = baseTask;
@@ -72,13 +82,16 @@ public class BaseTaskPool {
 				try {
 					// remote task
 					if (this.taskUrl != null) {
+						// init app client
+						AppClient client = new AppClient(this.taskUrl);
+						if (HttpUtil.WAP_INT == HttpUtil.getNetType(context)) {
+							client.useWap();
+						}
 						// http get
 						if (taskArg == null) {
-							AppClient client = new AppClient(this.taskUrl);
 							httpResult = client.get();
 						// http post
 						} else {
-							AppClient client = new AppClient(this.taskUrl);
 							httpResult = client.post(this.taskArg);
 						}
 					}

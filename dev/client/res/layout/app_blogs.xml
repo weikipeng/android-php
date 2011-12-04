@@ -25,8 +25,7 @@
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:layout_marginLeft="5dip" android:layout_marginRight="5dip"
 				android:background="@drawable/body_1"
-				android:layout_gravity="center"
-				android:layout_weight="1">
+				android:layout_gravity="center">
 				<!-- 
 				<ListView android:id="@+id/app_blogs_list_view" android:layout_width="fill_parent" android:layout_height="wrap_content" android:descendantFocusability="blocksDescendants"
 					android:fadingEdge="vertical" android:fadingEdgeLength="5dip" android:divider="@null"

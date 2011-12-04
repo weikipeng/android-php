@@ -26,10 +26,10 @@ public class BaseApp extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// init task pool
-		this.taskPool = new BaseTaskPool();
 		// async task handler
 		this.handler = new BaseHandler(this);
+		// init task pool
+		this.taskPool = new BaseTaskPool(this);
 	}
 	
 	@Override
@@ -140,7 +140,7 @@ public class BaseApp extends Activity {
 		taskPool.addTask(0, new BaseTask(){
 			@Override
 			public void onComplete(){
-				AppCache.getCachedImage(url);
+				AppCache.getCachedImage(getContext(), url);
 				sendMessage(BaseTask.LOAD_IMAGE);
 			}
 		}, 0);
