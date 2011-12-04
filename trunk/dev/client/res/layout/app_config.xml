@@ -11,7 +11,7 @@
 			<include layout="@layout/tpl_list_info" />
 			<ListView android:id="@+id/app_config_list_main" android:layout_width="fill_parent" android:layout_height="wrap_content" android:descendantFocusability="blocksDescendants"
 				android:layout_marginLeft="10dip" android:layout_marginRight="10dip" android:background="@drawable/xml_list_config_bg"
-				android:divider="@color/divider" android:dividerHeight="1dip"
+				android:divider="@color/divider1" android:dividerHeight="1dip"
 				android:listSelector="@drawable/xml_list_bg"/>
 		</LinearLayout>
 	</ScrollView>

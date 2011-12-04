@@ -11,6 +11,8 @@
 	<color name="body2">#F9F9F9</color>
 	<color name="menu1">#EEEEEE</color>
 	<color name="menu2">#BBBBBB</color>
-	<color name="divider">#CCCCCC</color>
+	<color name="divider1">#DDDDDD</color>
+	<color name="divider2">#EEEEEE</color>
+	<color name="divider3">#FFFFFF</color>
 	<color name="loading">#99000000</color>
 </resources>

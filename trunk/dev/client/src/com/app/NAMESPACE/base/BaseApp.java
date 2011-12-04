@@ -2,6 +2,7 @@ package com.app.NAMESPACE.base;
 
 import java.util.HashMap;
 import com.app.NAMESPACE.R;
+import com.app.NAMESPACE.util.AppCache;
 
 import android.app.Activity;
 import android.content.Context;
@@ -133,6 +134,16 @@ public class BaseApp extends Activity {
 	
 	public void openDialog(Bundle params) {
 		new BaseDialog(this, params).show();
+	}
+	
+	public void loadImage (final String url) {
+		taskPool.addTask(0, new BaseTask(){
+			@Override
+			public void onComplete(){
+				AppCache.getCachedImage(url);
+				sendMessage(BaseTask.LOAD_IMAGE);
+			}
+		}, 0);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////

@@ -60,9 +60,9 @@ public class AppIndex extends AuthApp {
 				try {
 					@SuppressWarnings("unchecked")
 					final ArrayList<Blog> blogList = (ArrayList<Blog>) message.getResultList("Blog");
-//					// get image
+					// load face image
 					for (Blog blog : blogList) {
-						loadFaceAsync(blog.getFace());
+						loadImage(blog.getFace());
 					}
 					// show text
 					blogListView = (ListView) this.findViewById(R.id.app_index_list_view);
@@ -84,24 +84,6 @@ public class AppIndex extends AuthApp {
 		}
 	}
 	
-	/**
-	 * 
-	 * @param url
-	 */
-	private void loadFaceAsync (final String url) {
-		taskPool.addTask(0, new BaseTask(){
-			@Override
-			public void onStart(){
-				AppCache.getCachedImage(url);
-			}
-			@Override
-			public void onComplete(){
-				Log.w("After load image", url);
-				sendMessage(BaseTask.REFRESH_LISTVIEW);
-			}
-		}, 0);
-	}
-	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -110,11 +92,9 @@ public class AppIndex extends AuthApp {
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	/**
-	 * 
-	 * @author huangjuanshi
-	 *
-	 */
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// inner classes
+	
 	private class IndexHandler extends BaseHandler {
 		public IndexHandler(BaseApp app) {
 			super(app);
@@ -124,7 +104,7 @@ public class AppIndex extends AuthApp {
 			super.handleMessage(msg);
 			try {
 				switch (msg.what) {
-					case BaseTask.REFRESH_LISTVIEW:
+					case BaseTask.LOAD_IMAGE:
 						blogListAdapter.notifyDataSetChanged();
 						Log.w("REFRESH", "ok");
 						break;

@@ -11,6 +11,7 @@ public class Customer extends BaseModel {
 	public final static String COL_PASS = "pass";
 	public final static String COL_SIGN = "sign";
 	public final static String COL_FACE = "face";
+	public final static String COL_FACEURL = "faceurl";
 	public final static String COL_BLOGCOUNT = "blogcount";
 	public final static String COL_FANSCOUNT = "fanscount";
 	public final static String COL_UPTIME = "uptime";
@@ -21,6 +22,7 @@ public class Customer extends BaseModel {
 	private String pass;
 	private String sign;
 	private String face;
+	private String faceurl;
 	private String blogcount;
 	private String fanscount;
 	private String uptime;
@@ -86,6 +88,14 @@ public class Customer extends BaseModel {
 	
 	public void setFace (String face) {
 		this.face = face;
+	}
+	
+	public String getFaceurl () {
+		return this.faceurl;
+	}
+	
+	public void setFaceurl (String faceurl) {
+		this.faceurl = faceurl;
 	}
 	
 	public String getUptime () {

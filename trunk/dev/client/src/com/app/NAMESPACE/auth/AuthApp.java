@@ -80,7 +80,7 @@ public class AuthApp extends BaseApp {
 				String appName = this.getString(R.string.app_name);
 				String appVersion = this.getString(R.string.app_version);
 				builder.setMessage(appName + " " + appVersion);
-				builder.setIcon(R.drawable.bomb_w);
+				builder.setIcon(R.drawable.face);
 				builder.setPositiveButton(R.string.btn_cancel, null);
 				builder.show();
 				break;
