@@ -59,6 +59,7 @@ public class AppSetFace extends AuthApp {
 						public void onItemClick(AdapterView<?> parent, View view,
 								int position, long id) {
 							Image face = imageList.get(position);
+							customer.setFace(face.getId());
 							doSetFace(face.getId());
 						}
 					});
@@ -69,6 +70,7 @@ public class AppSetFace extends AuthApp {
 				break;
 			case C.task.customerEdit:
 				toast("face has changed.");
+				doFinish();
 				break;
 		}
 	}

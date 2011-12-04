@@ -5,34 +5,61 @@ import java.util.HashMap;
 
 import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.auth.AuthApp;
+import com.app.NAMESPACE.base.BaseApp;
+import com.app.NAMESPACE.base.BaseHandler;
 import com.app.NAMESPACE.base.BaseMessage;
+import com.app.NAMESPACE.base.BaseTask;
 import com.app.NAMESPACE.base.C;
+import com.app.NAMESPACE.list.ExpandList;
 import com.app.NAMESPACE.list.SimpleList;
 import com.app.NAMESPACE.model.Blog;
+import com.app.NAMESPACE.model.Customer;
+import com.app.NAMESPACE.util.AppCache;
 import com.app.NAMESPACE.util.AppUtil;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class AppBlogs extends AuthApp {
 	
-	private ListView blogListView;
+//	private ListView blogListView;
+	private ImageView faceImage;
+	private String faceImageUrl;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.app_blogs);
 		
+		// set handler
+		this.setHandler(new BlogsHandler(this));
+		
 		// tab button
 		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_2);
-		ib.setImageResource(R.drawable.tab_heart_2);
+		ib.setImageResource(R.drawable.tab_heart_2);		
+	}
+	
+	@Override
+	public void onStart () {
+		super.onStart();
 		
-		// show my blog list
+		// prepare customer data
+		HashMap<String, String> cvParams = new HashMap<String, String>();
+		cvParams.put("customerId", customer.getId());
+		this.doTaskAsync(C.task.customerView, C.api.customerView, cvParams);
+		
+		// prepare blog data
 		HashMap<String, String> blogParams = new HashMap<String, String>();
 		blogParams.put("typeId", "1");
 		blogParams.put("pageId", "0");
@@ -43,15 +70,30 @@ public class AppBlogs extends AuthApp {
 	// async task callback methods
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public void onTaskComplete(int taskId, BaseMessage message) {
 		super.onTaskComplete(taskId, message);
 		
 		switch (taskId) {
+			case C.task.customerView:
+				try {
+					final Customer customer = (Customer) message.getResult("Customer");
+					TextView textName = (TextView) this.findViewById(R.id.app_blogs_text_customer_name);
+					TextView textInfo = (TextView) this.findViewById(R.id.app_blogs_text_customer_info);
+					textName.setText(customer.getSign());
+					textInfo.setText("Blog(" + customer.getBlogcount() + ") Fans(" + customer.getFanscount() + ").");
+					// load face image async
+					faceImage = (ImageView) this.findViewById(R.id.app_blogs_image_face);
+					faceImageUrl = customer.getFaceurl();
+					loadImage(faceImageUrl);
+				} catch (Exception e) {
+					e.printStackTrace();
+					toast(e.getMessage());
+				}
+				break;
 			case C.task.blogList:
 				try {
-					@SuppressWarnings("unchecked")
 					final ArrayList<Blog> blogList = (ArrayList<Blog>) message.getResultList("Blog");
-					blogListView = (ListView) this.findViewById(R.id.app_blogs_list_view);
 					String[] from = {
 						Blog.COL_CONTENT,
 						Blog.COL_UPTIME,
@@ -62,15 +104,31 @@ public class AppBlogs extends AuthApp {
 						R.id.tpl_list_blog_text_uptime,
 						R.id.tpl_list_blog_text_comment
 					};
-					blogListView.setAdapter(new SimpleList(this, AppUtil.dataToList(blogList, from), R.layout.tpl_list_blog, from, to));
-					blogListView.setOnItemClickListener(new OnItemClickListener(){
+					// can not use listview under scrollview
+//					blogListView = (ListView) this.findViewById(R.id.app_blogs_list_view);
+//					blogListView.setAdapter(new SimpleList(this, AppUtil.dataToList(blogList, from), R.layout.tpl_list_blogs, from, to));
+//					blogListView.setOnItemClickListener(new OnItemClickListener(){
+//						@Override
+//						public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+//							Bundle params = new Bundle();
+//							params.putString("blogId", blogList.get(pos).getId());
+//							overlay(AppBlog.class, params);
+//						}
+//					});
+					// use expandlist to do this
+					ExpandList el = new ExpandList(this, AppUtil.dataToList(blogList, from), R.layout.tpl_list_blogs, from, to);
+					LinearLayout layout = (LinearLayout) this.findViewById(R.id.app_blogs_list_view);
+					layout.removeAllViews(); // clean first
+					el.setDivider(R.color.divider3);
+					el.setOnItemClickListener(new ExpandList.OnItemClickListener() {
 						@Override
-						public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+						public void onItemClick(View view, int pos) {
 							Bundle params = new Bundle();
 							params.putString("blogId", blogList.get(pos).getId());
 							overlay(AppBlog.class, params);
 						}
 					});
+					el.render(layout);
 				} catch (Exception e) {
 					e.printStackTrace();
 					toast(e.getMessage());
@@ -87,4 +145,27 @@ public class AppBlogs extends AuthApp {
 		return super.onKeyDown(keyCode, event);
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// inner classes
+	
+	private class BlogsHandler extends BaseHandler {
+		public BlogsHandler(BaseApp app) {
+			super(app);
+		}
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			try {
+				switch (msg.what) {
+					case BaseTask.LOAD_IMAGE:
+						Bitmap face = AppCache.getImage(faceImageUrl);
+						faceImage.setImageBitmap(face);
+						break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				app.toast(e.getMessage());
+			}
+		}
+	}
 }

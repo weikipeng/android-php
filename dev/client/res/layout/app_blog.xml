@@ -8,17 +8,18 @@
 	    android:fillViewport="true">
 		<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" 
 			android:orientation="vertical">
-			<AbsoluteLayout android:layout_width="fill_parent" android:layout_height="50dip">
-				<Button android:layout_width="32dip" android:layout_height="32dip"
-					android:layout_alignParentLeft="true" android:focusable="false"
-					android:id="@+id/app_blog_customer_face" android:background="@drawable/bomb_w" 
-					android:layout_x="9dip" android:layout_y="9dip"/>
+			<AbsoluteLayout android:layout_width="fill_parent" android:layout_height="55dip">
+				<ImageView android:id="@+id/app_blog_image_face"
+					android:layout_width="50dip" android:layout_height="50dip" 
+					android:layout_margin="5dip" android:layout_alignParentRight="true"
+					android:src="@drawable/face" android:focusable="false"
+					android:layout_x="5dip" android:layout_y="5dip"/>
 				<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dip" 
-					android:id="@+id/app_blog_text_customer_name" android:textStyle="bold"
-					android:layout_x="50dip" android:layout_y="7dip"/>
+					android:id="@+id/app_blog_text_customer_name" android:textStyle="bold" android:text="name"
+					android:layout_x="60dip" android:layout_y="10dip"/>
 				<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dip" 
 					android:id="@+id/app_blog_text_customer_info" android:text="info"
-					android:layout_x="50dip" android:layout_y="25dip"/>
+					android:layout_x="60dip" android:layout_y="30dip"/>
 			</AbsoluteLayout>
 			<LinearLayout android:orientation="vertical"
 				android:layout_width="fill_parent" android:layout_height="wrap_content"

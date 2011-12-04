@@ -5,19 +5,27 @@ import java.util.HashMap;
 
 import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.auth.AuthApp;
+import com.app.NAMESPACE.base.BaseApp;
+import com.app.NAMESPACE.base.BaseHandler;
 import com.app.NAMESPACE.base.BaseMessage;
+import com.app.NAMESPACE.base.BaseTask;
 import com.app.NAMESPACE.base.C;
 import com.app.NAMESPACE.list.ExpandList;
 import com.app.NAMESPACE.model.Blog;
 import com.app.NAMESPACE.model.Comment;
 import com.app.NAMESPACE.model.Customer;
+import com.app.NAMESPACE.util.AppCache;
 import com.app.NAMESPACE.util.AppUtil;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,12 +33,18 @@ public class AppBlog extends AuthApp {
 	
 	private String blogId = null;
 	private Button commentBtn = null;
+	private ImageView faceImage = null;
+	private String faceImageUrl = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.app_blog);
 		
+		// set handler
+		this.setHandler(new BlogHandler(this));
+		
+		// get params
 		Bundle params = this.getIntent().getExtras();
 		blogId = params.getString("blogId");
 		
@@ -83,6 +97,10 @@ public class AppBlog extends AuthApp {
 					TextView testCustomerInfo = (TextView) this.findViewById(R.id.app_blog_text_customer_info);
 					textCustomerName.setText(customer.getName());
 					testCustomerInfo.setText(getResources().getString(R.string.blog_fans) + " : " + customer.getFanscount());
+					// load face image async
+					faceImage = (ImageView) this.findViewById(R.id.app_blog_image_face);
+					faceImageUrl = customer.getFaceurl();
+					loadImage(faceImageUrl);
 				} catch (Exception e) {
 					e.printStackTrace();
 					toast(e.getMessage());
@@ -120,4 +138,27 @@ public class AppBlog extends AuthApp {
 		return super.onKeyDown(keyCode, event);
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// inner classes
+	
+	private class BlogHandler extends BaseHandler {
+		public BlogHandler(BaseApp app) {
+			super(app);
+		}
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			try {
+				switch (msg.what) {
+					case BaseTask.LOAD_IMAGE:
+						Bitmap face = AppCache.getImage(faceImageUrl);
+						faceImage.setImageBitmap(face);
+						break;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				app.toast(e.getMessage());
+			}
+		}
+	}
 }
