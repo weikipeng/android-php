@@ -51,10 +51,10 @@ class NAMESPACE_Cli extends Hush_Cli
 	{
 		switch ($dbType) {
 			case 'mysql':
-				return ' -h' . Hush_Db_Config::DEFAULT_HOST
-					 . ' -P' . Hush_Db_Config::DEFAULT_PORT
-					 . ' -u' . Hush_Db_Config::DEFAULT_USER
-					 . ' -p' . Hush_Db_Config::DEFAULT_PASS
+				return ' -h' . __MYSQL_HOST
+					 . ' -P' . __MYSQL_PORT
+					 . ' -u' . __MYSQL_USER
+					 . ' -p' . __MYSQL_NAME
 					 . ' ' . $dbName;
 			default:
 				return '';
