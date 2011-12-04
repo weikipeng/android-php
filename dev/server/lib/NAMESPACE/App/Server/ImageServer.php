@@ -39,17 +39,17 @@ class ImageServer extends NAMESPACE_App_Server
 	 * ---------------------------------------------------------------------------------------------
 	 * > 接口说明：测试首页接口
 	 * <code>
-	 * URL地址：/image/face
+	 * URL地址：/image/faceView
 	 * 提交方式：GET
 	 * 参数#1：faceId，类型：STRING，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
 	 * @title 测试接口
-	 * @action /image/face
+	 * @action /image/faceView
 	 * @params faceId 0 STRING
 	 * @method get
 	 */
-	public function faceAction ()
+	public function faceViewAction ()
 	{
 		$faceId = explode(',', $this->param('faceId'));
 		$faceCount = count($faceId);
@@ -87,7 +87,7 @@ class ImageServer extends NAMESPACE_App_Server
 	public function faceListAction ()
 	{
 		// valid face ids
-		$faceId = array(0,1,2,3,4,5,6,7,8);
+		$faceId = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14);
 		// get face images
 		$faceList = array();
 		foreach ($faceId as $id) {

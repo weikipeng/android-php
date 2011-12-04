@@ -10,6 +10,7 @@
  */
 
 require_once 'NAMESPACE/Dao/Core.php';
+require_once 'NAMESPACE/Util/Image.php';
 
 /**
  * @package NAMESPACE_Dao_Core
@@ -52,6 +53,16 @@ class Core_Customer extends NAMESPACE_Dao_Core
 		$user = $this->dbr()->fetchRow($sql);
 		if ($user) return $user;
 		return false;
+	}
+	
+	/**
+	 * Get customer by id
+	 * @param int $id
+	 */
+	public function getById ($id) {
+		$customer = $this->read($id);
+		$customer['faceurl'] = NAMESPACE_Util_Image::getFaceUrl($customer['face']);
+		return $customer;
 	}
 	
 	/**

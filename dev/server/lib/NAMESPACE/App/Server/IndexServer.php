@@ -49,7 +49,7 @@ class IndexServer extends NAMESPACE_App_Server
 		
 		// get extra customer info
 		$customerDao = $this->dao->load('Core_Customer');
-		$customerItem = $customerDao->read($this->customer['id']);
+		$customerItem = $customerDao->getById($this->customer['id']);
 		$this->render('10000', 'Load index ok', array(
 			'Customer' => $customerItem
 		));
