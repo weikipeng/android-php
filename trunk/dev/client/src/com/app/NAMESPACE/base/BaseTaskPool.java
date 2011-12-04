@@ -5,8 +5,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.content.Context;
-import android.util.Log;
-
 import com.app.NAMESPACE.util.HttpUtil;
 
 import com.app.NAMESPACE.util.AppClient;
