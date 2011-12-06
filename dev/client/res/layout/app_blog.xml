@@ -8,19 +8,23 @@
 	    android:fillViewport="true">
 		<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" 
 			android:orientation="vertical">
-			<AbsoluteLayout android:layout_width="fill_parent" android:layout_height="55dip">
+			<RelativeLayout android:layout_width="fill_parent" android:layout_height="55dip">
 				<ImageView android:id="@+id/app_blog_image_face"
 					android:layout_width="50dip" android:layout_height="50dip" 
-					android:layout_margin="5dip" android:layout_alignParentRight="true"
+					android:layout_margin="5dip" android:layout_alignParentLeft="true"
 					android:src="@drawable/face" android:focusable="false"
 					android:layout_x="5dip" android:layout_y="5dip"/>
-				<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dip" 
+				<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dip" 
 					android:id="@+id/app_blog_text_customer_name" android:textStyle="bold" android:text="name"
-					android:layout_x="60dip" android:layout_y="10dip"/>
-				<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="5dip" 
+					android:layout_toRightOf="@+id/app_blog_image_face"/>
+				<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dip" 
 					android:id="@+id/app_blog_text_customer_info" android:text="info"
-					android:layout_x="60dip" android:layout_y="30dip"/>
-			</AbsoluteLayout>
+					android:layout_toRightOf="@+id/app_blog_image_face"
+					android:layout_below="@+id/app_blog_text_customer_name"/>
+				<Button android:layout_width="80dip" android:layout_height="32dip"
+					android:id="@+id/app_blog_btn_addfans" android:text="Add Fans"
+					android:layout_alignParentRight="true" android:layout_margin="5dip"/>
+			</RelativeLayout>
 			<LinearLayout android:orientation="vertical"
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
 				android:layout_marginLeft="5dip" android:layout_marginRight="5dip"

@@ -12,7 +12,8 @@ public final class C {
 	}
 	
 	public static final class api {
-		public static final String base				= "http://api.itous.net";
+//		public static final String base				= "http://api.itous.net";
+		public static final String base				= "http://192.168.1.3:8001";
 		public static final String index			= "/index/index";
 		public static final String login			= "/index/login";
 		public static final String logout			= "/index/logout";
@@ -25,6 +26,8 @@ public final class C {
 		public static final String commentCreate	= "/comment/commentCreate";
 		public static final String customerView		= "/customer/customerView";
 		public static final String customerEdit		= "/customer/customerEdit";
+		public static final String fansAdd			= "/customer/fansAdd";
+		public static final String fansDel			= "/customer/fansDel";
 	}
 	
 	public static final class task {
@@ -40,6 +43,8 @@ public final class C {
 		public static final int commentCreate		= 1010;
 		public static final int customerView		= 1011;
 		public static final int customerEdit		= 1012;
+		public static final int fansAdd				= 1013;
+		public static final int fansDel				= 1014;
 	}
 	
 	public static final class err {
@@ -69,7 +74,8 @@ public final class C {
 	// additional settings
 	
 	public static final class web {
-		public static final String base				= "http://www.itous.net";
+//		public static final String base				= "http://www.itous.net";
+		public static final String base				= "http://192.168.1.3:8002";
 		public static final String index			= base + "/index.php";
 		public static final String gomap			= base + "/gomap.php";
 	}

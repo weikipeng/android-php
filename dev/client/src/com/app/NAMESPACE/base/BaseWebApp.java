@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 abstract public class BaseWebApp extends BaseApp {
 	
@@ -26,17 +27,16 @@ abstract public class BaseWebApp extends BaseApp {
 		this.webView = webView;
 	}
 	
-	@Override
-	public void onStart() {
-		super.onStart();
-		
-		// before webview loaded
-		showDialog(DIALOG_PROGRESS);
-		getWindow().requestFeature(Window.FEATURE_PROGRESS);
-	}
-	
 	public void startWebview() {
-		// start loading webview
+		// load url link in webview
+		webView.setWebViewClient(new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				return true;
+			}
+		});
+		// show loading progress bar
 		webView.setWebChromeClient(new WebChromeClient(){
 			@Override
 			public void onProgressChanged(WebView view, int progress){
@@ -47,6 +47,15 @@ abstract public class BaseWebApp extends BaseApp {
 				}
 			}
 		});
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+		// before webview loaded
+		showDialog(DIALOG_PROGRESS);
+		getWindow().requestFeature(Window.FEATURE_PROGRESS);
 	}
 	
 	@Override
@@ -70,8 +79,13 @@ abstract public class BaseWebApp extends BaseApp {
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			forward(AppIndex.class);
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (webView.canGoBack()) {
+				webView.goBack();
+				return true;
+			} else {
+				forward(AppIndex.class);
+			}
 		}
 		return super.onKeyDown(keyCode, event);
 	}
