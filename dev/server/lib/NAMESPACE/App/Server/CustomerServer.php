@@ -129,9 +129,9 @@ class CustomerServer extends NAMESPACE_App_Server
 	 * URL地址：/customer/customerCreate
 	 * 提交方式：POST
 	 * 参数#1：name，类型：STRING，必须：YES
-	 * 参数#1：pass，类型：STRING，必须：YES
-	 * 参数#1：sign，类型：STRING，必须：YES
-	 * 参数#1：face，类型：STRING，必须：YES
+	 * 参数#2：pass，类型：STRING，必须：YES
+	 * 参数#3：sign，类型：STRING，必须：YES
+	 * 参数#4：face，类型：STRING，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
 	 * @title 测试接口
@@ -161,5 +161,69 @@ class CustomerServer extends NAMESPACE_App_Server
 			$this->render('10000', 'Create customer ok');
 		}
 		$this->render('10004', 'Create customer failed');
+	}
+	
+	/**
+	 * ---------------------------------------------------------------------------------------------
+	 * > 接口说明：测试登录接口
+	 * <code>
+	 * URL地址：/customer/fansAdd
+	 * 提交方式：POST
+	 * 参数#1：customerId，类型：INT，必须：YES
+	 * </code>
+	 * ---------------------------------------------------------------------------------------------
+	 * @title 测试接口
+	 * @action /customer/fansAdd
+	 * @params customerId '' INT
+	 * @method post
+	 */
+	public function fansAddAction ()
+	{
+		$this->doAuth();
+		
+		$customerId = $this->param('customerId');
+		if ($customerId) {
+			$fansDao = $this->dao->load('Core_CustomerFans');
+			if (!$fansDao->exist($customerId, $this->customer['id'])) {
+				$fansDao->create(array(
+					'customerid'	=> $customerId,
+					'fansid'		=> $this->customer['id']
+				));
+				// add customer blogcount
+				$customerDao = $this->dao->load('Core_Customer');
+				$customerDao->addFanscount($customerId);
+				$this->render('10000', 'Create blog ok');
+			}
+		}
+		$this->render('10004', 'Create fans failed');
+	}
+	
+	/**
+	 * ---------------------------------------------------------------------------------------------
+	 * > 接口说明：测试登录接口
+	 * <code>
+	 * URL地址：/customer/fansDel
+	 * 提交方式：POST
+	 * 参数#1：customerId，类型：INT，必须：YES
+	 * </code>
+	 * ---------------------------------------------------------------------------------------------
+	 * @title 测试接口
+	 * @action /customer/fansDel
+	 * @params customerId '' INT
+	 * @method post
+	 */
+	public function fansDelAction ()
+	{
+		$this->doAuth();
+		
+		$customerId = $this->param('customerId');
+		if ($customerId) {
+			$fansDao = $this->dao->load('Core_CustomerFans');
+			if ($fansDao->exist($customerId, $this->customer['id'])) {
+				$fansDao->delete($customerId, $this->customer['id']);
+				$this->render('10000', 'Delete fans ok');
+			}
+		}
+		$this->render('10004', 'Delete fans failed');
 	}
 }
