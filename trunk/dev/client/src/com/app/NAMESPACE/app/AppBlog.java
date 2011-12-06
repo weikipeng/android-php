@@ -31,6 +31,8 @@ import android.widget.TextView;
 public class AppBlog extends AuthApp {
 	
 	private String blogId = null;
+	private String customerId = null;
+	private Button addfansBtn = null;
 	private Button commentBtn = null;
 	private ImageView faceImage = null;
 	private String faceImageUrl = null;
@@ -46,6 +48,18 @@ public class AppBlog extends AuthApp {
 		// get params
 		Bundle params = this.getIntent().getExtras();
 		blogId = params.getString("blogId");
+		
+		// do add fans
+		addfansBtn = (Button) this.findViewById(R.id.app_blog_btn_addfans);
+		addfansBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// prepare blog data
+				HashMap<String, String> urlParams = new HashMap<String, String>();
+				urlParams.put("customerId", customerId);
+				doTaskAsync(C.task.fansAdd, C.api.fansAdd, urlParams);
+			}
+		});
 		
 		// do add comment
 		commentBtn = (Button) this.findViewById(R.id.app_blog_btn_comment);
@@ -96,6 +110,8 @@ public class AppBlog extends AuthApp {
 					TextView testCustomerInfo = (TextView) this.findViewById(R.id.app_blog_text_customer_info);
 					textCustomerName.setText(customer.getName());
 					testCustomerInfo.setText(getResources().getString(R.string.blog_fans) + " : " + customer.getFanscount());
+					// set customer id
+					customerId = customer.getId();
 					// load face image async
 					faceImage = (ImageView) this.findViewById(R.id.app_blog_image_face);
 					faceImageUrl = customer.getFaceurl();
@@ -103,6 +119,13 @@ public class AppBlog extends AuthApp {
 				} catch (Exception e) {
 					e.printStackTrace();
 					toast(e.getMessage());
+				}
+				break;
+			case C.task.fansAdd:
+				if (message.getCode().equals("10000")) {
+					toast("Add fans ok");
+				} else {
+					toast("Add fans fail");
 				}
 				break;
 			case C.task.commentList:
