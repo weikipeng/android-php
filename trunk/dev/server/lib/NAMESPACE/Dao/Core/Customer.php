@@ -77,6 +77,17 @@ class Core_Customer extends NAMESPACE_Dao_Core
 	}
 	
 	/**
+	 * Add fanscount by one
+	 * @param int $id
+	 */
+	public function addFanscount ($id, $addCount = 1)
+	{
+		$customer = $this->read($id);
+		$customer['fanscount'] = $customer['fanscount'] + $addCount;
+		$this->update($customer);
+	}
+	
+	/**
 	 * Get blog list 
 	 * @param $customerId Customer ID
 	 */
