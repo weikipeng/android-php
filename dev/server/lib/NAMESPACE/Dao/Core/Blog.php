@@ -59,7 +59,8 @@ class Core_Blog extends NAMESPACE_Dao_Core
 		$list = array();
 		$sql = $this->dbr()->select()
 			->from($this->t1, "*")
-			->order("{$this->t1}.uptime desc");
+			->order("{$this->t1}.uptime desc")
+			->limit(10);
 		
 		$res = $this->dbr()->fetchAll($sql);
 		foreach ($res as $row) {
