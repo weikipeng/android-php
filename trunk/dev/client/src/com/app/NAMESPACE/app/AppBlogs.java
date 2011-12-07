@@ -15,6 +15,7 @@ import com.app.NAMESPACE.model.Blog;
 import com.app.NAMESPACE.model.Customer;
 import com.app.NAMESPACE.util.AppCache;
 import com.app.NAMESPACE.util.AppUtil;
+import com.app.NAMESPACE.util.UIUtil;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -76,7 +77,7 @@ public class AppBlogs extends AuthApp {
 					TextView textName = (TextView) this.findViewById(R.id.app_blogs_text_customer_name);
 					TextView textInfo = (TextView) this.findViewById(R.id.app_blogs_text_customer_info);
 					textName.setText(customer.getSign());
-					textInfo.setText("Blog(" + customer.getBlogcount() + ") Fans(" + customer.getFanscount() + ").");
+					textInfo.setText(UIUtil.getCustomerInfo(this, customer));
 					// load face image async
 					faceImage = (ImageView) this.findViewById(R.id.app_blogs_image_face);
 					faceImageUrl = customer.getFaceurl();

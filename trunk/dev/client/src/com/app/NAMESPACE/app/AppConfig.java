@@ -15,6 +15,7 @@ import com.app.NAMESPACE.model.Config;
 import com.app.NAMESPACE.model.Customer;
 import com.app.NAMESPACE.util.AppCache;
 import com.app.NAMESPACE.util.AppUtil;
+import com.app.NAMESPACE.util.UIUtil;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -96,7 +97,7 @@ public class AppConfig extends AuthApp {
 					TextView textTop = (TextView) this.findViewById(R.id.tpl_list_info_text_top);
 					TextView textBottom = (TextView) this.findViewById(R.id.tpl_list_info_text_bottom);
 					textTop.setText(customer.getSign());
-					textBottom.setText("Blog(" + customer.getBlogcount() + ") Fans(" + customer.getFanscount() + ").");
+					textBottom.setText(UIUtil.getCustomerInfo(this, customer));
 					// load face image async
 					faceImage = (ImageView) this.findViewById(R.id.tpl_list_info_image_face);
 					faceImageUrl = customer.getFaceurl();
