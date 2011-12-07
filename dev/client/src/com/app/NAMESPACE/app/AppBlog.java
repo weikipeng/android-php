@@ -16,6 +16,7 @@ import com.app.NAMESPACE.model.Comment;
 import com.app.NAMESPACE.model.Customer;
 import com.app.NAMESPACE.util.AppCache;
 import com.app.NAMESPACE.util.AppUtil;
+import com.app.NAMESPACE.util.UIUtil;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -109,7 +110,7 @@ public class AppBlog extends AuthApp {
 					TextView textCustomerName = (TextView) this.findViewById(R.id.app_blog_text_customer_name);
 					TextView testCustomerInfo = (TextView) this.findViewById(R.id.app_blog_text_customer_info);
 					textCustomerName.setText(customer.getName());
-					testCustomerInfo.setText(getResources().getString(R.string.blog_fans) + " : " + customer.getFanscount());
+					testCustomerInfo.setText(UIUtil.getCustomerInfo(this, customer));
 					// set customer id
 					customerId = customer.getId();
 					// load face image async
