@@ -261,10 +261,6 @@ public class BaseApp extends Activity {
 		}, 0);
 	}
 	
-	public void onTaskComplete (int taskId) {
-		
-	}
-	
 	public void onTaskComplete (int taskId, BaseMessage message) {
 		
 	}

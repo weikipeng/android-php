@@ -19,11 +19,6 @@ public class BaseTaskPool {
 		taskPool = Executors.newCachedThreadPool();
 	}
 	
-	public BaseTaskPool (BaseApp app, int size) {
-		this.context = app.getContext();
-		taskPool = Executors.newFixedThreadPool(size);
-	}
-	
 	// http post task with params
 	public void addTask (int taskId, String taskUrl, HashMap<String, String> taskArg, BaseTask baseTask, int delayTime) {
 		baseTask.setId(taskId);

@@ -20,6 +20,9 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Service;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ParseException;
 
 import com.app.NAMESPACE.base.BaseMessage;
@@ -104,6 +107,14 @@ public class AppUtil {
 	public static String gzipToString(final HttpEntity entity)
 		throws IOException, ParseException {
 		return gzipToString(entity, null);
+	}
+	
+	public static SharedPreferences getSharedPreferences (Context ctx) {
+		return ctx.getSharedPreferences("com.app.NAMESPACE.sp.global", Context.MODE_PRIVATE);
+	}
+	
+	public static SharedPreferences getSharedPreferences (Service service) {
+		return service.getSharedPreferences("com.app.NAMESPACE.sp.global", Context.MODE_PRIVATE);
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////
