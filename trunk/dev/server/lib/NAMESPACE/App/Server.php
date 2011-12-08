@@ -125,7 +125,7 @@ class NAMESPACE_App_Server extends Hush_Service
 				// Object list
 				if (strpos($name, '.list')) {
 					$model = trim(str_replace('.list', '', $name));
-					foreach ($data as $k => $v) {
+					foreach ((array) $data as $k => $v) {
 						$result[$name][$k] = M($model, $v);
 					}
 				// Object

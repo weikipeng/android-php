@@ -29,7 +29,11 @@ $_DataMap = array(
 		'id' => 'id',
 		'url' => 'url',
 		'type' => 'type',
-	)
+	),
+	'Notice' => array(
+		'id' => 'id',
+		'message' => 'message'
+	),
 );
 
 function M ($model, $data)
