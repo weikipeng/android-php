@@ -83,7 +83,7 @@ class Core_Customer extends NAMESPACE_Dao_Core
 	public function addFanscount ($id, $addCount = 1)
 	{
 		$customer = $this->read($id);
-		$customer['fanscount'] = $customer['fanscount'] + $addCount;
+		$customer['fanscount'] = intval($customer['fanscount']) + $addCount;
 		$this->update($customer);
 	}
 	

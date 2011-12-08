@@ -192,6 +192,9 @@ class CustomerServer extends NAMESPACE_App_Server
 				// add customer blogcount
 				$customerDao = $this->dao->load('Core_Customer');
 				$customerDao->addFanscount($customerId);
+				// add into notice
+				$noticeDao = $this->dao->load('Core_Notice');
+				$noticeDao->addFanscount($customerId);
 				$this->render('10000', 'Create blog ok');
 			}
 		}

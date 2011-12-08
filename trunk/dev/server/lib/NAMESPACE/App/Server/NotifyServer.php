@@ -48,11 +48,12 @@ class NotifyServer extends NAMESPACE_App_Server
 		$this->doAuth();
 		
 		// get extra customer info
-		$nDao = $this->dao->load('Core_Notice');
-		if ($nDao->getCountByCustomer($this->customer['id'])) {
-			$nList = $nDao->getListByCustomer($this->customer['id']);
+		$noticeDao = $this->dao->load('Core_Notice');
+		$noticeItem = $noticeDao->getByCustomer($this->customer['id']);
+		if ($noticeItem) {
+			$noticeDao->setRead($this->customer['id']);
 			$this->render('10000', 'Get notification ok', array(
-				'Notice.list' => $nList
+				'Notice' => $noticeItem
 			));
 		}
 		$this->render('10012', 'Get notification failed');
