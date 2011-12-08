@@ -46,7 +46,7 @@ class Core_Customer extends NAMESPACE_Dao_Core
 	public function doAuth ($user, $pass)
 	{
 		$sql = $this->dbr()->select()
-			->from($this->t1, "*")
+			->from($this->t1, '*')
 			->where("{$this->t1}.name = ?", $user)
 			->where("{$this->t1}.pass = ?", $pass);
 		
@@ -95,7 +95,7 @@ class Core_Customer extends NAMESPACE_Dao_Core
 	{
 		$list = array();
 		$sql = $this->dbr()->select()
-			->from($this->t1, "*")
+			->from($this->t1, '*')
 			->order("{$this->t1}.uptime desc");
 		
 		return $this->dbr()->fetchAll($sql);

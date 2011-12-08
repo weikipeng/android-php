@@ -15,17 +15,17 @@ require_once 'NAMESPACE/Util/Image.php';
 /**
  * @package NAMESPACE_Dao_Core
  */
-class Core_CustomerFans extends NAMESPACE_Dao_Core
+class Core_Notice extends NAMESPACE_Dao_Core
 {
 	/**
 	 * @static
 	 */
-	const TABLE_NAME = 'customer_fans';
+	const TABLE_NAME = 'notice';
 	
 	/**
 	 * @static
 	 */
-	const TABLE_PRIM = '';
+	const TABLE_PRIM = 'id';
 	
 	/**
 	 * Initialize
@@ -33,47 +33,36 @@ class Core_CustomerFans extends NAMESPACE_Dao_Core
 	public function __init () 
 	{
 		$this->t1 = self::TABLE_NAME;
+		$this->k1 = self::TABLE_PRIM;
 		
-		$this->_bindTable($this->t1);
+		$this->_bindTable($this->t1, $this->k1);
 	}
 	
 	/**
-	 * Check fans data exists
+	 * Get notification count
 	 * @param int $customerId
-	 * @param int $fansId
 	 * @return array
 	 */
-	public function exist ($customerId, $fansId)
+	public function getCountByCustomer ($customerId)
 	{
 		$sql = $this->dbr()->select()->from($this->t1, '(1)')
 			->where("customerid = ?", $customerId)
-			->where("fansid = ?", $fansId);
+			->where("status = 0");
 		
 		return $this->dbr()->fetchOne($sql);
 	}
 	
 	/**
-	 * Delete fans data
+	 * Get notification list
 	 * @param int $customerId
-	 * @param int $fansId
-	 */
-	public function delete ($customerId, $fansId) 
-	{
-		$wheresql = "customerid = $customerId and fansid = $fansId";
-		return $this->dbw()->delete($this->t1, $wheresql);
-	}
-	
-	/**
-	 * Count fans number
-	 * @param int $customerId
-	 * @param int $fansId
 	 * @return array
 	 */
-	public function countFans ($customerId)
+	public function getListByCustomer ($customerId)
 	{
-		$sql = $this->dbr()->select()->from($this->t1, '(1)')
-			->where("customerid = ?", $customerId);
+		$sql = $this->dbr()->select()->from($this->t1, '*')
+			->where("customerid = ?", $customerId)
+			->where("status = 0");
 		
-		return $this->dbr()->fetchOne($sql);
+		return $this->dbr()->fetchAll($sql);
 	}
 }

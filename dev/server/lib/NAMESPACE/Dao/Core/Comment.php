@@ -47,7 +47,7 @@ class Core_Comment extends NAMESPACE_Dao_Core
 	{
 		$list = array();
 		$sql = $this->dbr()->select()
-			->from($this->t1, "*")
+			->from($this->t1, '*')
 			->where("{$this->t1}.blogid = ?", $blogId)
 			->order("{$this->t1}.uptime desc");
 		
@@ -74,7 +74,7 @@ class Core_Comment extends NAMESPACE_Dao_Core
 	{
 		$list = array();
 		$sql = $this->dbr()->select()
-			->from($this->t1, "*")
+			->from($this->t1, '*')
 			->where("{$this->t1}.customerid = ?", $customerId)
 			->order("{$this->t1}.uptime desc");
 		
