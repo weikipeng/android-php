@@ -142,3 +142,17 @@ CREATE TABLE IF NOT EXISTS `customer_fans` (
 -- 转存表中的数据 `fans`
 --
 
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `notice`
+--
+
+CREATE TABLE IF NOT EXISTS `notice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customerid` int(11) NOT NULL DEFAULT '0',
+  `message` varchar(255) NOT NULL DEFAULT '',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `uptime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
