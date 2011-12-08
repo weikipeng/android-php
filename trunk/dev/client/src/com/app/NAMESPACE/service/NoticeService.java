@@ -1,6 +1,5 @@
 package com.app.NAMESPACE.service;
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -76,13 +75,8 @@ public class NoticeService extends BaseService {
 	@Override
 	public void onTaskComplete (int taskId, BaseMessage message) {
 		try {
-			@SuppressWarnings("unchecked")
-			ArrayList<Notice> noticeList = (ArrayList<Notice>) message.getResultList("Notice");
-			String noticeString = "";
-			for (Notice notice : noticeList) {
-				noticeString += notice.getMessage() + "\n";
-			}
-			showNotification(noticeString);
+			Notice notice = (Notice) message.getResult("Notice");
+			showNotification(notice.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
