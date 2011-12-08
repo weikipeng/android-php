@@ -16,8 +16,10 @@ import com.app.NAMESPACE.R;
 import com.app.NAMESPACE.base.BaseApp;
 import com.app.NAMESPACE.base.BaseAuth;
 import com.app.NAMESPACE.base.BaseMessage;
+import com.app.NAMESPACE.base.BaseService;
 import com.app.NAMESPACE.base.C;
 import com.app.NAMESPACE.model.Customer;
+import com.app.NAMESPACE.service.NoticeService;
 
 public class AppLogin extends BaseApp {
 
@@ -100,9 +102,10 @@ public class AppLogin extends BaseApp {
 		super.onTaskComplete(taskId, message);
 		switch (taskId) {
 			case C.task.login:
+				Customer customer = null;
 				// login logic
 				try {
-					Customer customer = (Customer) message.getResult("Customer");
+					customer = (Customer) message.getResult("Customer");
 					// login success
 					if (customer.getName() != null) {
 						BaseAuth.setCustomer(customer);
@@ -119,6 +122,9 @@ public class AppLogin extends BaseApp {
 				}
 				// turn to index
 				if (BaseAuth.isLogin()) {
+					// start service
+					BaseService.start(this, NoticeService.class);
+					// turn to index
 					forward(AppIndex.class);
 				}
 				break;

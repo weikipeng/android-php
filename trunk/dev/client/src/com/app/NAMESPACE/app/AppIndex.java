@@ -14,7 +14,6 @@ import com.app.NAMESPACE.list.BlogList;
 import com.app.NAMESPACE.model.Blog;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.KeyEvent;
 import android.widget.AdapterView;
@@ -104,7 +103,6 @@ public class AppIndex extends AuthApp {
 				switch (msg.what) {
 					case BaseTask.LOAD_IMAGE:
 						blogListAdapter.notifyDataSetChanged();
-						Log.w("REFRESH", "ok");
 						break;
 				}
 			} catch (Exception e) {

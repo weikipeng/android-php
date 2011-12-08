@@ -14,8 +14,8 @@ public class BaseHandler extends Handler {
 		this.app = app;
 	}
 	
-	public BaseHandler (Looper i) {
-		super(i);
+	public BaseHandler (Looper looper) {
+		super(looper);
 	}
 	
 	@Override

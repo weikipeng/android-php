@@ -28,6 +28,7 @@ public final class C {
 		public static final String customerEdit		= "/customer/customerEdit";
 		public static final String fansAdd			= "/customer/fansAdd";
 		public static final String fansDel			= "/customer/fansDel";
+		public static final String notice			= "/notify/notice";
 	}
 	
 	public static final class task {
@@ -45,6 +46,7 @@ public final class C {
 		public static final int customerEdit		= 1012;
 		public static final int fansAdd				= 1013;
 		public static final int fansDel				= 1014;
+		public static final int notice				= 1015;
 	}
 	
 	public static final class err {
