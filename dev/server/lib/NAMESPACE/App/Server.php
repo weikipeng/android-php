@@ -54,53 +54,6 @@ class NAMESPACE_App_Server extends Hush_Service
 	}
 	
 	/**
-	 * Get all messages array
-	 * 
-	 * @return array
-	 */
-	public function getMsg ()
-	{
-		return $this->_msgs;
-	}
-	
-	/**
-	 * Add error messages into template, and then render it
-	 * 
-	 * @param string $msg Error message
-	 * @return NAMESPACE_App_Service
-	 */
-	public function addMsg ($msg)
-	{
-		// get msg from ini file
-		static $msg_tpl_arr;
-		if (!$msg_tpl_arr) {
-			if (!file_exists(__MSG_INI_FILE)) {
-				require_once 'NAMESPACE/App/Exception.php';
-				throw new NAMESPACE_App_Exception('Message ini file can not be found');
-			}
-			$msg_tpl_arr = parse_ini_file(__MSG_INI_FILE);
-		}
-		$msg_tpl_str = isset($msg_tpl_arr[$msg]) ? $error_tpl_arr[$msg] : 'undefined';
-		
-		// should do replace logic
-		$args = func_get_args();
-		@array_shift($args);
-		if (sizeof($args) > 0) {
-			$replace_old = array();
-			$replace_new = array();
-			foreach ($args as $id => $arg) {
-				$replace_old[] = '{' . $id . '}';
-				$replace_new[] = $arg;
-			}
-			$msg_tpl_str = str_replace($replace_old, $replace_new, $msg_tpl_str);
-		}
-		
-		// set message into vars
-		$this->_msgs[] = $msg_tpl_str;
-		return $this;
-	}
-	
-	/**
 	 * Forward page by header redirection
 	 * J2EE like method's name :)
 	 * 

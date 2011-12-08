@@ -39,6 +39,7 @@ $_DataMap = array(
 function M ($model, $data)
 {
 	global $_DataMap;
+	
 	$dataMap = isset($_DataMap[$model]) ? $_DataMap[$model] : null;
 	if ($dataMap) {
 		$dataRes = array();
@@ -50,5 +51,6 @@ function M ($model, $data)
 		}
 		return $dataRes;
 	}
+	
 	return $data;
 }

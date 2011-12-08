@@ -39,17 +39,48 @@ class Core_Notice extends NAMESPACE_Dao_Core
 	}
 	
 	/**
-	 * Get notification count
+	 * Set notice read
 	 * @param int $customerId
-	 * @return array
 	 */
-	public function getCountByCustomer ($customerId)
-	{
-		$sql = $this->dbr()->select()->from($this->t1, '(1)')
+	public function setRead ($customerId) {
+		$sql = $this->dbr()->select()->from($this->t1, '*')
 			->where("customerid = ?", $customerId)
 			->where("status = 0");
 		
-		return $this->dbr()->fetchOne($sql);
+		$row = $this->dbr()->fetchRow($sql);
+		if ($row) {
+			$this->update(array(
+				'id'		=> intval($row['id']),
+				'status'	=> 1
+			));
+		}
+	}
+	
+	/**
+	 * Add fanscount by one
+	 * @param int $customerId
+	 */
+	public function addFanscount ($customerId, $addCount = 1)
+	{
+		$sql = $this->dbr()->select()->from($this->t1, '*')
+			->where("customerid = ?", $customerId)
+			->where("status = 0");
+		
+		$row = $this->dbr()->fetchRow($sql);
+		// update
+		if ($row) {
+			$fanscount = intval($row['fanscount']) + $addCount;
+			$this->update(array(
+				'id'		=> intval($row['id']),
+				'fanscount'	=> $fanscount
+			));
+		// insert
+		} else {
+			$this->create(array(
+				'customerid'	=> $customerId,
+				'fanscount'		=> 1
+			));
+		}
 	}
 	
 	/**
@@ -57,12 +88,25 @@ class Core_Notice extends NAMESPACE_Dao_Core
 	 * @param int $customerId
 	 * @return array
 	 */
-	public function getListByCustomer ($customerId)
+	public function getByCustomer ($customerId)
 	{
 		$sql = $this->dbr()->select()->from($this->t1, '*')
 			->where("customerid = ?", $customerId)
 			->where("status = 0");
 		
-		return $this->dbr()->fetchAll($sql);
+		$row = $this->dbr()->fetchRow($sql);
+		$msg = trim($row['message']);
+		// when message is empty 
+		if (strlen($msg) > 0) {
+			return $row;
+		}
+		// when has new fans
+		$fans = intval($row['fanscount']);
+		if ($fans > 0) {
+			$row['message'] = L('cn', 'notice', $row['fanscount']);
+			return $row;
+		}
+		// return null
+		return null;
 	}
 }

@@ -10,9 +10,14 @@ require_once 'global.defines.php';
 require_once 'global.session.php';
 
 /**
- * Session settings
+ * Datamap settings
  */
 require_once 'global.datamap.php';
+
+/**
+ * Message settings
+ */
+require_once 'global.message.php';
 
 /**
  * Database settings
@@ -30,18 +35,13 @@ define('__APP_VERSION', '1.0');
  */
 //define('__HOST_SERVER', 'http://api.itous.net');
 //define('__HOST_WEBSITE', 'http://www.itous.net');
-define('__HOST_SERVER', 'http://192.168.41.37:8001');
-define('__HOST_WEBSITE', 'http://192.168.41.37:8002');
+define('__HOST_SERVER', 'http://192.168.1.3:8001');
+define('__HOST_WEBSITE', 'http://192.168.1.3:8002');
 
 /**
  * MVC url mapping ini file
  */
 define('__MAP_INI_FILE', realpath(__ETC . '/app.mapping.ini'));
-
-/**
- * Error's messages ini file
- */
-define('__MSG_INI_FILE', realpath(__ETC . '/app.message.ini'));
 
 /**
  * Logic libraries
