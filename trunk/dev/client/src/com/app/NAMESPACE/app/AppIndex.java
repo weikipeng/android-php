@@ -37,6 +37,10 @@ public class AppIndex extends AuthApp {
 		// tab button
 		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_1);
 		ib.setImageResource(R.drawable.tab_blog_2);
+	}
+	
+	public void onStart(){
+		super.onStart();
 		
 		// show all blog list
 		HashMap<String, String> blogParams = new HashMap<String, String>();

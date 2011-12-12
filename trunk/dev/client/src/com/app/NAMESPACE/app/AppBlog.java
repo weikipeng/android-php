@@ -122,13 +122,6 @@ public class AppBlog extends AuthApp {
 					toast(e.getMessage());
 				}
 				break;
-			case C.task.fansAdd:
-				if (message.getCode().equals("10000")) {
-					toast("Add fans ok");
-				} else {
-					toast("Add fans fail");
-				}
-				break;
 			case C.task.commentList:
 				try {
 					@SuppressWarnings("unchecked")
@@ -145,6 +138,28 @@ public class AppBlog extends AuthApp {
 					LinearLayout layout = (LinearLayout) this.findViewById(R.id.app_blog_list_comment);
 					layout.removeAllViews(); // clean first
 					el.render(layout);
+				} catch (Exception e) {
+					e.printStackTrace();
+					toast(e.getMessage());
+				}
+				break;
+			case C.task.fansAdd:
+				if (message.getCode().equals("10000")) {
+					toast("Add fans ok");
+					// refresh customer data
+					HashMap<String, String> cvParams = new HashMap<String, String>();
+					cvParams.put("customerId", customerId);
+					this.doTaskAsync(C.task.customerView, C.api.customerView, cvParams);
+				} else {
+					toast("Add fans fail");
+				}
+				break;
+			case C.task.customerView:
+				try {
+					// update customer info
+					final Customer customer = (Customer) message.getResult("Customer");
+					TextView textInfo = (TextView) this.findViewById(R.id.app_blog_text_customer_info);
+					textInfo.setText(UIUtil.getCustomerInfo(this, customer));
 				} catch (Exception e) {
 					e.printStackTrace();
 					toast(e.getMessage());
