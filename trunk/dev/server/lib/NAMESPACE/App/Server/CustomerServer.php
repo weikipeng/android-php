@@ -33,13 +33,13 @@ class CustomerServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试首页接口
+	 * > 接口说明：用户列表接口
 	 * <code>
 	 * URL地址：/customer/customerList
 	 * 提交方式：GET
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 用户列表接口
 	 * @action /customer/customerList
 	 * @method get
 	 */
@@ -56,14 +56,14 @@ class CustomerServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试登录接口
+	 * > 接口说明：查看用户信息接口
 	 * <code>
 	 * URL地址：/customer/customerView
 	 * 提交方式：POST
 	 * 参数#1：customerId，类型：INT，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 查看用户信息接口
 	 * @action /customer/customerView
 	 * @params customerId 1 INT
 	 * @method post
@@ -87,7 +87,7 @@ class CustomerServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试登录接口
+	 * > 接口说明：更新用户信息接口
 	 * <code>
 	 * URL地址：/customer/customerEdit
 	 * 提交方式：POST
@@ -95,7 +95,7 @@ class CustomerServer extends NAMESPACE_App_Server
 	 * 参数#2：val，类型：STRING，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 更新用户信息接口
 	 * @action /customer/customerEdit
 	 * @params key '' STRING
 	 * @params val '' STRING
@@ -124,7 +124,7 @@ class CustomerServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试登录接口
+	 * > 接口说明：新建用户接口
 	 * <code>
 	 * URL地址：/customer/customerCreate
 	 * 提交方式：POST
@@ -134,7 +134,7 @@ class CustomerServer extends NAMESPACE_App_Server
 	 * 参数#4：face，类型：STRING，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 新建用户接口
 	 * @action /customer/customerCreate
 	 * @params name '' STRING
 	 * @params pass '' STRING
@@ -165,14 +165,14 @@ class CustomerServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试登录接口
+	 * > 接口说明：添加粉丝接口
 	 * <code>
 	 * URL地址：/customer/fansAdd
 	 * 提交方式：POST
 	 * 参数#1：customerId，类型：INT，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 添加粉丝接口
 	 * @action /customer/fansAdd
 	 * @params customerId '' INT
 	 * @method post
@@ -195,22 +195,22 @@ class CustomerServer extends NAMESPACE_App_Server
 				// add into notice
 				$noticeDao = $this->dao->load('Core_Notice');
 				$noticeDao->addFanscount($customerId);
-				$this->render('10000', 'Create blog ok');
+				$this->render('10000', 'Add fans ok');
 			}
 		}
-		$this->render('10004', 'Create fans failed');
+		$this->render('10004', 'Add fans failed');
 	}
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试登录接口
+	 * > 接口说明：删除粉丝接口
 	 * <code>
 	 * URL地址：/customer/fansDel
 	 * 提交方式：POST
 	 * 参数#1：customerId，类型：INT，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 删除粉丝接口
 	 * @action /customer/fansDel
 	 * @params customerId '' INT
 	 * @method post

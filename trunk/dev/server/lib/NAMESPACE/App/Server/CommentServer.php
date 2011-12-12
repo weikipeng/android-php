@@ -33,7 +33,7 @@ class CommentServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试首页接口
+	 * > 接口说明：评论列表接口
 	 * <code>
 	 * URL地址：/comment/commentList
 	 * 提交方式：GET
@@ -41,7 +41,7 @@ class CommentServer extends NAMESPACE_App_Server
 	 * 参数#2：pageId，类型：INT，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 评论列表接口
 	 * @action /comment/commentList
 	 * @params blogId 0 INT
 	 * @params pageId 0 INT
@@ -67,7 +67,7 @@ class CommentServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试登录接口
+	 * > 接口说明：发表评论接口
 	 * <code>
 	 * URL地址：/comment/commentCreate
 	 * 提交方式：POST
@@ -75,7 +75,7 @@ class CommentServer extends NAMESPACE_App_Server
 	 * 参数#2：content，类型：STRING，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 发表评论接口
 	 * @action /comment/commentCreate
 	 * @params blogId 0 INT
 	 * @params content '' STRING
