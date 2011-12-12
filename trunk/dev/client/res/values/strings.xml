@@ -8,7 +8,7 @@
 	<string name="btn_confirm">确认</string>
 	<string name="btn_cancel">取消</string>
 	<string name="btn_comment">写评论</string>
-	<string name="btn_addfans">加粉丝</string>
+	<string name="btn_addfans">加关注</string>
 	<!-- 菜单文字 -->
 	<string name="menu_app_write">写微博</string>
 	<string name="menu_app_logout">注销账户</string>
