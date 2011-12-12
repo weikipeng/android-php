@@ -33,7 +33,7 @@ class IndexServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试首页接口
+	 * > 接口说明：测试接口
 	 * <code>
 	 * URL地址：/index/index
 	 * 提交方式：POST
@@ -57,7 +57,7 @@ class IndexServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试登录接口
+	 * > 接口说明：用户登录接口
 	 * <code>
 	 * URL地址：/index/login
 	 * 提交方式：POST
@@ -65,7 +65,7 @@ class IndexServer extends NAMESPACE_App_Server
 	 * 参数#2：pass，类型：STRING，必须：YES，示例：admin
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 用户登录接口
 	 * @action /index/login
 	 * @params name james STRING
 	 * @params pass james STRING
@@ -94,14 +94,14 @@ class IndexServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试登录接口
+	 * > 接口说明：用户登出接口
 	 * <code>
 	 * URL地址：/index/logout
 	 * 提交方式：POST
 	 * 参数#1：sid，类型：STRING，必须：YES，示例：
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 用户登出接口
 	 * @action /index/logout
 	 * @method post
 	 */

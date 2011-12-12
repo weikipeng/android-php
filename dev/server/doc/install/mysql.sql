@@ -151,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `customer_fans` (
 CREATE TABLE IF NOT EXISTS `notice` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customerid` int(11) NOT NULL DEFAULT '0',
+  `fanscount` int(11) NOT NULL DEFAULT '0',
   `message` varchar(255) NOT NULL DEFAULT '',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `uptime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

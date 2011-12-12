@@ -33,7 +33,7 @@ class BlogServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试首页接口
+	 * > 接口说明：微博列表接口
 	 * <code>
 	 * URL地址：/blog/blogList
 	 * 提交方式：GET
@@ -41,7 +41,7 @@ class BlogServer extends NAMESPACE_App_Server
 	 * 参数#2：pageId，类型：INT，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 微博列表接口
 	 * @action /blog/blogList
 	 * @params typeId 0 0：全部，1：自己，2：关注
 	 * @params pageId 0 INT
@@ -77,14 +77,14 @@ class BlogServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试首页接口
+	 * > 接口说明：查看微博正文接口
 	 * <code>
 	 * URL地址：/blog/blogView
 	 * 提交方式：POST
 	 * 参数#1：blogId，类型：INT，必须：YES，示例：1
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 查看微博正文接口
 	 * @action /blog/blogView
 	 * @params blogId 1 INT
 	 * @method post
@@ -109,14 +109,14 @@ class BlogServer extends NAMESPACE_App_Server
 	
 	/**
 	 * ---------------------------------------------------------------------------------------------
-	 * > 接口说明：测试登录接口
+	 * > 接口说明：发表微博接口
 	 * <code>
 	 * URL地址：/blog/blogCreate
 	 * 提交方式：POST
 	 * 参数#1：content，类型：STRING，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
-	 * @title 测试接口
+	 * @title 发表微博接口
 	 * @action /blog/blogCreate
 	 * @params content '' STRING
 	 * @method post
