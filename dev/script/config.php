@@ -23,4 +23,4 @@ $clientSourceDir = __APP_DIR . '/dev/source/client';
 $clientTargetDir = __APP_DIR . '/app/' . __APP_NAME . '/client';
 $serverSourceDir = __APP_DIR . '/dev/source/server';
 $serverTargetDir = __APP_DIR . '/app/' . __APP_NAME . '/server';
-define('__APP_ROOT', $serverTargetDir);
+define('__APP_ROOT', str_replace('\\','/', $serverTargetDir));
