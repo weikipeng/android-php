@@ -13,15 +13,18 @@ echo "**********************************************\n";
 function dir_copy_wrapper ($fromFile, $destFile) {
 	// load settings
 	$defaultNs = 'NAMESPACE';
-	if (preg_match('/.project$/i', $destFile)) {
+	if (preg_match('/.sql$/i', $destFile) ||
+		preg_match('/.project$/i', $destFile)) {
 		$appNs = strtolower(__APP_NAME);
 	} else {
 		$appNs = ucfirst(strtolower(__APP_NAME));
 	}
-	echo "DEBUG:$fromFile, $destFile\n";
 	// replace code
 	if (is_file($destFile) && (
+		preg_match('/.txt$/i', $destFile) ||
+		preg_match('/.ini$/i', $destFile) ||
 		preg_match('/.php$/i', $destFile) ||
+		preg_match('/.sql$/i', $destFile) ||
 		preg_match('/.project$/i', $destFile))) {
 		echo "FILE $destFile ... ";
 		$destFileContent = file_get_contents($destFile);
@@ -30,7 +33,7 @@ function dir_copy_wrapper ($fromFile, $destFile) {
 		echo "ok.\n";
 		return;
 	}
-	// replace conf
+	// replace httpd conf
 	if (is_file($destFile) && preg_match('/.conf$/i', $destFile)) {
 		echo "FILE $destFile ... ";
 		$destFileContent = file_get_contents($destFile);
