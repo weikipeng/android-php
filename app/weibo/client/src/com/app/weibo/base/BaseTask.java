@@ -1,6 +1,6 @@
 package com.app.weibo.base;
 
-public class BaseTask {
+public class BaseTask extends Thread {
 
 	public static final int TASK_COMPLETE = 0;
 	public static final int SHOW_TOAST = 1;
@@ -8,25 +8,16 @@ public class BaseTask {
 	public static final int HIDE_LOADBAR = 3;
 	public static final int LOAD_IMAGE = 4;
 	
-	private int id = 0;
-	private String name = "";
+	public int taskId = -1;
 	
-	public BaseTask() {}
+	public BaseTask () {}
 	
-	public int getId () {
-		return this.id;
+	public void setTaskId (int id) {
+		this.taskId = id;
 	}
 	
-	public void setId (int id) {
-		this.id = id;
-	}
-	
-	public String getName () {
-		return this.name;
-	}
-	
-	public void setName (String name) {
-		this.name = name;
+	public int getTaskId () {
+		return this.taskId;
 	}
 	
 	public void onStart () {

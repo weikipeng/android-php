@@ -4,6 +4,9 @@
 	<string name="hello">Hello World!</string>
 	<string name="app_name">weibo</string>
 	<string name="app_version">v1.0</string>
+	<!-- 插件文字 -->
+	<string name="widget_pull_list_view_down">下拉刷新</string>
+	<string name="widget_pull_list_view_refresh">正在刷新...</string>
 	<!-- 按钮文字 -->
 	<string name="btn_confirm">确认</string>
 	<string name="btn_cancel">取消</string>

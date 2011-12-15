@@ -1,6 +1,7 @@
 package com.app.weibo.list;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+
 import com.app.weibo.R;
 import com.app.weibo.base.BaseApp;
 import com.app.weibo.base.BaseList;
@@ -18,7 +19,7 @@ public class BlogList extends BaseList {
 
 	private BaseApp app;
 	private LayoutInflater inflater;
-	private ArrayList<Blog> blogList;
+	private LinkedList<Blog> blogList;
 	
 	public final class BlogListItem {
 		public ImageView face;
@@ -27,7 +28,7 @@ public class BlogList extends BaseList {
 		public TextView comment;
 	}
 	
-	public BlogList (BaseApp app, ArrayList<Blog> blogList) {
+	public BlogList (BaseApp app, LinkedList<Blog> blogList) {
 		this.app = app;
 		this.inflater = LayoutInflater.from(this.app);
 		this.blogList = blogList;
