@@ -212,7 +212,7 @@ public class BaseApp extends Activity {
 		taskPool.addTask(taskId, new BaseTask(){
 			@Override
 			public void onComplete () {
-				sendMessage(BaseTask.TASK_COMPLETE, this.getId(), null);
+				sendMessage(BaseTask.TASK_COMPLETE, this.getTaskId(), null);
 			}
 			@Override
 			public void onError (String error) {
@@ -231,7 +231,7 @@ public class BaseApp extends Activity {
 			@Override
 			public void onComplete (String httpResult) {
 				if (httpResult != null) {
-					sendMessage(BaseTask.TASK_COMPLETE, this.getId(), httpResult);
+					sendMessage(BaseTask.TASK_COMPLETE, this.getTaskId(), httpResult);
 				} else {
 					sendMessage(BaseTask.SHOW_TOAST, C.err.message);
 				}
@@ -249,7 +249,7 @@ public class BaseApp extends Activity {
 			@Override
 			public void onComplete (String httpResult) {
 				if (httpResult != null) {
-					sendMessage(BaseTask.TASK_COMPLETE, this.getId(), httpResult);
+					sendMessage(BaseTask.TASK_COMPLETE, this.getTaskId(), httpResult);
 				} else {
 					sendMessage(BaseTask.SHOW_TOAST, C.err.message);
 				}

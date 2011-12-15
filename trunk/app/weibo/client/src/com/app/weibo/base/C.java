@@ -32,6 +32,7 @@ public final class C {
 	}
 	
 	public static final class task {
+		// common api task
 		public static final int index				= 1001;
 		public static final int login				= 1002;
 		public static final int logout				= 1003;
@@ -47,6 +48,8 @@ public final class C {
 		public static final int fansAdd				= 1013;
 		public static final int fansDel				= 1014;
 		public static final int notice				= 1015;
+		// additional task
+		public static final int refreshBlogList		= 1101;
 	}
 	
 	public static final class err {

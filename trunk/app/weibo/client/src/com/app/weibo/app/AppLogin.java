@@ -16,10 +16,8 @@ import com.app.weibo.R;
 import com.app.weibo.base.BaseApp;
 import com.app.weibo.base.BaseAuth;
 import com.app.weibo.base.BaseMessage;
-import com.app.weibo.base.BaseService;
 import com.app.weibo.base.C;
 import com.app.weibo.model.Customer;
-import com.app.weibo.service.NoticeService;
 
 public class AppLogin extends BaseApp {
 
@@ -123,7 +121,7 @@ public class AppLogin extends BaseApp {
 				// turn to index
 				if (BaseAuth.isLogin()) {
 					// start service
-					BaseService.start(this, NoticeService.class);
+//					BaseService.start(this, NoticeService.class);
 					// turn to index
 					forward(AppIndex.class);
 				}

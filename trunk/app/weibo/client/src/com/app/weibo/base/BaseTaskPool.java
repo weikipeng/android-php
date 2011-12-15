@@ -21,7 +21,7 @@ public class BaseTaskPool {
 	
 	// http post task with params
 	public void addTask (int taskId, String taskUrl, HashMap<String, String> taskArg, BaseTask baseTask, int delayTime) {
-		baseTask.setId(taskId);
+		baseTask.setTaskId(taskId);
 		try {
 			taskPool.execute(new TaskThread(context, taskUrl, taskArg, baseTask, delayTime));
 		} catch (Exception e) {
@@ -31,7 +31,7 @@ public class BaseTaskPool {
 	
 	// http post task without params
 	public void addTask (int taskId, String taskUrl, BaseTask baseTask, int delayTime) {
-		baseTask.setId(taskId);
+		baseTask.setTaskId(taskId);
 		try {
 			taskPool.execute(new TaskThread(context, taskUrl, null, baseTask, delayTime));
 		} catch (Exception e) {
@@ -41,7 +41,7 @@ public class BaseTaskPool {
 	
 	// custom task
 	public void addTask (int taskId, BaseTask baseTask, int delayTime) {
-		baseTask.setId(taskId);
+		baseTask.setTaskId(taskId);
 		try {
 			taskPool.execute(new TaskThread(context, null, null, baseTask, delayTime));
 		} catch (Exception e) {
