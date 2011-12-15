@@ -19,7 +19,7 @@ class Weibo_Dao_Core extends Weibo_Dao
 	/**
 	 * @static
 	 */
-	const DB_NAME = 'Weibo_core';
+	const DB_NAME = 'weibo_core';
 	
 	/**
 	 * Construct
