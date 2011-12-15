@@ -38,13 +38,13 @@ class BlogServer extends Weibo_App_Server
 	 * URL地址：/blog/blogList
 	 * 提交方式：GET
 	 * 参数#1：typeId，类型：INT，必须：YES
-	 * 参数#2：pageId，类型：INT，必须：YES
+	 * 参数#2：startId，类型：INT，必须：YES
 	 * </code>
 	 * ---------------------------------------------------------------------------------------------
 	 * @title 微博列表接口
 	 * @action /blog/blogList
 	 * @params typeId 0 0：全部，1：自己，2：关注
-	 * @params pageId 0 INT
+	 * @params startId 0 INT
 	 * @method get
 	 */
 	public function blogListAction ()
@@ -52,17 +52,17 @@ class BlogServer extends Weibo_App_Server
 		$this->doAuth();
 		
 		$typeId = intval($this->param('typeId'));
-		$pageId = intval($this->param('pageId'));
+		$startId = intval($this->param('startId'));
 		
 		$blogList = array();
 		switch ($typeId) {
 			case 0:
 				$blogDao = $this->dao->load('Core_Blog');
-				$blogList = $blogDao->getListByPage();
+				$blogList = $blogDao->getListByPage($startId);
 				break;
 			case 1:
 				$blogDao = $this->dao->load('Core_Blog');
-				$blogList = $blogDao->getListByCustomer($this->customer['id']);
+				$blogList = $blogDao->getListByCustomer($this->customer['id'], $startId);
 				break;
 			case 2:
 				break;

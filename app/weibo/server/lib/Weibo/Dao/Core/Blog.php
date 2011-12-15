@@ -52,15 +52,18 @@ class Core_Blog extends Weibo_Dao_Core
 	
 	/**
 	 * Get all blog list 
-	 * @param int $pageId
+	 * @param int $startId Start Blog ID
 	 */
-	public function getListByPage ($pageId = 0)
+	public function getListByPage ($startId = 0)
 	{
 		$list = array();
 		$sql = $this->dbr()->select()
-			->from($this->t1, '*')
-			->order("{$this->t1}.uptime desc")
-			->limit(10);
+			->from($this->t1, '*');
+		if ($startId > 0) {
+			$sql = $sql->where("{$this->t1}.id > ?", $startId);
+		}
+		$sql = $sql->order("{$this->t1}.uptime desc");
+		$sql = $sql->limit(5);
 		
 		$res = $this->dbr()->fetchAll($sql);
 		foreach ($res as $row) {
@@ -81,15 +84,19 @@ class Core_Blog extends Weibo_Dao_Core
 	/**
 	 * Get blog list 
 	 * @param string $customerId Customer ID
-	 * @param int $pageId
+	 * @param int $startId Start Blog ID
 	 */
-	public function getListByCustomer ($customerId, $pageId = 0)
+	public function getListByCustomer ($customerId, $startId = 0)
 	{
 		$list = array();
 		$sql = $this->dbr()->select()
 			->from($this->t1, '*')
-			->where("{$this->t1}.customerid = ?", $customerId)
-			->order("{$this->t1}.uptime desc");
+			->where("{$this->t1}.customerid = ?", $customerId);
+		if ($startId > 0) {
+			$sql = $sql->where("{$this->t1}.id > ?", $startId);
+		}
+		$sql = $sql->order("{$this->t1}.uptime desc");
+		$sql = $sql->limit(5);
 		
 		$res = $this->dbr()->fetchAll($sql);
 		foreach ($res as $row) {
