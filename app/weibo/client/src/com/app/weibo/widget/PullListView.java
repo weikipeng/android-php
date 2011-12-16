@@ -86,6 +86,9 @@ public class PullListView extends ListView implements OnScrollListener {
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_UP:
+				if (mRefreshViewShow == true && mRefreshViewScrollTop != 0) {
+					reset();
+				}
 				break;
 			case MotionEvent.ACTION_DOWN:
 				break;
