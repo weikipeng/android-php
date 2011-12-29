@@ -216,7 +216,7 @@ public class BaseApp extends Activity {
 			}
 			@Override
 			public void onError (String error) {
-				sendMessage(BaseTask.SHOW_TOAST, C.err.network);
+				sendMessage(BaseTask.NETWORK_ERROR, this.getId(), null);
 			}
 		}, delayTime);
 	}
@@ -230,15 +230,11 @@ public class BaseApp extends Activity {
 		taskPool.addTask(taskId, taskUrl, new BaseTask(){
 			@Override
 			public void onComplete (String httpResult) {
-				if (httpResult != null) {
-					sendMessage(BaseTask.TASK_COMPLETE, this.getId(), httpResult);
-				} else {
-					sendMessage(BaseTask.SHOW_TOAST, C.err.message);
-				}
+				sendMessage(BaseTask.TASK_COMPLETE, this.getId(), httpResult);
 			}
 			@Override
 			public void onError (String error) {
-				sendMessage(BaseTask.SHOW_TOAST, C.err.network);
+				sendMessage(BaseTask.NETWORK_ERROR, this.getId(), null);
 			}
 		}, 0);
 	}
@@ -248,21 +244,21 @@ public class BaseApp extends Activity {
 		taskPool.addTask(taskId, taskUrl, taskArgs, new BaseTask(){
 			@Override
 			public void onComplete (String httpResult) {
-				if (httpResult != null) {
-					sendMessage(BaseTask.TASK_COMPLETE, this.getId(), httpResult);
-				} else {
-					sendMessage(BaseTask.SHOW_TOAST, C.err.message);
-				}
+				sendMessage(BaseTask.TASK_COMPLETE, this.getId(), httpResult);
 			}
 			@Override
 			public void onError (String error) {
-				sendMessage(BaseTask.SHOW_TOAST, C.err.network);
+				sendMessage(BaseTask.NETWORK_ERROR, this.getId(), null);
 			}
 		}, 0);
 	}
 	
 	public void onTaskComplete (int taskId, BaseMessage message) {
 		
+	}
+	
+	public void onNetworkError (int taskId) {
+		toast(C.err.network);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////

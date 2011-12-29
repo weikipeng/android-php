@@ -131,6 +131,11 @@ public class AppLogin extends BaseApp {
 		}
 	}
 	
+	@Override
+	public void onNetworkError (int taskId) {
+		super.onNetworkError(taskId);
+	}
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	// other methods
 	
