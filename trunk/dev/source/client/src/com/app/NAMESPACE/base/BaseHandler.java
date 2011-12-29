@@ -28,18 +28,27 @@ public class BaseHandler extends Handler {
 					app.hideLoadBar();
 					taskId = msg.getData().getInt("task");
 					result = msg.getData().getString("data");
-					app.onTaskComplete(taskId, AppUtil.getMessage(result));
+					if (result != null) {
+						app.onTaskComplete(taskId, AppUtil.getMessage(result));
+					} else {
+						app.toast(C.err.message);
+					}
 					break;
-				case BaseTask.SHOW_TOAST:
+				case BaseTask.NETWORK_ERROR:
 					app.hideLoadBar();
-					result = msg.getData().getString("data");
-					app.toast(result);
+					taskId = msg.getData().getInt("task");
+					app.onNetworkError(taskId);
 					break;
 				case BaseTask.SHOW_LOADBAR:
 					app.showLoadBar();
 					break;
 				case BaseTask.HIDE_LOADBAR:
 					app.hideLoadBar();
+					break;
+				case BaseTask.SHOW_TOAST:
+					app.hideLoadBar();
+					result = msg.getData().getString("data");
+					app.toast(result);
 					break;
 			}
 		} catch (Exception e) {
