@@ -12,8 +12,8 @@ public final class C {
 	}
 	
 	public static final class api {
-//		public static final String base				= "http://api.itous.net";
-		public static final String base				= "http://192.168.1.8:8001";
+		public static final String base				= "http://api.itous.net";
+//		public static final String base				= "http://192.168.1.8:8001";
 		public static final String index			= "/index/index";
 		public static final String login			= "/index/login";
 		public static final String logout			= "/index/logout";
@@ -79,8 +79,8 @@ public final class C {
 	// additional settings
 	
 	public static final class web {
-//		public static final String base				= "http://www.itous.net";
-		public static final String base				= "http://192.168.1.8:8002";
+		public static final String base				= "http://www.itous.net";
+//		public static final String base				= "http://192.168.1.8:8002";
 		public static final String index			= base + "/index.php";
 		public static final String gomap			= base + "/gomap.php";
 	}
