@@ -3,10 +3,11 @@ package com.app.demos.base;
 public class BaseTask {
 
 	public static final int TASK_COMPLETE = 0;
-	public static final int SHOW_TOAST = 1;
+	public static final int NETWORK_ERROR = 1;
 	public static final int SHOW_LOADBAR = 2;
 	public static final int HIDE_LOADBAR = 3;
-	public static final int LOAD_IMAGE = 4;
+	public static final int SHOW_TOAST = 4;
+	public static final int LOAD_IMAGE = 5;
 	
 	private int id = 0;
 	private String name = "";

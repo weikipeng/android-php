@@ -12,8 +12,12 @@ import com.app.demos.base.BaseTask;
 import com.app.demos.base.C;
 import com.app.demos.list.BlogList;
 import com.app.demos.model.Blog;
+import com.app.demos.sqlite.BlogSqlite;
+
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.KeyEvent;
 import android.widget.AdapterView;
@@ -25,6 +29,7 @@ public class AppIndex extends AuthApp {
 
 	private ListView blogListView;
 	private BlogList blogListAdapter;
+	private BlogSqlite blogSqlite;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,9 @@ public class AppIndex extends AuthApp {
 		// tab button
 		ImageButton ib = (ImageButton) this.findViewById(R.id.main_tab_1);
 		ib.setImageResource(R.drawable.tab_blog_2);
+		
+		// init sqlite
+		blogSqlite = new BlogSqlite(this);
 	}
 	
 	public void onStart(){
@@ -64,6 +72,7 @@ public class AppIndex extends AuthApp {
 					// load face image
 					for (Blog blog : blogList) {
 						loadImage(blog.getFace());
+						blogSqlite.updateBlog(blog);
 					}
 					// show text
 					blogListView = (ListView) this.findViewById(R.id.app_index_list_view);
@@ -84,6 +93,42 @@ public class AppIndex extends AuthApp {
 				break;
 		}
 	}
+	
+	@Override
+	public void onNetworkError (int taskId) {
+		super.onNetworkError(taskId);
+		toast(C.err.network);
+		switch (taskId) {
+			case C.task.blogList:
+				try {
+					final ArrayList<Blog> blogList = blogSqlite.getAllBlogs();;
+					// load face image
+					for (Blog blog : blogList) {
+						loadImage(blog.getFace());
+						blogSqlite.updateBlog(blog);
+					}
+					// show text
+					blogListView = (ListView) this.findViewById(R.id.app_index_list_view);
+					blogListAdapter = new BlogList(this, blogList);
+					blogListView.setAdapter(blogListAdapter);
+					blogListView.setOnItemClickListener(new OnItemClickListener(){
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+							Bundle params = new Bundle();
+							params.putString("blogId", blogList.get(pos).getId());
+							overlay(AppBlog.class, params);
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+					toast(e.getMessage());
+				}
+				break;
+		}
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// other methods
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

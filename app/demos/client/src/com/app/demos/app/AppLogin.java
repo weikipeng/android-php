@@ -123,12 +123,17 @@ public class AppLogin extends BaseApp {
 				// turn to index
 				if (BaseAuth.isLogin()) {
 					// start service
-					BaseService.start(this, NoticeService.class);
+//					BaseService.start(this, NoticeService.class);
 					// turn to index
 					forward(AppIndex.class);
 				}
 				break;
 		}
+	}
+	
+	@Override
+	public void onNetworkError (int taskId) {
+		super.onNetworkError(taskId);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////

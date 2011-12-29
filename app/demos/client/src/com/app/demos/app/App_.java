@@ -21,9 +21,16 @@ public class App_ extends AuthApp {
 	
 	@Override
 	public void onTaskComplete(int taskId, BaseMessage message) {
-		super.onTaskComplete(taskId, message);
-		
+		super.onTaskComplete(taskId, message);	
 	}
+	
+	@Override
+	public void onNetworkError (int taskId) {
+		super.onNetworkError(taskId);
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// other methods
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
