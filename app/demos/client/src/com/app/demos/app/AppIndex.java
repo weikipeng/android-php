@@ -14,10 +14,8 @@ import com.app.demos.list.BlogList;
 import com.app.demos.model.Blog;
 import com.app.demos.sqlite.BlogSqlite;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.KeyEvent;
 import android.widget.AdapterView;
