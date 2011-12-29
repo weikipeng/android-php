@@ -169,6 +169,14 @@ public class AppBlog extends AuthApp {
 	}
 	
 	@Override
+	public void onNetworkError (int taskId) {
+		super.onNetworkError(taskId);
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// other methods
+	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			doFinish();
