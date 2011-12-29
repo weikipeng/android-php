@@ -14,7 +14,7 @@ require_once 'Hush/Util.php';
  * Project Settings
  * TODO : following defines must be set manually !!!
  */
-define('__APP_NAME', 'weibo');
+define('__APP_NAME', 'testapp');
 
 /**
  * Script Settings
