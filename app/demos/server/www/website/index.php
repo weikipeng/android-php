@@ -6,4 +6,4 @@ require_once 'Hush/App.php';
 //Hush_Util::jsRedirect('/demos/index.html');
 ?>
 <a href="/demos/index.html">JQuery Mobile</a>
-<a href="http://192.168.41.60/testhtml5/t.php">Ajax Demo</a>
+<a href="gomap.php">Map Demo</a>
