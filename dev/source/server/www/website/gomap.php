@@ -12,6 +12,9 @@ function initialize() {
 	if (window.android){
 		latitude = window.android.getLatitude();
 		longitude = window.android.getLongitude();
+	} else {
+		latitude = 31.235087;
+		longitude = 121.506656;
 	}
 	var myLatlng = new google.maps.LatLng(latitude,longitude);
 	var myOptions = {
