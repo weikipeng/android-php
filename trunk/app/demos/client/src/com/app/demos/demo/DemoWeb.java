@@ -1,5 +1,6 @@
 package com.app.demos.demo;
 
+import android.util.Log;
 import android.webkit.WebView;
 
 import com.app.demos.R;
@@ -20,7 +21,16 @@ public class DemoWeb extends BaseWebApp {
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.loadUrl(C.web.index);
 		
+		// add js interface
+		mWebView.addJavascriptInterface(new DemoJs(), "demo");
+		
 		this.setWebView(mWebView);
 		this.startWebview();
+	}
+	
+	protected class DemoJs {
+		public void testCallBack(String testParam) {
+			Log.w("DemoJs", testParam);
+		}
 	}
 }
