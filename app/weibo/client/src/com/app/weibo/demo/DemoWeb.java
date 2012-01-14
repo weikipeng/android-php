@@ -21,6 +21,6 @@ public class DemoWeb extends BaseWebApp {
 		mWebView.loadUrl(C.web.index);
 		
 		this.setWebView(mWebView);
-		this.startWebview();
+		this.startWebView();
 	}
 }
