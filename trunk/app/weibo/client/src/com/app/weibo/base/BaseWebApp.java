@@ -27,7 +27,7 @@ abstract public class BaseWebApp extends BaseApp {
 		this.webView = webView;
 	}
 	
-	public void startWebview() {
+	public void startWebView() {
 		// load url link in webview
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
