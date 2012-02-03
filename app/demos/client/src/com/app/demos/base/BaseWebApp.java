@@ -1,5 +1,8 @@
 package com.app.demos.base;
 
+import com.app.demos.R;
+import com.app.demos.app.AppBlogs;
+import com.app.demos.app.AppConfig;
 import com.app.demos.app.AppIndex;
 
 import android.app.AlertDialog;
@@ -8,10 +11,14 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
+import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.webkit.JsResult;
 import android.graphics.Bitmap;
@@ -33,7 +40,11 @@ abstract public class BaseWebApp extends BaseApp {
 		this.webView = webView;
 	}
 	
-	public void startWebview() {
+	public void startWebView() {
+		
+		this.bindMainTop();
+		this.bindMainTab();
+		
 		// load url link in webview
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
@@ -124,5 +135,54 @@ abstract public class BaseWebApp extends BaseApp {
 			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	private void bindMainTop () {
+		Button bTopQuit = (Button) findViewById(R.id.main_top_quit);
+		if (bTopQuit != null) {
+			OnClickListener mOnClickListener = new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					switch (v.getId()) {
+						case R.id.main_top_quit:
+							doFinish();
+							break;
+					}
+				}
+			};
+			bTopQuit.setOnClickListener(mOnClickListener);
+		}
+	}
+	
+	private void bindMainTab () {
+		ImageButton bTabHome = (ImageButton) findViewById(R.id.main_tab_1);
+		ImageButton bTabBlog = (ImageButton) findViewById(R.id.main_tab_2);
+		ImageButton bTabConf = (ImageButton) findViewById(R.id.main_tab_3);
+		ImageButton bTabWrite = (ImageButton) findViewById(R.id.main_tab_4);
+		if (bTabHome != null && bTabBlog != null && bTabConf != null) {
+			OnClickListener mOnClickListener = new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					switch (v.getId()) {
+						case R.id.main_tab_1:
+							forward(AppIndex.class);
+							break;
+						case R.id.main_tab_2:
+							forward(AppBlogs.class);
+							break;
+						case R.id.main_tab_3:
+							forward(AppConfig.class);
+							break;
+						case R.id.main_tab_4:
+							doEditBlog();
+							break;
+					}
+				}
+			};
+			bTabHome.setOnClickListener(mOnClickListener);
+			bTabBlog.setOnClickListener(mOnClickListener);
+			bTabConf.setOnClickListener(mOnClickListener);
+			bTabWrite.setOnClickListener(mOnClickListener);
+		}
 	}
 }
