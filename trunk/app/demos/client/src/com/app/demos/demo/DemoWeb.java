@@ -25,7 +25,7 @@ public class DemoWeb extends BaseWebApp {
 		mWebView.addJavascriptInterface(new DemoJs(), "demo");
 		
 		this.setWebView(mWebView);
-		this.startWebview();
+		this.startWebView();
 	}
 	
 	protected class DemoJs {

@@ -29,6 +29,6 @@ public class DemoMap extends BaseWebApp {
 		mWebViewMap.loadUrl(C.web.gomap);
 		
 		this.setWebView(mWebViewMap);
-		this.startWebview();
+		this.startWebView();
 	}	
 }
