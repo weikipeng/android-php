@@ -57,7 +57,7 @@ class Core_Blog extends Demos_Dao_Core
 	public function getListByPage ($pageId = 0)
 	{
 		$list = array();
-		$sql = $this->dbr()->select()
+		$sql = $this->select()
 			->from($this->t1, '*')
 			->order("{$this->t1}.uptime desc")
 			->limit(10);
@@ -86,7 +86,7 @@ class Core_Blog extends Demos_Dao_Core
 	public function getListByCustomer ($customerId, $pageId = 0)
 	{
 		$list = array();
-		$sql = $this->dbr()->select()
+		$sql = $this->select()
 			->from($this->t1, '*')
 			->where("{$this->t1}.customerid = ?", $customerId)
 			->order("{$this->t1}.uptime desc");
