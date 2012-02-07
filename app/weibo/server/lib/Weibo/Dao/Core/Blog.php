@@ -57,7 +57,7 @@ class Core_Blog extends Weibo_Dao_Core
 	public function getListByPage ($startId = 0)
 	{
 		$list = array();
-		$sql = $this->dbr()->select()
+		$sql = $this->select()
 			->from($this->t1, '*');
 		if ($startId > 0) {
 			$sql = $sql->where("{$this->t1}.id > ?", $startId);
@@ -89,7 +89,7 @@ class Core_Blog extends Weibo_Dao_Core
 	public function getListByCustomer ($customerId, $startId = 0)
 	{
 		$list = array();
-		$sql = $this->dbr()->select()
+		$sql = $this->select()
 			->from($this->t1, '*')
 			->where("{$this->t1}.customerid = ?", $customerId);
 		if ($startId > 0) {

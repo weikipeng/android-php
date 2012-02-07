@@ -45,7 +45,7 @@ class Core_Customer extends Demos_Dao_Core
 	 */
 	public function doAuth ($user, $pass)
 	{
-		$sql = $this->dbr()->select()
+		$sql = $this->select()
 			->from($this->t1, '*')
 			->where("{$this->t1}.name = ?", $user)
 			->where("{$this->t1}.pass = ?", $pass);
@@ -94,7 +94,7 @@ class Core_Customer extends Demos_Dao_Core
 	public function getListByPage ($pageId = 0)
 	{
 		$list = array();
-		$sql = $this->dbr()->select()
+		$sql = $this->select()
 			->from($this->t1, '*')
 			->order("{$this->t1}.uptime desc");
 		

@@ -46,7 +46,7 @@ class Core_Comment extends Demos_Dao_Core
 	public function getListByBlog ($blogId, $pageId = 0)
 	{
 		$list = array();
-		$sql = $this->dbr()->select()
+		$sql = $this->select()
 			->from($this->t1, '*')
 			->where("{$this->t1}.blogid = ?", $blogId)
 			->order("{$this->t1}.uptime desc");
@@ -73,7 +73,7 @@ class Core_Comment extends Demos_Dao_Core
 	public function getListByCustomer ($customerId, $pageId = 0)
 	{
 		$list = array();
-		$sql = $this->dbr()->select()
+		$sql = $this->select()
 			->from($this->t1, '*')
 			->where("{$this->t1}.customerid = ?", $customerId)
 			->order("{$this->t1}.uptime desc");
