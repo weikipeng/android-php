@@ -43,7 +43,7 @@ class Core_Notice extends NAMESPACE_Dao_Core
 	 * @param int $customerId
 	 */
 	public function setRead ($customerId) {
-		$sql = $this->dbr()->select()->from($this->t1, '*')
+		$sql = $this->select()->from($this->t1, '*')
 			->where("customerid = ?", $customerId)
 			->where("status = 0");
 		
@@ -62,7 +62,7 @@ class Core_Notice extends NAMESPACE_Dao_Core
 	 */
 	public function addFanscount ($customerId, $addCount = 1)
 	{
-		$sql = $this->dbr()->select()->from($this->t1, '*')
+		$sql = $this->select()->from($this->t1, '*')
 			->where("customerid = ?", $customerId)
 			->where("status = 0");
 		
@@ -90,7 +90,7 @@ class Core_Notice extends NAMESPACE_Dao_Core
 	 */
 	public function getByCustomer ($customerId)
 	{
-		$sql = $this->dbr()->select()->from($this->t1, '*')
+		$sql = $this->select()->from($this->t1, '*')
 			->where("customerid = ?", $customerId)
 			->where("status = 0");
 		

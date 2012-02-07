@@ -45,7 +45,7 @@ class Core_CustomerFans extends NAMESPACE_Dao_Core
 	 */
 	public function exist ($customerId, $fansId)
 	{
-		$sql = $this->dbr()->select()->from($this->t1, '(1)')
+		$sql = $this->select()->from($this->t1, '(1)')
 			->where("customerid = ?", $customerId)
 			->where("fansid = ?", $fansId);
 		
@@ -71,7 +71,7 @@ class Core_CustomerFans extends NAMESPACE_Dao_Core
 	 */
 	public function countFans ($customerId)
 	{
-		$sql = $this->dbr()->select()->from($this->t1, '(1)')
+		$sql = $this->select()->from($this->t1, '(1)')
 			->where("customerid = ?", $customerId);
 		
 		return $this->dbr()->fetchOne($sql);
