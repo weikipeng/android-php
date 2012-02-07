@@ -45,6 +45,9 @@ abstract public class BaseWebApp extends BaseApp {
 		this.bindMainTop();
 		this.bindMainTab();
 		
+		// bind header and footer
+		this.bindMainTop();
+		this.bindMainTab();
 		// load url link in webview
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
