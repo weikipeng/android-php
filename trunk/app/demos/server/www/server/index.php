@@ -9,12 +9,10 @@ $app->setErrorPage('./404.php')
 	->addAppDir(__LIB_PATH_SERVER)
 	->addAppDir(__LIB_PATH_WEBSITE);
 
-/**
- * skip 404 page and trace exception
- * TODO : should be commented in www environment
- */
+// 将所有的调试信息和错误打印关闭，建议在正式环境关闭
 $app->setDebug(true);
 
+// 设置Controller类的类名后缀
 $app->run(array(
 	'defaultClassSuffix' => 'Server'
 ));
