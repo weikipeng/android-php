@@ -76,14 +76,16 @@ class IndexServer extends Demos_App_Server
 		// return login customer
 		$name = $this->param('name');
 		$pass = $this->param('pass');
-		$customerDao = $this->dao->load('Core_Customer');
-		$customer = $customerDao->doAuth($name, $pass);
-		if ($customer) {
-			$customer['sid'] = session_id();
-			$_SESSION['customer'] = $customer;
-			$this->render('10002', 'Login ok', array(
-				'Customer' => $customer
-			));
+		if ($name && $pass) {
+			$customerDao = $this->dao->load('Core_Customer');
+			$customer = $customerDao->doAuth($name, $pass);
+			if ($customer) {
+				$customer['sid'] = session_id();
+				$_SESSION['customer'] = $customer;
+				$this->render('10002', 'Login ok', array(
+					'Customer' => $customer
+				));
+			}
 		}
 		// return sid only for client
 		$customer = array('sid' => session_id());
