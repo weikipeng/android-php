@@ -80,8 +80,8 @@ class DebugServer extends Demos_App_Server
 		$this->_printMenu();
 		
 		echo "<table class='tbcom' cellpadding=0 cellspacing=0>\n";
-		echo "<tr><td style='width:80px;'>&gt; Api Test</td><td style='width:10px;'>:</td><td>实时测试接口调用</td></tr>";
-		echo "<tr><td style='width:80px;'>&gt; Api Stat</td><td style='width:10px;'>:</td><td>接口访问统计信息</td></tr>";
+		echo "<tr><td style='width:80px;'>&gt; Api Test</td><td style='width:10px;'>:</td><td>实时接口测试</td></tr>";
+		echo "<tr><td style='width:80px;'>&gt; Api Stat</td><td style='width:10px;'>:</td><td>接口访问统计</td></tr>";
 		echo "</table>\n";
 		echo "<hr/>\n";
 		
