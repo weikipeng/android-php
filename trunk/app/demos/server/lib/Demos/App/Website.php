@@ -9,12 +9,12 @@
  * @version    $Id$
  */
 
-require_once 'Demos/App/Server.php';
+require_once 'Demos/App.php';
 
 /**
  * @package Demos_App
  */
-class Demos_App_Website extends Demos_App_Server
+class Demos_App_Website extends Demos_App
 {
 	
 }
