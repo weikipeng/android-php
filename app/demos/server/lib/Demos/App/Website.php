@@ -14,7 +14,7 @@ require_once 'Demos/App.php';
 /**
  * @package Demos_App
  */
-class Demos_App_Website extends Demos_App
+class Demos_App_Website extends Hush_Page
 {
 	
 }
