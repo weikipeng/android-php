@@ -9,10 +9,12 @@
  * @version    $Id$
  */
 
+require_once 'Hush/Util.php';
+
 /**
  * @package Demos_Util
  */
-class Demos_Util
+class Demos_Util extends Hush_Util
 {
 	
 }
