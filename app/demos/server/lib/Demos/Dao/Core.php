@@ -19,7 +19,7 @@ class Demos_Dao_Core extends Demos_Dao
 	/**
 	 * @static
 	 */
-	const DB_NAME = 'Demos_core';
+	const DB_NAME = 'demos_core';
 	
 	/**
 	 * Construct
