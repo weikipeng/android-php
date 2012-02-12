@@ -1,8 +1,8 @@
 <?php
 require_once '../../etc/app.config.php';
-require_once 'Hush/App.php';
+require_once 'Demos/App.php';
 
-$app = new Hush_App();
+$app = new Demos_App();
 
 $app->setErrorPage('./404.php')
 	->addMapFile(__MAP_INI_FILE)
