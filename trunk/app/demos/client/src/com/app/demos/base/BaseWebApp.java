@@ -41,10 +41,6 @@ abstract public class BaseWebApp extends BaseApp {
 	}
 	
 	public void startWebView() {
-		
-		this.bindMainTop();
-		this.bindMainTab();
-		
 		// bind header and footer
 		this.bindMainTop();
 		this.bindMainTab();
