@@ -4,7 +4,7 @@
  *
  * @category   Demos
  * @package    Demos_App
- * @author     James.Huang <huangjuanshi@snda.com>
+ * @author     James.Huang <huangjuanshi@163.com>
  * @license    http://www.apache.org/licenses/LICENSE-2.0
  * @version    $Id$
  */
