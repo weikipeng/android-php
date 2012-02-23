@@ -30,7 +30,7 @@ class Demos_Cli_Doc extends Demos_Cli
 	public function buildAction ()
 	{
 		// init phpdoc enviornment
-		$phpdocBin = realpath(__COMM_LIB_DIR . '/Phpdoc/phpdoc.php');
+		$phpdocBin = realpath(__COMM_LIB_DIR . '/Phpdoc/phpdoc');
 		if (!$phpdocBin) die('Phpdoc exe file can not be found.');
 		$phpdocBin = 'php ' . $phpdocBin;
 		
