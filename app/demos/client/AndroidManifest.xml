@@ -70,6 +70,12 @@
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
+		<activity android:name=".test.TestApp" android:theme="@style/com.app.demos.theme.light">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
 		<!-- Service defines -->
 		<service android:name=".service.NoticeService" android:label="Notification Service"/>
 	</application>

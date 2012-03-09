@@ -30,6 +30,8 @@ public class BaseHandler extends Handler {
 					result = msg.getData().getString("data");
 					if (result != null) {
 						app.onTaskComplete(taskId, AppUtil.getMessage(result));
+					} else if (!AppUtil.isEmptyInt(taskId)) {
+						app.onTaskComplete(taskId);
 					} else {
 						app.toast(C.err.message);
 					}

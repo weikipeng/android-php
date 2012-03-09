@@ -3,6 +3,7 @@ package com.app.demos.base;
 import java.util.HashMap;
 import com.app.demos.R;
 import com.app.demos.util.AppCache;
+import com.app.demos.util.AppUtil;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,11 +23,14 @@ public class BaseApp extends Activity {
 	protected BaseHandler handler;
 	protected BaseTaskPool taskPool;
 	protected boolean showLoadBar = false;
+	protected boolean showDebugMsg = true;
 	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// debug memory
+		debugMemory("onCreate");
 		// async task handler
 		this.handler = new BaseHandler(this);
 		// init task pool
@@ -35,21 +40,29 @@ public class BaseApp extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// debug memory
+		debugMemory("onResume");
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
+		// debug memory
+		debugMemory("onPause");
 	}
 	
 	@Override
 	public void onStart() {
 		super.onStart();
+		// debug memory
+		debugMemory("onStart");
 	}
 	
 	@Override
 	public void onStop() {
 		super.onStop();
+		// debug memory
+		debugMemory("onStop");
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,8 +270,21 @@ public class BaseApp extends Activity {
 		
 	}
 	
+	public void onTaskComplete (int taskId) {
+		
+	}
+	
 	public void onNetworkError (int taskId) {
 		toast(C.err.network);
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// debug method
+	
+	public void debugMemory (String tag) {
+		if (this.showDebugMsg) {
+			Log.w(this.getClass().getSimpleName(), tag+":"+AppUtil.getUsedMemory());
+		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////

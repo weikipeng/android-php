@@ -10,6 +10,7 @@ import com.app.demos.base.BaseAuth;
 import com.app.demos.demo.DemoMap;
 import com.app.demos.demo.DemoWeb;
 import com.app.demos.model.Customer;
+import com.app.demos.test.TestApp;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class AuthApp extends BaseApp {
 	private final int MENU_APP_ABOUT = 2;
 	private final int MENU_DEMO_WEB = 3;
 	private final int MENU_DEMO_MAP = 4;
+	private final int MENU_DEMO_TEST = 5;
 	
 	protected static Customer customer = null;
 	
@@ -59,6 +61,7 @@ public class AuthApp extends BaseApp {
 		menu.add(0, MENU_APP_ABOUT, 0, R.string.menu_app_about).setIcon(android.R.drawable.ic_menu_info_details);
 		menu.add(0, MENU_DEMO_WEB, 0, R.string.menu_demo_web).setIcon(android.R.drawable.ic_menu_view);
 		menu.add(0, MENU_DEMO_MAP, 0, R.string.menu_demo_map).setIcon(android.R.drawable.ic_menu_view);
+		menu.add(0, MENU_DEMO_TEST, 0, R.string.menu_demo_test).setIcon(android.R.drawable.ic_menu_view);
 		return true;
 	}
 	
@@ -89,6 +92,9 @@ public class AuthApp extends BaseApp {
 				break;
 			case MENU_DEMO_MAP:
 				forward(DemoMap.class);
+				break;
+			case MENU_DEMO_TEST:
+				forward(TestApp.class);
 				break;
 		}
 		return super.onOptionsItemSelected(item);

@@ -168,4 +168,22 @@ public class AppUtil {
 		}
 		return map;
 	}
+	
+	/* 判断int是否为空 */
+	static public boolean isEmptyInt (int v) {
+		Integer t = new Integer(v);
+		return t == null ? true : false;
+	}
+	
+	/* 获取毫秒数 */
+	public static long getTimeMillis () {
+		return System.currentTimeMillis();
+	}
+	
+	/* 获取耗费内存 */
+	public static long getUsedMemory () {
+		long total = Runtime.getRuntime().totalMemory();
+		long free = Runtime.getRuntime().freeMemory();
+		return total - free;
+	}
 }
