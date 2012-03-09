@@ -78,7 +78,7 @@ public class NoticeService extends BaseService {
 			Notice notice = (Notice) message.getResult("Notice");
 			showNotification(notice.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 	

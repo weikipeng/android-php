@@ -15,6 +15,7 @@
 	<string name="menu_app_about">应用信息</string>
 	<string name="menu_demo_web">网页示例</string>
 	<string name="menu_demo_map">地图示例</string>
+	<string name="menu_demo_test">测试示例</string>
 	<!-- 配置提示 -->
 	<string name="config_sign">修改签名</string>
 	<string name="config_face">更换头像</string>
