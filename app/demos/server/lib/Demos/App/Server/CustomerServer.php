@@ -144,7 +144,7 @@ class CustomerServer extends Demos_App_Server
 	 */
 	public function customerCreateAction ()
 	{
-		$this->doAuth();
+//		$this->doAuth();
 		
 		$name = $this->param('name');
 		$pass = $this->param('pass');
