@@ -82,7 +82,7 @@ class IndexServer extends Demos_App_Server
 			if ($customer) {
 				$customer['sid'] = session_id();
 				$_SESSION['customer'] = $customer;
-				$this->render('10002', 'Login ok', array(
+				$this->render('10000', 'Login ok', array(
 					'Customer' => $customer
 				));
 			}
