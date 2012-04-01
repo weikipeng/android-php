@@ -62,7 +62,7 @@ class CommentServer extends Demos_App_Server
 				'Comment.list' => $commentList
 			));
 		}
-		$this->render('10007', 'Get comment list failed');
+		$this->render('14010', 'Get comment list failed');
 	}
 	
 	/**
@@ -105,6 +105,6 @@ class CommentServer extends Demos_App_Server
 			$blogDao->addCommentcount($blogId);
 			$this->render('10000', 'Create comment ok');
 		}
-		$this->render('10008', 'Create comment failed');
+		$this->render('14011', 'Create comment failed');
 	}
 }
