@@ -89,7 +89,7 @@ class IndexServer extends Demos_App_Server
 		}
 		// return sid only for client
 		$customer = array('sid' => session_id());
-		$this->render('10003', 'Login failed', array(
+		$this->render('14001', 'Login failed', array(
 			'Customer' => $customer
 		));
 	}

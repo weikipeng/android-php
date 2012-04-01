@@ -72,7 +72,7 @@ class BlogServer extends Demos_App_Server
 				'Blog.list' => $blogList
 			));
 		}
-		$this->render('10006', 'Get blog list failed');
+		$this->render('14008', 'Get blog list failed');
 	}
 	
 	/**
@@ -141,6 +141,6 @@ class BlogServer extends Demos_App_Server
 			$customerDao->addBlogcount($this->customer['id']);
 			$this->render('10000', 'Create blog ok');
 		}
-		$this->render('10005', 'Create blog failed');
+		$this->render('14009', 'Create blog failed');
 	}
 }

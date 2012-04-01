@@ -82,7 +82,7 @@ class CustomerServer extends Demos_App_Server
 				'Customer' => $customerItem
 			));
 		}
-		$this->render('10010', 'View customer failed');
+		$this->render('14002', 'View customer failed');
 	}
 	
 	/**
@@ -115,11 +115,11 @@ class CustomerServer extends Demos_App_Server
 					$key	=> $val,
 				));
 			} catch (Exception $e) {
-				$this->render('10004', 'Update customer failed');
+				$this->render('14003', 'Update customer failed');
 			}
 			$this->render('10000', 'Update customer ok');
 		}
-		$this->render('10004', 'Update customer failed');
+		$this->render('14004', 'Update customer failed');
 	}
 	
 	/**
@@ -160,7 +160,7 @@ class CustomerServer extends Demos_App_Server
 			));
 			$this->render('10000', 'Create customer ok');
 		}
-		$this->render('10004', 'Create customer failed');
+		$this->render('14005', 'Create customer failed');
 	}
 	
 	/**
@@ -198,7 +198,7 @@ class CustomerServer extends Demos_App_Server
 				$this->render('10000', 'Add fans ok');
 			}
 		}
-		$this->render('10004', 'Add fans failed');
+		$this->render('14006', 'Add fans failed');
 	}
 	
 	/**
@@ -227,6 +227,6 @@ class CustomerServer extends Demos_App_Server
 				$this->render('10000', 'Delete fans ok');
 			}
 		}
-		$this->render('10004', 'Delete fans failed');
+		$this->render('14007', 'Delete fans failed');
 	}
 }

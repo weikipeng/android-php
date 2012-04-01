@@ -68,7 +68,7 @@ class ImageServer extends Demos_App_Server
 				'Image.list' => $faceList
 			));
 		} else {
-			$this->render('10009', 'Get face failed');
+			$this->render('14012', 'Get face failed');
 		}
 	}
 	

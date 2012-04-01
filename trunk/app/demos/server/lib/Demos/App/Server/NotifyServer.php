@@ -56,6 +56,6 @@ class NotifyServer extends Demos_App_Server
 				'Notice' => $noticeItem
 			));
 		}
-		$this->render('10012', 'Get notification failed');
+		$this->render('14013', 'Get notification failed');
 	}
 }
