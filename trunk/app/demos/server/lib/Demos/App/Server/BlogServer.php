@@ -58,11 +58,11 @@ class BlogServer extends Demos_App_Server
 		switch ($typeId) {
 			case 0:
 				$blogDao = $this->dao->load('Core_Blog');
-				$blogList = $blogDao->getListByPage();
+				$blogList = $blogDao->getListByPage($pageId);
 				break;
 			case 1:
 				$blogDao = $this->dao->load('Core_Blog');
-				$blogList = $blogDao->getListByCustomer($this->customer['id']);
+				$blogList = $blogDao->getListByCustomer($this->customer['id'], $pageId);
 				break;
 			case 2:
 				break;
