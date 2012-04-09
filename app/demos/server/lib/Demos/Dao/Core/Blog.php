@@ -60,20 +60,22 @@ class Core_Blog extends Demos_Dao_Core
 		$sql = $this->select()
 			->from($this->t1, '*')
 			->order("{$this->t1}.uptime desc")
-			->limit(10);
+			->limitPage($pageId, 10);
 		
 		$res = $this->dbr()->fetchAll($sql);
-		foreach ($res as $row) {
+		if ($res) {
 			$customerDao = new Core_Customer();
-			$customer = $customerDao->read($row['customerid']);
-			$blog = array(
-				'id'		=> $row['id'],
-				'face'		=> Demos_Util_Image::getFaceUrl($customer['face']),
-				'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
-				'comment'	=> '评论('.$row['commentcount'].')',
-				'uptime'	=> $row['uptime'],
-			);
-			array_push($list, $blog);
+			foreach ($res as $row) {
+				$customer = $customerDao->read($row['customerid']);
+				$blog = array(
+					'id'		=> $row['id'],
+					'face'		=> Demos_Util_Image::getFaceUrl($customer['face']),
+					'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
+					'comment'	=> '评论('.$row['commentcount'].')',
+					'uptime'	=> $row['uptime'],
+				);
+				array_push($list, $blog);
+			}
 		}
 		return $list;
 	}
@@ -89,19 +91,22 @@ class Core_Blog extends Demos_Dao_Core
 		$sql = $this->select()
 			->from($this->t1, '*')
 			->where("{$this->t1}.customerid = ?", $customerId)
-			->order("{$this->t1}.uptime desc");
+			->order("{$this->t1}.uptime desc")
+			->limitPage($pageId, 10);
 		
 		$res = $this->dbr()->fetchAll($sql);
-		foreach ($res as $row) {
+		if ($res) {
 			$customerDao = new Core_Customer();
-			$customer = $customerDao->read($row['customerid']);
-			$blog = array(
-				'id'		=> $row['id'],
-				'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
-				'comment'	=> '评论('.$row['commentcount'].')',
-				'uptime'	=> $row['uptime'],
-			);
-			array_push($list, $blog);
+			foreach ($res as $row) {
+				$customer = $customerDao->read($row['customerid']);
+				$blog = array(
+					'id'		=> $row['id'],
+					'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
+					'comment'	=> '评论('.$row['commentcount'].')',
+					'uptime'	=> $row['uptime'],
+				);
+				array_push($list, $blog);
+			}
 		}
 		return $list;
 	}
