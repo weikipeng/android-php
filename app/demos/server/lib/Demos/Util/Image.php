@@ -14,12 +14,20 @@
  */
 class Demos_Util_Image
 {
+	/**
+	 * 获取头像图片的URL地址
+	 * @param int $id
+	 */
 	public static function getFaceUrl ($id) 
 	{
 		$facePath = __HOST_WEBSITE . '/faces/default';
 		return $facePath . '/face_' . $id . '.png';
 	}
 	
+	/**
+	 * 获取头像图片的对象
+	 * @param int $id
+	 */
 	public static function getFaceImage ($id) 
 	{
 		return array(
