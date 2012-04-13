@@ -51,18 +51,19 @@ class ImageServer extends Demos_App_Server
 	 */
 	public function faceViewAction ()
 	{
-		$faceId = explode(',', $this->param('faceId'));
-		$faceCount = count($faceId);
+		$faceIdStr = $this->param('faceId');
+		$faceIdArr = $faceIdStr ? explode(',', $this->param('faceId')) : array();
+		$faceCount = count($faceIdArr);
 		if ($faceCount == 1) {
-			$id = intval($faceId[0]);
-			$faceItem = Demos_Util_Image::getFaceImage($id);
+			$faceId = intval($faceIdArr[0]);
+			$faceItem = Demos_Util_Image::getFaceImage($faceId);
 			$this->render('10000', 'Get face ok', array(
 				'Image' => $faceItem
 			));
 		} elseif ($faceCount > 1) {
 			$faceList = array();
-			foreach ($faceId as $id) {
-				$faceList[] = Demos_Util_Image::getFaceImage($id);
+			foreach ($faceIdArr as $faceId) {
+				$faceList[] = Demos_Util_Image::getFaceImage($faceId);
 			}
 			$this->render('10000', 'Get face list ok', array(
 				'Image.list' => $faceList
@@ -87,11 +88,11 @@ class ImageServer extends Demos_App_Server
 	public function faceListAction ()
 	{
 		// valid face ids
-		$faceId = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14);
+		$faceIdArr = range(0,14);
 		// get face images
 		$faceList = array();
-		foreach ($faceId as $id) {
-			$faceList[] = Demos_Util_Image::getFaceImage($id);
+		foreach ($faceIdArr as $faceId) {
+			$faceList[] = Demos_Util_Image::getFaceImage($faceId);
 		}
 		$this->render('10000', 'Get face list ok', array(
 			'Image.list' => $faceList

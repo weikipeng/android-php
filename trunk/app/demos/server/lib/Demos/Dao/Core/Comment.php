@@ -49,18 +49,21 @@ class Core_Comment extends Demos_Dao_Core
 		$sql = $this->select()
 			->from($this->t1, '*')
 			->where("{$this->t1}.blogid = ?", $blogId)
-			->order("{$this->t1}.uptime desc");
+			->order("{$this->t1}.uptime desc")
+			->limitPage($pageId, 10);
 		
 		$res = $this->dbr()->fetchAll($sql);
-		foreach ($res as $row) {
+		if ($res) {
 			$customerDao = new Core_Customer();
-			$customer = $customerDao->read($row['customerid']);
-			$comment = array(
-				'id'		=> $row['id'],
-				'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
-				'uptime'	=> $row['uptime'],
-			);
-			array_push($list, $comment);
+			foreach ($res as $row) {
+				$customer = $customerDao->read($row['customerid']);
+				$comment = array(
+					'id'		=> $row['id'],
+					'content'	=> '<b>'.$customer['name'].'</b> : '.$row['content'],
+					'uptime'	=> $row['uptime'],
+				);
+				array_push($list, $comment);
+			}
 		}
 		return $list;
 	}
@@ -76,7 +79,8 @@ class Core_Comment extends Demos_Dao_Core
 		$sql = $this->select()
 			->from($this->t1, '*')
 			->where("{$this->t1}.customerid = ?", $customerId)
-			->order("{$this->t1}.uptime desc");
+			->order("{$this->t1}.uptime desc")
+			->limitPage($pageId, 10);
 		
 		return $this->dbr()->fetchAll($sql);
 	}
