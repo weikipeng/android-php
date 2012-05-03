@@ -1,10 +1,10 @@
-<html> 
-<head> 
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
-<title>Simple V3 Map for Android</title> 
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
-<script type="text/javascript"> 
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+<title>Simple V3 Map for Android</title>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript">
 var map;
 function initialize() {
 	var latitude = 0;
@@ -28,9 +28,9 @@ function centerAt(latitude, longitude){
 	myLatlng = new google.maps.LatLng(latitude,longitude);
 	map.panTo(myLatlng);
 }
-</script> 
-</head> 
-<body style="margin:0px; padding:0px;" onload="initialize()"> 
-  <div id="map_canvas" style="width:100%; height:100%"></div> 
-</body> 
-</html> 
+</script>
+</head>
+<body style="margin:0px; padding:0px;" onload="initialize()">
+  <div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+</html>
