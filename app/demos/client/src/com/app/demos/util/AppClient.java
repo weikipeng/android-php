@@ -33,18 +33,20 @@ import android.util.Log;
 @SuppressWarnings("rawtypes")
 public class AppClient {
 	
+	// compress strategy
+	final private static int CS_NONE = 0;
+	final private static int CS_GZIP = 1;
+	
+	// logic variables
 	private String apiUrl;
 	private HttpParams httpParams;
 	private HttpClient httpClient;
 	private int timeoutConnection = 10000;
 	private int timeoutSocket = 10000;
-	private int compress = 0;
+	private int compress = CS_NONE;
 	
 	// charset default utf8
 	private String charset = HTTP.UTF_8;
-	
-	// compress strategy
-	final public static int CS_GZIP = 1;
 	
 	public AppClient (String url) {
 		initClient(url);
@@ -134,7 +136,7 @@ public class AppClient {
 	
 	private HttpGet headerFilter (HttpGet httpGet) {
 		switch (this.compress) {
-			case AppClient.CS_GZIP:
+			case CS_GZIP:
 				httpGet.addHeader("Accept-Encoding", "gzip");
 				break;
 			default :
@@ -145,7 +147,7 @@ public class AppClient {
 	
 	private HttpPost headerFilter (HttpPost httpPost) {
 		switch (this.compress) {
-			case AppClient.CS_GZIP:
+			case CS_GZIP:
 				httpPost.addHeader("Accept-Encoding", "gzip");
 				break;
 			default :
@@ -158,7 +160,7 @@ public class AppClient {
 		String result = null;
 		try {
 			switch (this.compress) {
-				case AppClient.CS_GZIP:
+				case CS_GZIP:
 					result = AppUtil.gzipToString(entity);
 					break;
 				default :
