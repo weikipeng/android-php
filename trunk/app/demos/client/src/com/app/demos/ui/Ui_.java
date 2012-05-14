@@ -1,18 +1,18 @@
-package com.app.demos.app;
+package com.app.demos.ui;
 
 import com.app.demos.R;
-import com.app.demos.auth.AuthApp;
 import com.app.demos.base.BaseMessage;
+import com.app.demos.base.BaseUiAuth;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-public class App_ extends AuthApp {
+public class Ui_ extends BaseUiAuth {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.app_index);
+		setContentView(R.layout.ui_index);
 		
 	}
 	

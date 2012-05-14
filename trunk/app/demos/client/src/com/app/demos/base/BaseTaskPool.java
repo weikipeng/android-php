@@ -14,8 +14,8 @@ public class BaseTaskPool {
 	static private ExecutorService taskPool;
 	private Context context; // used for HttpUtil.getNetType
 	
-	public BaseTaskPool (BaseApp app) {
-		this.context = app.getContext();
+	public BaseTaskPool (BaseUi ui) {
+		this.context = ui.getContext();
 		taskPool = Executors.newCachedThreadPool();
 	}
 	

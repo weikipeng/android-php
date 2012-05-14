@@ -4,10 +4,10 @@ import android.util.Log;
 import android.webkit.WebView;
 
 import com.app.demos.R;
-import com.app.demos.base.BaseWebApp;
+import com.app.demos.base.BaseUiWeb;
 import com.app.demos.base.C;
 
-public class DemoWeb extends BaseWebApp {
+public class DemoWeb extends BaseUiWeb {
 	
 	private WebView mWebView;
 	

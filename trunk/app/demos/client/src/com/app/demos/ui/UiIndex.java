@@ -1,14 +1,14 @@
-package com.app.demos.app;
+package com.app.demos.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.app.demos.R;
-import com.app.demos.auth.AuthApp;
-import com.app.demos.base.BaseApp;
 import com.app.demos.base.BaseHandler;
 import com.app.demos.base.BaseMessage;
 import com.app.demos.base.BaseTask;
+import com.app.demos.base.BaseUi;
+import com.app.demos.base.BaseUiAuth;
 import com.app.demos.base.C;
 import com.app.demos.list.BlogList;
 import com.app.demos.model.Blog;
@@ -23,7 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class AppIndex extends AuthApp {
+public class UiIndex extends BaseUiAuth {
 
 	private ListView blogListView;
 	private BlogList blogListAdapter;
@@ -32,7 +32,7 @@ public class AppIndex extends AuthApp {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.app_index);
+		setContentView(R.layout.ui_index);
 		
 		// set handler
 		this.setHandler(new IndexHandler(this));
@@ -45,6 +45,7 @@ public class AppIndex extends AuthApp {
 		blogSqlite = new BlogSqlite(this);
 	}
 	
+	@Override
 	public void onStart(){
 		super.onStart();
 		
@@ -81,7 +82,7 @@ public class AppIndex extends AuthApp {
 						public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 							Bundle params = new Bundle();
 							params.putString("blogId", blogList.get(pos).getId());
-							overlay(AppBlog.class, params);
+							overlay(UiBlog.class, params);
 						}
 					});
 				} catch (Exception e) {
@@ -99,7 +100,7 @@ public class AppIndex extends AuthApp {
 		switch (taskId) {
 			case C.task.blogList:
 				try {
-					final ArrayList<Blog> blogList = blogSqlite.getAllBlogs();;
+					final ArrayList<Blog> blogList = blogSqlite.getAllBlogs();
 					// load face image
 					for (Blog blog : blogList) {
 						loadImage(blog.getFace());
@@ -114,7 +115,7 @@ public class AppIndex extends AuthApp {
 						public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 							Bundle params = new Bundle();
 							params.putString("blogId", blogList.get(pos).getId());
-							overlay(AppBlog.class, params);
+							overlay(UiBlog.class, params);
 						}
 					});
 				} catch (Exception e) {
@@ -140,8 +141,8 @@ public class AppIndex extends AuthApp {
 	// inner classes
 	
 	private class IndexHandler extends BaseHandler {
-		public IndexHandler(BaseApp app) {
-			super(app);
+		public IndexHandler(BaseUi ui) {
+			super(ui);
 		}
 		@Override
 		public void handleMessage(Message msg) {
@@ -154,7 +155,7 @@ public class AppIndex extends AuthApp {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				app.toast(e.getMessage());
+				ui.toast(e.getMessage());
 			}
 		}
 	}

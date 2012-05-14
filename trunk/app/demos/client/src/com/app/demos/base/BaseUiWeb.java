@@ -1,9 +1,9 @@
 package com.app.demos.base;
 
 import com.app.demos.R;
-import com.app.demos.app.AppBlogs;
-import com.app.demos.app.AppConfig;
-import com.app.demos.app.AppIndex;
+import com.app.demos.ui.UiBlogs;
+import com.app.demos.ui.UiConfig;
+import com.app.demos.ui.UiIndex;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,7 +23,7 @@ import android.widget.Toast;
 import android.webkit.JsResult;
 import android.graphics.Bitmap;
 
-abstract public class BaseWebApp extends BaseApp {
+abstract public class BaseUiWeb extends BaseUi {
 	
 	private static final int MAX_PROGRESS = 100;
 	private static final int DIALOG_PROGRESS = 1;
@@ -63,7 +63,7 @@ abstract public class BaseWebApp extends BaseApp {
             }
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Toast.makeText(BaseWebApp.this, "Get Error : " + description, Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseUiWeb.this, "Get Error : " + description, Toast.LENGTH_SHORT).show();
             }
 		});
 		// show loading progress bar
@@ -80,11 +80,12 @@ abstract public class BaseWebApp extends BaseApp {
             public boolean onJsAlert(WebView view, String url,  
                     String message, final JsResult result) {  
                 // replace with android widget
-                new AlertDialog.Builder(BaseWebApp.this)
+                new AlertDialog.Builder(BaseUiWeb.this)
                     .setTitle("Notification")
                     .setMessage(message)
                     .setPositiveButton(android.R.string.ok, new AlertDialog.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
+                        @Override
+						public void onClick(DialogInterface dialog, int which) {
                             result.confirm();
                         }
                     })
@@ -130,7 +131,7 @@ abstract public class BaseWebApp extends BaseApp {
 				webView.goBack();
 				return true;
 			} else {
-				forward(AppIndex.class);
+				forward(UiIndex.class);
 			}
 		}
 		return super.onKeyDown(keyCode, event);
@@ -164,13 +165,13 @@ abstract public class BaseWebApp extends BaseApp {
 				public void onClick(View v) {
 					switch (v.getId()) {
 						case R.id.main_tab_1:
-							forward(AppIndex.class);
+							forward(UiIndex.class);
 							break;
 						case R.id.main_tab_2:
-							forward(AppBlogs.class);
+							forward(UiBlogs.class);
 							break;
 						case R.id.main_tab_3:
-							forward(AppConfig.class);
+							forward(UiConfig.class);
 							break;
 						case R.id.main_tab_4:
 							doEditBlog();

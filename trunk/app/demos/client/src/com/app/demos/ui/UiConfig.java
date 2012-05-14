@@ -1,14 +1,14 @@
-package com.app.demos.app;
+package com.app.demos.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.app.demos.R;
-import com.app.demos.auth.AuthApp;
-import com.app.demos.base.BaseApp;
 import com.app.demos.base.BaseHandler;
 import com.app.demos.base.BaseMessage;
 import com.app.demos.base.BaseTask;
+import com.app.demos.base.BaseUi;
+import com.app.demos.base.BaseUiAuth;
 import com.app.demos.base.C;
 import com.app.demos.list.SimpleList;
 import com.app.demos.model.Config;
@@ -29,7 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class AppConfig extends AuthApp {
+public class UiConfig extends BaseUiAuth {
 	
 	private ListView listConfig;
 	private ImageView faceImage;
@@ -38,7 +38,7 @@ public class AppConfig extends AuthApp {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.app_config);
+		setContentView(R.layout.ui_config);
 		
 		// set handler
 		this.setHandler(new ConfigHandler(this));
@@ -67,7 +67,7 @@ public class AppConfig extends AuthApp {
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				// change face
 				if (pos == 0) {
-					overlay(AppSetFace.class);
+					overlay(UiSetFace.class);
 				// edit customer info
 				} else {
 					Bundle data = new Bundle();
@@ -121,7 +121,7 @@ public class AppConfig extends AuthApp {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			this.forward(AppIndex.class);
+			this.forward(UiIndex.class);
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -130,8 +130,8 @@ public class AppConfig extends AuthApp {
 	// inner classes
 	
 	private class ConfigHandler extends BaseHandler {
-		public ConfigHandler(BaseApp app) {
-			super(app);
+		public ConfigHandler(BaseUi ui) {
+			super(ui);
 		}
 		@Override
 		public void handleMessage(Message msg) {
@@ -145,7 +145,7 @@ public class AppConfig extends AuthApp {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				app.toast(e.getMessage());
+				ui.toast(e.getMessage());
 			}
 		}
 	}

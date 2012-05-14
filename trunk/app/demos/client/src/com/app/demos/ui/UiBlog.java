@@ -1,11 +1,11 @@
-package com.app.demos.app;
+package com.app.demos.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.app.demos.R;
-import com.app.demos.auth.AuthApp;
-import com.app.demos.base.BaseApp;
+import com.app.demos.base.BaseUi;
+import com.app.demos.base.BaseUiAuth;
 import com.app.demos.base.BaseHandler;
 import com.app.demos.base.BaseMessage;
 import com.app.demos.base.BaseTask;
@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class AppBlog extends AuthApp {
+public class UiBlog extends BaseUiAuth {
 	
 	private String blogId = null;
 	private String customerId = null;
@@ -41,7 +41,7 @@ public class AppBlog extends AuthApp {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.app_blog);
+		setContentView(R.layout.ui_blog);
 		
 		// set handler
 		this.setHandler(new BlogHandler(this));
@@ -188,8 +188,8 @@ public class AppBlog extends AuthApp {
 	// inner classes
 	
 	private class BlogHandler extends BaseHandler {
-		public BlogHandler(BaseApp app) {
-			super(app);
+		public BlogHandler(BaseUi ui) {
+			super(ui);
 		}
 		@Override
 		public void handleMessage(Message msg) {
@@ -203,7 +203,7 @@ public class AppBlog extends AuthApp {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				app.toast(e.getMessage());
+				ui.toast(e.getMessage());
 			}
 		}
 	}

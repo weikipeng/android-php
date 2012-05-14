@@ -70,6 +70,7 @@ public class BlogSqlite extends BaseSqlite {
 				this.create(values);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 		return false;
@@ -77,8 +78,9 @@ public class BlogSqlite extends BaseSqlite {
 
 	public ArrayList<Blog> getAllBlogs () {
 		ArrayList<Blog> blogList = new ArrayList<Blog>();
+		Cursor cursor = null;
 		try {
-			Cursor cursor = this.query(null, null);
+			cursor = this.query(null, null);
 			while (cursor.moveToNext()) {
 				Blog blog = new Blog();
 				blog.setId(cursor.getString(0));
@@ -90,7 +92,9 @@ public class BlogSqlite extends BaseSqlite {
 				blogList.add(blog);
 			}
 		} catch (Exception e) {
-			
+			e.printStackTrace();
+		} finally {
+			cursor.close();
 		}
 		return blogList;
 	}

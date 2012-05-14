@@ -1,14 +1,14 @@
-package com.app.demos.app;
+package com.app.demos.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.app.demos.R;
-import com.app.demos.auth.AuthApp;
-import com.app.demos.base.BaseApp;
 import com.app.demos.base.BaseHandler;
 import com.app.demos.base.BaseMessage;
 import com.app.demos.base.BaseTask;
+import com.app.demos.base.BaseUi;
+import com.app.demos.base.BaseUiAuth;
 import com.app.demos.base.C;
 import com.app.demos.list.ExpandList;
 import com.app.demos.model.Blog;
@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class AppBlogs extends AuthApp {
+public class UiBlogs extends BaseUiAuth {
 	
 //	private ListView blogListView;
 	private ImageView faceImage;
@@ -36,7 +36,7 @@ public class AppBlogs extends AuthApp {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.app_blogs);
+		setContentView(R.layout.ui_blogs);
 		
 		// set handler
 		this.setHandler(new BlogsHandler(this));
@@ -121,7 +121,7 @@ public class AppBlogs extends AuthApp {
 						public void onItemClick(View view, int pos) {
 							Bundle params = new Bundle();
 							params.putString("blogId", blogList.get(pos).getId());
-							overlay(AppBlog.class, params);
+							overlay(UiBlog.class, params);
 						}
 					});
 					el.render(layout);
@@ -144,7 +144,7 @@ public class AppBlogs extends AuthApp {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			this.forward(AppIndex.class);
+			this.forward(UiIndex.class);
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -153,8 +153,8 @@ public class AppBlogs extends AuthApp {
 	// inner classes
 	
 	private class BlogsHandler extends BaseHandler {
-		public BlogsHandler(BaseApp app) {
-			super(app);
+		public BlogsHandler(BaseUi ui) {
+			super(ui);
 		}
 		@Override
 		public void handleMessage(Message msg) {
@@ -168,7 +168,7 @@ public class AppBlogs extends AuthApp {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				app.toast(e.getMessage());
+				ui.toast(e.getMessage());
 			}
 		}
 	}

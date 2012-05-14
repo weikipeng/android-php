@@ -1,10 +1,10 @@
-package com.app.demos.app;
+package com.app.demos.ui;
 
 import java.util.HashMap;
 
 import com.app.demos.R;
-import com.app.demos.auth.AuthApp;
 import com.app.demos.base.BaseMessage;
+import com.app.demos.base.BaseUiAuth;
 import com.app.demos.base.C;
 
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class AppEditText extends AuthApp {
+public class UiEditText extends BaseUiAuth {
 	
 	private EditText mEditText;
 	private Button mEditSubmit;
@@ -23,7 +23,7 @@ public class AppEditText extends AuthApp {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.app_edit);
+		setContentView(R.layout.ui_edit);
 		
 		// show keyboard
 		((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);

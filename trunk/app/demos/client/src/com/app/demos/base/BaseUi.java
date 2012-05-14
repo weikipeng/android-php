@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.SimpleAdapter.ViewBinder;
 
-public class BaseApp extends Activity {
+public class BaseUi extends Activity {
 	
 	protected BaseHandler handler;
 	protected BaseTaskPool taskPool;
@@ -32,9 +32,9 @@ public class BaseApp extends Activity {
 		// debug memory
 		debugMemory("onCreate");
 		// async task handler
-//		this.handler = new BaseHandler(this);
+		this.handler = new BaseHandler(this);
 		// init task pool
-//		this.taskPool = new BaseTaskPool(this);
+		this.taskPool = new BaseTaskPool(this);
 	}
 	
 	@Override
