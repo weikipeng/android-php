@@ -67,8 +67,11 @@ public abstract class BaseSqlite {
 		try {
 			db = dbh.getReadableDatabase();
 			cursor = db.query(tableName(), tableColumns(), where, params, null, null, null);
+			return cursor;
 		} catch (Exception e) {
-			
+			e.printStackTrace();
+		} finally {
+			cursor.close();
 		}
 		return cursor;
 	}
