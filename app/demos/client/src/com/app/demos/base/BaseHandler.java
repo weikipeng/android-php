@@ -8,10 +8,10 @@ import android.os.Message;
 
 public class BaseHandler extends Handler {
 	
-	protected BaseApp app;
+	protected BaseUi ui;
 	
-	public BaseHandler (BaseApp app) {
-		this.app = app;
+	public BaseHandler (BaseUi ui) {
+		this.ui = ui;
 	}
 	
 	public BaseHandler (Looper looper) {
@@ -25,37 +25,37 @@ public class BaseHandler extends Handler {
 			String result;
 			switch (msg.what) {
 				case BaseTask.TASK_COMPLETE:
-					app.hideLoadBar();
+					ui.hideLoadBar();
 					taskId = msg.getData().getInt("task");
 					result = msg.getData().getString("data");
 					if (result != null) {
-						app.onTaskComplete(taskId, AppUtil.getMessage(result));
+						ui.onTaskComplete(taskId, AppUtil.getMessage(result));
 					} else if (!AppUtil.isEmptyInt(taskId)) {
-						app.onTaskComplete(taskId);
+						ui.onTaskComplete(taskId);
 					} else {
-						app.toast(C.err.message);
+						ui.toast(C.err.message);
 					}
 					break;
 				case BaseTask.NETWORK_ERROR:
-					app.hideLoadBar();
+					ui.hideLoadBar();
 					taskId = msg.getData().getInt("task");
-					app.onNetworkError(taskId);
+					ui.onNetworkError(taskId);
 					break;
 				case BaseTask.SHOW_LOADBAR:
-					app.showLoadBar();
+					ui.showLoadBar();
 					break;
 				case BaseTask.HIDE_LOADBAR:
-					app.hideLoadBar();
+					ui.hideLoadBar();
 					break;
 				case BaseTask.SHOW_TOAST:
-					app.hideLoadBar();
+					ui.hideLoadBar();
 					result = msg.getData().getString("data");
-					app.toast(result);
+					ui.toast(result);
 					break;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			app.toast(e.getMessage());
+			ui.toast(e.getMessage());
 		}
 	}
 	

@@ -4,10 +4,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.app.demos.R;
-import com.app.demos.base.BaseWebApp;
+import com.app.demos.base.BaseUiWeb;
 import com.app.demos.base.C;
 
-public class DemoMap extends BaseWebApp {
+public class DemoMap extends BaseUiWeb {
 	
 	private WebView mWebViewMap;
 	

@@ -1,4 +1,4 @@
-package com.app.demos.app;
+package com.app.demos.ui;
 
 import java.util.HashMap;
 
@@ -13,15 +13,15 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.app.demos.R;
-import com.app.demos.base.BaseApp;
 import com.app.demos.base.BaseAuth;
 import com.app.demos.base.BaseMessage;
 import com.app.demos.base.BaseService;
+import com.app.demos.base.BaseUi;
 import com.app.demos.base.C;
 import com.app.demos.model.Customer;
 import com.app.demos.service.NoticeService;
 
-public class AppLogin extends BaseApp {
+public class UiLogin extends BaseUi {
 
 	private EditText mEditName;
 	private EditText mEditPass;
@@ -34,11 +34,11 @@ public class AppLogin extends BaseApp {
 		
 		// check if login
 		if (BaseAuth.isLogin()) {
-			this.forward(AppIndex.class);
+			this.forward(UiIndex.class);
 		}
 		
 		// set view after check login
-		setContentView(R.layout.app_login);
+		setContentView(R.layout.ui_login);
 		
 		// remember password
 		mEditName = (EditText) this.findViewById(R.id.app_login_edit_name);
@@ -125,7 +125,7 @@ public class AppLogin extends BaseApp {
 					// start service
 					BaseService.start(this, NoticeService.class);
 					// turn to index
-					forward(AppIndex.class);
+					forward(UiIndex.class);
 				}
 				break;
 		}

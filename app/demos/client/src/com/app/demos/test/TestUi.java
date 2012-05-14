@@ -1,14 +1,14 @@
 package com.app.demos.test;
 
 import com.app.demos.R;
-import com.app.demos.base.BaseApp;
+import com.app.demos.base.BaseUi;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class TestApp extends BaseApp {
+public class TestUi extends BaseUi {
 	
 	final static int testArrayTask = 1;
 	final static int testArrayListTask = 2;
@@ -18,7 +18,7 @@ public class TestApp extends BaseApp {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.app_test);
+		setContentView(R.layout.ui_test);
 		
 		btnTestArray = (Button) this.findViewById(R.id.app_test_btn_test_array);
 		btnTestArray.setOnClickListener(new OnClickListener() {

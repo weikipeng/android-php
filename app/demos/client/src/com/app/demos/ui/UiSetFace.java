@@ -1,10 +1,10 @@
-package com.app.demos.app;
+package com.app.demos.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.app.demos.R;
-import com.app.demos.auth.AuthApp;
 import com.app.demos.base.BaseMessage;
+import com.app.demos.base.BaseUiAuth;
 import com.app.demos.base.C;
 import com.app.demos.list.GridImageList;
 import com.app.demos.model.Image;
@@ -16,14 +16,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
-public class AppSetFace extends AuthApp {
+public class UiSetFace extends BaseUiAuth {
 	
 	GridView faceGridView = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.app_face);
+		setContentView(R.layout.ui_face);
 
 		// get face image list
 		this.doTaskAsync(C.task.faceList, C.api.faceList);

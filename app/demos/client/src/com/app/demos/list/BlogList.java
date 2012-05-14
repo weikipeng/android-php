@@ -2,7 +2,7 @@ package com.app.demos.list;
 
 import java.util.ArrayList;
 import com.app.demos.R;
-import com.app.demos.base.BaseApp;
+import com.app.demos.base.BaseUi;
 import com.app.demos.base.BaseList;
 import com.app.demos.model.Blog;
 import com.app.demos.util.AppCache;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class BlogList extends BaseList {
 
-	private BaseApp app;
+	private BaseUi ui;
 	private LayoutInflater inflater;
 	private ArrayList<Blog> blogList;
 	
@@ -27,9 +27,9 @@ public class BlogList extends BaseList {
 		public TextView comment;
 	}
 	
-	public BlogList (BaseApp app, ArrayList<Blog> blogList) {
-		this.app = app;
-		this.inflater = LayoutInflater.from(this.app);
+	public BlogList (BaseUi ui, ArrayList<Blog> blogList) {
+		this.ui = ui;
+		this.inflater = LayoutInflater.from(this.ui);
 		this.blogList = blogList;
 	}
 	

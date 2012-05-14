@@ -1,16 +1,15 @@
-package com.app.demos.auth;
+package com.app.demos.base;
 
 import com.app.demos.R;
-import com.app.demos.app.AppBlogs;
-import com.app.demos.app.AppConfig;
-import com.app.demos.app.AppIndex;
-import com.app.demos.app.AppLogin;
-import com.app.demos.base.BaseApp;
 import com.app.demos.base.BaseAuth;
 import com.app.demos.demo.DemoMap;
 import com.app.demos.demo.DemoWeb;
 import com.app.demos.model.Customer;
-import com.app.demos.test.TestApp;
+import com.app.demos.test.TestUi;
+import com.app.demos.ui.UiBlogs;
+import com.app.demos.ui.UiConfig;
+import com.app.demos.ui.UiIndex;
+import com.app.demos.ui.UiLogin;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -21,7 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class AuthApp extends BaseApp {
+public class BaseUiAuth extends BaseUi {
 	
 	private final int MENU_APP_WRITE = 0;
 	private final int MENU_APP_LOGOUT = 1;
@@ -38,7 +37,7 @@ public class AuthApp extends BaseApp {
 		super.onCreate(savedInstanceState);
 		
 		if (!BaseAuth.isLogin()) {
-			this.forward(AppLogin.class);
+			this.forward(UiLogin.class);
 			this.onStop();
 		} else {
 			customer = BaseAuth.getCustomer();
@@ -74,7 +73,7 @@ public class AuthApp extends BaseApp {
 			}
 			case MENU_APP_LOGOUT: {
 				doLogout(); // do logout first
-				forward(AppLogin.class);
+				forward(UiLogin.class);
 				break;
 			}
 			case MENU_APP_ABOUT:
@@ -94,7 +93,7 @@ public class AuthApp extends BaseApp {
 				forward(DemoMap.class);
 				break;
 			case MENU_DEMO_TEST:
-				forward(TestApp.class);
+				forward(TestUi.class);
 				break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -128,13 +127,13 @@ public class AuthApp extends BaseApp {
 				public void onClick(View v) {
 					switch (v.getId()) {
 						case R.id.main_tab_1:
-							forward(AppIndex.class);
+							forward(UiIndex.class);
 							break;
 						case R.id.main_tab_2:
-							forward(AppBlogs.class);
+							forward(UiBlogs.class);
 							break;
 						case R.id.main_tab_3:
-							forward(AppConfig.class);
+							forward(UiConfig.class);
 							break;
 						case R.id.main_tab_4:
 							doEditBlog();

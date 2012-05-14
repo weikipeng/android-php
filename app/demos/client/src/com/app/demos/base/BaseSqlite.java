@@ -25,7 +25,7 @@ public abstract class BaseSqlite {
 			db = dbh.getWritableDatabase();
 			db.insert(tableName(), null, values);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -35,7 +35,7 @@ public abstract class BaseSqlite {
 			db = dbh.getWritableDatabase();
 			db.update(tableName(), values, where, params);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -45,7 +45,7 @@ public abstract class BaseSqlite {
 			db = dbh.getWritableDatabase();
 			db.delete(tableName(), where, params);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -56,7 +56,7 @@ public abstract class BaseSqlite {
 			db = dbh.getReadableDatabase();
 			cursor = db.query(tableName(), columns, where, params, null, null, null);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		return cursor;
 	}
