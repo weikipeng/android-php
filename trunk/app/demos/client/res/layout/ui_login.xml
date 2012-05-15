@@ -60,12 +60,21 @@
 			android:text="@string/login_remember" 
 			android:id="@+id/app_login_check_remember" 
 			android:layout_marginLeft="60dip"/>
-		<Button 
+		<!-- <Button 
 			android:id="@+id/app_login_btn_submit" 
 			android:layout_height="wrap_content" 
 			android:text="@string/login_submit" 
 			android:layout_width="100dip" 
-			android:layout_alignParentRight="true"/>
+			android:layout_alignParentRight="true"/> -->
+		<Button 
+			android:id="@+id/app_login_btn_submit" 
+			android:text="@string/login_submit" 
+			android:layout_width="90dip" 
+			android:layout_height="35dip" 
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:focusable="true"
+			android:background="@drawable/xml_login_btn"/>
 	</RelativeLayout>
 </LinearLayout>
 </merge>
