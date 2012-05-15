@@ -27,7 +27,8 @@ public class HttpUtil {
 			return HttpUtil.NONET_INT;
 		}
 		NetworkInfo info = conn.getActiveNetworkInfo();
-		if (info == null){
+		boolean available = info.isAvailable();
+		if (!available){
 			return HttpUtil.NONET_INT;
 		}
 		// check use wifi
