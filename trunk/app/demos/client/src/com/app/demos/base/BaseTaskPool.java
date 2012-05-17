@@ -56,13 +56,13 @@ public class BaseTaskPool {
 	private class TaskThread implements Runnable {
 		private Context context;
 		private String taskUrl;
-		private HashMap<String, String> taskArg;
+		private HashMap<String, String> taskArgs;
 		private BaseTask baseTask;
 		private int delayTime = 0;
-		public TaskThread(Context context, String taskUrl, HashMap<String, String> taskArg, BaseTask baseTask, int delayTime) {
+		public TaskThread(Context context, String taskUrl, HashMap<String, String> taskArgs, BaseTask baseTask, int delayTime) {
 			this.context = context;
 			this.taskUrl = taskUrl;
-			this.taskArg = taskArg;
+			this.taskArgs = taskArgs;
 			this.baseTask = baseTask;
 			this.delayTime = delayTime;
 		}
@@ -84,11 +84,11 @@ public class BaseTaskPool {
 							client.useWap();
 						}
 						// http get
-						if (taskArg == null) {
+						if (taskArgs == null) {
 							httpResult = client.get();
 						// http post
 						} else {
-							httpResult = client.post(this.taskArg);
+							httpResult = client.post(this.taskArgs);
 						}
 					}
 					// remote task
