@@ -11,8 +11,11 @@ import com.app.demos.util.AppClient;
 
 public class BaseTaskPool {
 	
+	// task thread pool
 	static private ExecutorService taskPool;
-	private Context context; // used for HttpUtil.getNetType
+	
+	// for HttpUtil.getNetType
+	private Context context;
 	
 	public BaseTaskPool (BaseUi ui) {
 		this.context = ui.getContext();
@@ -20,10 +23,10 @@ public class BaseTaskPool {
 	}
 	
 	// http post task with params
-	public void addTask (int taskId, String taskUrl, HashMap<String, String> taskArg, BaseTask baseTask, int delayTime) {
+	public void addTask (int taskId, String taskUrl, HashMap<String, String> taskArgs, BaseTask baseTask, int delayTime) {
 		baseTask.setId(taskId);
 		try {
-			taskPool.execute(new TaskThread(context, taskUrl, taskArg, baseTask, delayTime));
+			taskPool.execute(new TaskThread(context, taskUrl, taskArgs, baseTask, delayTime));
 		} catch (Exception e) {
 			taskPool.shutdown();
 		}
@@ -49,7 +52,8 @@ public class BaseTaskPool {
 		}
 	}
 	
-	public static class TaskThread implements Runnable {
+	// task thread logic
+	private class TaskThread implements Runnable {
 		private Context context;
 		private String taskUrl;
 		private HashMap<String, String> taskArg;
@@ -65,10 +69,9 @@ public class BaseTaskPool {
 		@Override
 		public void run() {
 			try {
-//				Looper.prepare();
 				baseTask.onStart();
 				String httpResult = null;
-				// set timeout
+				// set delay time
 				if (this.delayTime > 0) {
 					Thread.sleep(this.delayTime);
 				}
@@ -98,11 +101,14 @@ public class BaseTaskPool {
 				} catch (Exception e) {
 					baseTask.onError(e.getMessage());
 				}
-				baseTask.onStop();
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-//				Looper.loop();
+				try {
+					baseTask.onStop();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
