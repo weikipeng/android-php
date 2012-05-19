@@ -1,5 +1,7 @@
 package com.app.demos.base;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,77 +14,92 @@ public abstract class BaseSqlite {
 	private static final String DB_NAME = "demos.db";
 	private static final int DB_VERSION = 1;
 	
-	protected Context ctx = null;
-	protected DbHelper dbh = null;
+	private DbHelper dbh = null;
+	private SQLiteDatabase db = null;
+	private Cursor cursor = null;
 	
 	public BaseSqlite(Context context) {
 		dbh = new DbHelper(context, DB_NAME, null, DB_VERSION);
 	}
 
 	public void create (ContentValues values) {
-		SQLiteDatabase db = null;
 		try {
 			db = dbh.getWritableDatabase();
 			db.insert(tableName(), null, values);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			db.close();
 		}
 	}
 	
 	public void update (ContentValues values, String where, String[] params) {
-		SQLiteDatabase db = null;
 		try {
 			db = dbh.getWritableDatabase();
 			db.update(tableName(), values, where, params);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			db.close();
 		}
 	}
 	
 	public void delete (String where, String[] params) {
-		SQLiteDatabase db = null;
 		try {
 			db = dbh.getWritableDatabase();
 			db.delete(tableName(), where, params);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			db.close();
 		}
 	}
 	
-	public Cursor query (String[] columns, String where, String[] params) {
-		SQLiteDatabase db = null;
-		Cursor cursor = null;
-		try {
-			db = dbh.getReadableDatabase();
-			cursor = db.query(tableName(), columns, where, params, null, null, null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return cursor;
-	}
-	
-	public Cursor query (String where, String[] params) {
-		SQLiteDatabase db = null;
-		Cursor cursor = null;
+	public ArrayList<ArrayList<String>> query (String where, String[] params) {
+		ArrayList<ArrayList<String>> rList = new ArrayList<ArrayList<String>>();
 		try {
 			db = dbh.getReadableDatabase();
 			cursor = db.query(tableName(), tableColumns(), where, params, null, null, null);
-			return cursor;
+			while (cursor.moveToNext()) {
+				int i = cursor.getColumnCount();
+				ArrayList<String> rRow = new ArrayList<String>();
+				while (i >= 0) {
+					rRow.add(i, cursor.getString(i));
+				}
+				rList.add(rRow);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			cursor.close();
+			db.close();
 		}
-		return cursor;
+		return rList;
+	}
+	
+	public int count (String where, String[] params) {
+		try {
+			db = dbh.getReadableDatabase();
+			cursor = db.query(tableName(), tableColumns(), where, params, null, null, null);
+			return cursor.getCount();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cursor.close();
+			db.close();
+		}
+		return 0;
 	}
 	
 	public boolean exists (String where, String[] params) {
 		boolean result = false;
-		Cursor cursor = null;
 		try {
-			cursor = this.query(where, params);
-			result = cursor.moveToFirst();
+			int count = this.count(where, params);
+			if (count > 0) {
+				result = true;
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			result = false;
 		} finally {
 			cursor.close();

@@ -20,6 +20,7 @@ import android.widget.SimpleAdapter.ViewBinder;
 
 public class BaseUi extends Activity {
 	
+	protected BaseApp app;
 	protected BaseHandler handler;
 	protected BaseTaskPool taskPool;
 	protected boolean showLoadBar = false;
@@ -35,6 +36,8 @@ public class BaseUi extends Activity {
 		this.handler = new BaseHandler(this);
 		// init task pool
 		this.taskPool = new BaseTaskPool(this);
+		// init application
+		this.app = (BaseApp) this.getApplicationContext();
 	}
 	
 	@Override

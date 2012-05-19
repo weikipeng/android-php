@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 
 import com.app.demos.base.BaseSqlite;
 import com.app.demos.model.Blog;
@@ -78,23 +77,22 @@ public class BlogSqlite extends BaseSqlite {
 
 	public ArrayList<Blog> getAllBlogs () {
 		ArrayList<Blog> blogList = new ArrayList<Blog>();
-		Cursor cursor = null;
 		try {
-			cursor = this.query(null, null);
-			while (cursor.moveToNext()) {
+			ArrayList<ArrayList<String>> rList = this.query(null, null);
+			int rCount = rList.size();
+			for (int i = 0; i < rCount; i++) {
+				ArrayList<String> rRow = rList.get(i);
 				Blog blog = new Blog();
-				blog.setId(cursor.getString(0));
-				blog.setFace(cursor.getString(1));
-				blog.setContent(cursor.getString(2));
-				blog.setComment(cursor.getString(3));
-				blog.setAuthor(cursor.getString(4));
-				blog.setUptime(cursor.getString(5));
+				blog.setId(rRow.get(0));
+				blog.setFace(rRow.get(1));
+				blog.setContent(rRow.get(2));
+				blog.setComment(rRow.get(3));
+				blog.setAuthor(rRow.get(4));
+				blog.setUptime(rRow.get(5));
 				blogList.add(blog);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			cursor.close();
 		}
 		return blogList;
 	}
