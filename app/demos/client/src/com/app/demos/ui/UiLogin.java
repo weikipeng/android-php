@@ -5,6 +5,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,6 +51,8 @@ public class UiLogin extends BaseUi {
 			mEditName.setText(settings.getString("username", ""));
 			mEditPass.setText(settings.getString("password", ""));
 		}
+		
+		// remember checkbox
 		mCheckBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -82,6 +85,7 @@ public class UiLogin extends BaseUi {
 	}
 	
 	private void doTaskLogin() {
+		app.setLong(System.currentTimeMillis());
 		if (mEditName.length() > 0 && mEditPass.length() > 0) {
 			HashMap<String, String> urlParams = new HashMap<String, String>();
 			urlParams.put("name", mEditName.getText().toString());
@@ -120,6 +124,10 @@ public class UiLogin extends BaseUi {
 					e.printStackTrace();
 					toast(e.getMessage());
 				}
+				// login complete
+				long startTime = app.getLong();
+				long loginTime = System.currentTimeMillis() - startTime;
+				Log.w("LoginTime", Long.toString(loginTime));
 				// turn to index
 				if (BaseAuth.isLogin()) {
 					// start service
