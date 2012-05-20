@@ -5,18 +5,15 @@ import com.app.demos.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class BasicDialog {
 
-	private TextView mTextMessage;
-	private ImageView mImageClose;
 	private Dialog mDialog;
+	private TextView mTextMessage;
 
 	public BasicDialog(Context context, Bundle params) {
 		mDialog = new Dialog(context, R.style.com_app_weibo_theme_dialog);
@@ -35,14 +32,6 @@ public class BasicDialog {
 		mTextMessage = (TextView) mDialog.findViewById(R.id.cs_main_dialog_text);
 		mTextMessage.setTextColor(context.getResources().getColor(R.color.gray));
 		mTextMessage.setText(params.getString("text"));
-		
-		mImageClose = (ImageView) mDialog.findViewById(R.id.cs_main_dialog_close);
-		mImageClose.setOnClickListener(new ImageView.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				mDialog.dismiss();
-			}
-		});
 	}
 
 	public void show() {
