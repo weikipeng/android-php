@@ -6,11 +6,11 @@ import java.lang.reflect.Proxy;
 
 import com.app.demos.util.AppUtil;
 
-public class TestHandler implements InvocationHandler {
+public class TestProxy implements InvocationHandler {
 
 	Object testObj;
 	
-	public TestHandler (Object obj) {
+	public TestProxy (Object obj) {
 		testObj = obj;
 	}
 	
@@ -18,7 +18,7 @@ public class TestHandler implements InvocationHandler {
 		return Proxy.newProxyInstance(
 			obj.getClass().getClassLoader(), 
 			obj.getClass().getInterfaces(), 
-			new TestHandler(obj));
+			new TestProxy(obj));
 	}
 	
 	@Override

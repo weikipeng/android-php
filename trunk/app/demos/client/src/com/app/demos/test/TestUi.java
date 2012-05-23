@@ -42,7 +42,7 @@ public class TestUi extends BaseUi {
 		switch (taskId) {
 			case testArrayTask:
 				try {
-					TestDemo td = (TestDemo) TestHandler.init(new TestDemoImpl());
+					TestDemo td = (TestDemo) TestProxy.init(new TestDemoImpl());
 					td.testArray();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +50,7 @@ public class TestUi extends BaseUi {
 				break;
 			case testArrayListTask:
 				try {
-					TestDemo td = (TestDemo) TestHandler.init(new TestDemoImpl());
+					TestDemo td = (TestDemo) TestProxy.init(new TestDemoImpl());
 					td.testArrayList();
 				} catch (Exception e) {
 					e.printStackTrace();
