@@ -15,20 +15,19 @@ public class DemoMap extends BaseUiWeb {
 	public void onStart() {
 		super.onStart();
 		
-		// start loading webview
 		setContentView(R.layout.demo_map);
-		final String centerURL = "javascript:centerAt(31.237141,121.501622);";
+		
 		mWebViewMap = (WebView) findViewById(R.id.web_map);
 		mWebViewMap.getSettings().setJavaScriptEnabled(true);
 		mWebViewMap.setWebViewClient(new WebViewClient(){
 			@Override
 			public void onPageFinished(WebView view, String url){
-				mWebViewMap.loadUrl(centerURL);
+				mWebViewMap.loadUrl("javascript:centerAt(39.907325,116.391455);");
 			}
 		});
 		mWebViewMap.loadUrl(C.web.gomap);
 		
 		this.setWebView(mWebViewMap);
 		this.startWebView();
-	}	
+	}
 }

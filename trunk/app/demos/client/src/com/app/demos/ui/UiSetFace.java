@@ -69,7 +69,7 @@ public class UiSetFace extends BaseUiAuth {
 				}
 				break;
 			case C.task.customerEdit:
-				toast("face has changed.");
+				toast("face has changed");
 				doFinish();
 				break;
 		}

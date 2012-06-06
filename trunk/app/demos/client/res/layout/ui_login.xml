@@ -43,8 +43,8 @@
 			android:textSize="10pt" 
 			android:layout_marginTop="5dip"/>
 		<EditText 
-			android:layout_width="fill_parent" 
 			android:layout_weight="1" 
+			android:layout_width="fill_parent" 
 			android:layout_height="wrap_content" 
 			android:inputType="textPassword" 
 			android:id="@+id/app_login_edit_pass" 
@@ -65,7 +65,8 @@
 			android:layout_height="wrap_content" 
 			android:text="@string/login_submit" 
 			android:layout_width="100dip" 
-			android:layout_alignParentRight="true"/> -->
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"/> -->
 		<Button 
 			android:id="@+id/app_login_btn_submit" 
 			android:text="@string/login_submit" 
