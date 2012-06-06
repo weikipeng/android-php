@@ -9,19 +9,15 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 import android.webkit.JsResult;
-import android.graphics.Bitmap;
 
 abstract public class BaseUiWeb extends BaseUi {
 	
@@ -41,32 +37,12 @@ abstract public class BaseUiWeb extends BaseUi {
 	}
 	
 	public void startWebView() {
+		
 		// bind header and footer
 		this.bindMainTop();
 		this.bindMainTab();
-		// load url link in webview
-		webView.setWebViewClient(new WebViewClient() {
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
-			}
-            @Override  
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                // call on page started
-            	Log.w("BaseWebApp", "onPageStarted");
-            }
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                // call on page finished
-            	Log.w("BaseWebApp", "onPageFinished");
-            }
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Toast.makeText(BaseUiWeb.this, "Get Error : " + description, Toast.LENGTH_SHORT).show();
-            }
-		});
-		// show loading progress bar
+		
+		// customize webview function
 		webView.setWebChromeClient(new WebChromeClient(){
 			@Override
 			public void onProgressChanged(WebView view, int progress){
