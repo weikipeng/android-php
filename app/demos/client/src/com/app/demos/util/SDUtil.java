@@ -101,10 +101,8 @@ public class SDUtil {
 	 * @return
 	 */
 	public static int getFreeSpace() {
-		StatFs stat = new StatFs(Environment.getExternalStorageDirectory()
-				.getPath());
-		double sdFreeMB = ((double) stat.getAvailableBlocks() * (double) stat
-				.getBlockSize()) / MB;
+		StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
+		double sdFreeMB = ((double) stat.getAvailableBlocks() * (double) stat.getBlockSize()) / MB;
 		return (int) sdFreeMB;
 	}
 

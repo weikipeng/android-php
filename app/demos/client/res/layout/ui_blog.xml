@@ -18,13 +18,13 @@
 			android:orientation="vertical">
 			<RelativeLayout 
 				android:layout_width="fill_parent" 
-				android:layout_height="55dip">
+				android:layout_height="60dip">
 				<ImageView android:id="@+id/app_blog_image_face"
 					android:layout_width="50dip" 
 					android:layout_height="50dip" 
 					android:layout_margin="5dip" 
-					android:layout_alignParentLeft="true"
 					android:src="@drawable/face" 
+					android:scaleType="fitXY"
 					android:focusable="false"/>
 				<TextView 
 					android:layout_width="wrap_content" 
