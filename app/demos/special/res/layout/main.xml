@@ -6,10 +6,18 @@
 	<TextView 
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
-		android:text="@string/hello" />
+		android:paddingTop="10dip"
+		android:paddingLeft="5dip"
+		android:paddingBottom="10dip"
+		android:text="Special Demos :" />
 	<Button 
 		android:id="@+id/btn_demo_camera"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
-		android:text="@string/hello" />
+		android:text="Demo Camera" />
+	<Button 
+		android:id="@+id/btn_demo_sensor"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:text="Demo Sensor" />
 </LinearLayout>
