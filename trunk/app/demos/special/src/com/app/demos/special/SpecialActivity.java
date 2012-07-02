@@ -1,4 +1,6 @@
-package com.app.special;
+package com.app.demos.special;
+
+import com.app.demos.special.R;
 
 import android.app.Activity;
 import android.os.Bundle;
