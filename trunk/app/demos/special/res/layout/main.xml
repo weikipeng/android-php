@@ -11,13 +11,28 @@
 		android:paddingBottom="10dip"
 		android:text="Special Demos :" />
 	<Button 
-		android:id="@+id/btn_demo_camera"
+		android:id="@+id/btn_demo_lbs"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
-		android:text="Demo Camera" />
+		android:text="Demo LBS" />
 	<Button 
 		android:id="@+id/btn_demo_sensor"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
 		android:text="Demo Sensor" />
+	<Button 
+		android:id="@+id/btn_demo_camera"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:text="Demo Camera" />
+	<Button 
+		android:id="@+id/btn_demo_media"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:text="Demo Media" />
+	<Button 
+		android:id="@+id/btn_demo_voice"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:text="Demo Voice" />
 </LinearLayout>
