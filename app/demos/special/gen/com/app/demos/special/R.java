@@ -11,13 +11,38 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
+        public static final int btn_common=0x7f020000;
+        public static final int icon=0x7f020001;
+        public static final int play_next=0x7f020002;
+        public static final int play_prev=0x7f020003;
+        public static final int play_start=0x7f020004;
+        public static final int play_stop=0x7f020005;
     }
     public static final class id {
-        public static final int btn_demo_camera=0x7f050000;
+        public static final int btn_demo_camera=0x7f05000c;
+        public static final int btn_demo_lbs=0x7f05000a;
+        public static final int btn_demo_media=0x7f05000d;
+        public static final int btn_demo_sensor=0x7f05000b;
+        public static final int btn_demo_voice=0x7f05000e;
+        public static final int btn_take_photo=0x7f050001;
+        public static final int demo_media_btn_play_next=0x7f050006;
+        public static final int demo_media_btn_play_prev=0x7f050003;
+        public static final int demo_media_btn_play_start=0x7f050004;
+        public static final int demo_media_btn_play_stop=0x7f050005;
+        public static final int demo_media_list_music=0x7f050002;
+        public static final int demo_sensor_text_result=0x7f050007;
+        public static final int demo_voice_btn_start_record=0x7f050008;
+        public static final int list_music_item_text_name=0x7f050009;
+        public static final int view_camera=0x7f050000;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
+        public static final int demo_camera=0x7f030000;
+        public static final int demo_lbs=0x7f030001;
+        public static final int demo_media=0x7f030002;
+        public static final int demo_sensor=0x7f030003;
+        public static final int demo_voice=0x7f030004;
+        public static final int list_music_item=0x7f030005;
+        public static final int main=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

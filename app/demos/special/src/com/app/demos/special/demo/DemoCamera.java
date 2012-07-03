@@ -57,7 +57,7 @@ public class DemoCamera extends Activity {
 	}
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (camera!=null) {
+		if (camera != null) {
 			if (event.getRepeatCount() == 0) {
 				switch (keyCode) {
 					case KeyEvent.KEYCODE_DPAD_CENTER:
@@ -69,7 +69,7 @@ public class DemoCamera extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	private final class CameraSurfaceCallback implements SurfaceHolder.Callback{
+	private final class CameraSurfaceCallback implements SurfaceHolder.Callback {
 		
 		private boolean isPreview;
 		
