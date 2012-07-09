@@ -88,6 +88,7 @@ public class DemoMedia extends Activity {
 				case KeyEvent.KEYCODE_BACK:
 					mediaPlayer.stop();
 					mediaPlayer.release();
+					mediaPlayer = null;
 					break;
 			}
 		}

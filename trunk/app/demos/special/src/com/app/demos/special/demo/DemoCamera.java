@@ -112,6 +112,7 @@ public class DemoCamera extends Activity {
 				if (isPreview) {
 					camera.stopPreview();
 					camera.release();
+					camera = null;
 				}
 			}
 		}
