@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.app.demos.special.R;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -33,8 +34,10 @@ public class DemoVoice extends Activity {
 					intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 					intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Start Record");
 					startActivityForResult(intent, VOICE_RESULT_REQUEST_CODE);
-				} catch (Exception e) {
+				} catch (ActivityNotFoundException e) {
 					Toast.makeText(DemoVoice.this, "Can not find device", Toast.LENGTH_LONG).show();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		});
