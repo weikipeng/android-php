@@ -20,4 +20,9 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" 
 		android:text="Demo 3D" />
+	<Button 
+		android:id="@+id/btn_demo_3d_texture"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:text="Demo 3D Texture" />
 </LinearLayout>
