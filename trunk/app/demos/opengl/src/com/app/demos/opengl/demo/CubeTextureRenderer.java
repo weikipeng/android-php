@@ -3,17 +3,18 @@ package com.app.demos.opengl.demo;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.graphics.Bitmap;
 import android.opengl.GLSurfaceView.Renderer;
 
-public class CubeRenderer implements Renderer {
+public class CubeTextureRenderer implements Renderer {
 	
 	private boolean mTranslucentBackground;
-	private Cube mCube;
+	private CubeTexture mCubeTexture;
 	private float mAngle;
 
-	public CubeRenderer(boolean useTranslucentBackground) {
+	public CubeTextureRenderer(boolean useTranslucentBackground, Bitmap texture) {
 		mTranslucentBackground = useTranslucentBackground;
-		mCube = new Cube();
+		mCubeTexture = new CubeTexture();
 	}
 
 	public void onDrawFrame(GL10 gl) {
@@ -32,11 +33,7 @@ public class CubeRenderer implements Renderer {
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
 		// 绘制立方体
-		mCube.draw(gl);
-		// 新的立方体
-//		gl.glRotatef(mAngle * 2.0f, 0, 1, 1);
-//		gl.glTranslatef(0.5f, 0.5f, 0.5f);
-//		mCube.draw(gl);
+		mCubeTexture.draw(gl);
 		// 角度增量
 		mAngle += 1.2f;
 	}
@@ -48,6 +45,9 @@ public class CubeRenderer implements Renderer {
 		gl.glMatrixMode(GL10.GL_PROJECTION);
 		gl.glLoadIdentity();
 		gl.glFrustumf(-ratio, ratio, -1, 1, 1, 10);
+		// 重置不雅察矩阵
+		gl.glMatrixMode(GL10.GL_MODELVIEW);
+		gl.glLoadIdentity();
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -63,6 +63,8 @@ public class CubeRenderer implements Renderer {
 		} else {
 			gl.glClearColor(1, 1, 1, 1);
 		}
+		// 初始化纹理
+		mCubeTexture.init(gl);
 	}
 
 }
