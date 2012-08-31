@@ -1,0 +1,298 @@
+package com.man.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.PointF;
+import android.os.Handler;
+
+import com.man.SceneMenu;
+import com.man.cfg.CFG;
+import com.man.entity.Man;
+import com.man.entity.PeopleMoveException;
+import com.man.entity.UglyWoman;
+import com.man.entity.Woman;
+import com.man.entity.WomanFactory;
+import com.man.plug.AlertGame;
+import com.man.plug.MsgScore;
+import com.man.util.GameUtil;
+import com.man.view.GameView;
+
+/**
+ * 游戏控制器
+ */
+public class Controller implements Runnable {
+
+	/**
+	 * 游戏是否运行
+	 */
+	protected boolean live = false;
+	
+	/**
+	 * 男人
+	 */
+	protected Man man;
+
+	/**
+	 * 女人们
+	 */
+	private List<Woman> women;
+
+	/**
+	 * 男人图片
+	 */
+	private Bitmap manImage = null;
+	
+	/**
+	 * 女人图片
+	 */
+	private Bitmap womanImage = null;
+	
+	/**
+	 * 游戏画布
+	 */
+	private GameView gameView;
+
+	/**
+	 * Handler
+	 */
+	private Handler handler;
+
+	/**
+	 * Context
+	 */
+	private Context context;
+	
+	/**
+	 * Handler
+	 */
+	private Activity activity;
+	
+	/**
+	 * 时间提示器
+	 */
+	private MsgScore msgScore;
+
+	/**
+	 * 构造一个控制器
+	 */
+	public Controller(Activity activity) {
+		this.handler = new Handler();
+		this.activity = activity;
+		this.context = activity;
+	}
+
+	/**
+	 * 游戏时间<br/>
+	 * 单位：秒
+	 */
+	private float gameTime = 0;
+
+	/**
+	 * 画出所有人
+	 * 
+	 * @param canvas
+	 *            画布
+	 */
+	public void drawAll(Canvas canvas) {
+		// 优化锯齿
+		PaintFlagsDrawFilter pfd = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
+		canvas.setDrawFilter(pfd);
+		
+		// 画出男人
+		man.drawMe(canvas);
+
+		// 画出女人们
+		for (Woman woman : women) {
+			woman.drawMe(canvas);
+		}
+
+		// 画出时间提示器
+		msgScore.drawMe(canvas);
+	}
+
+	public void setMan(Man man) {
+		this.man = man;
+	}
+
+	public void setWomen(List<Woman> women) {
+		this.women = women;
+	}
+
+	public void setManImage(Bitmap bm) {
+		this.manImage = bm;
+	}
+	
+	public void setWomanImage(Bitmap bm) {
+		this.womanImage = bm;
+	}
+	
+	public void setGameView(GameView gameView) {
+		this.gameView = gameView;
+	}
+
+	/**
+	 * 这里放置女人移动的方法
+	 */
+	@Override
+	public void run() {
+		handler.postDelayed(this, CFG.DELAY_TIME);
+
+		// 计时
+		gameTime += CFG.DELAY_TIME / 1000.0;
+		msgScore.setTime((int) gameTime);
+
+		// 移动男人
+		man.move();
+		
+		// 需要移除的
+		List<Woman> removeWomen = null;
+		
+		// 移动女人们
+		for (Woman woman : women) {
+			try {
+				woman.move();
+			} catch (PeopleMoveException e) {
+				// 如果这个女人出去了
+				if (removeWomen == null) {
+					removeWomen = new ArrayList<Woman>();
+				}
+				removeWomen.add(woman);
+			}
+		}
+
+		// 移除出界的
+		if (removeWomen != null) {
+			
+			women.removeAll(removeWomen);
+		}
+
+		// 再添加几个
+		if (women.size() < CFG.GAME_LEVEL[((int) (gameTime / 10))
+				% CFG.GAME_LEVEL.length]) {
+			int tmpCount = CFG.GAME_LEVEL[((int) (gameTime / 10))
+					% CFG.GAME_LEVEL.length]
+					- women.size();
+			for (int i = 0; i < tmpCount; i++) {
+				Woman woman = WomanFactory.getWoman();
+				woman.setImage(womanImage);
+				woman.lookPeople(man);
+				women.add(woman);
+			}
+		}
+
+		// 画面重画
+		gameView.redraw();
+
+		// 检测碰撞
+		checkCollide();
+	}
+
+	/**
+	 * 对所有的人物检测碰撞
+	 */
+	private void checkCollide() {
+		// 如果丑女人碰撞了男人则游戏结束
+		for (Woman woman : women) {
+			if (woman.collide(man)) {
+				if (woman instanceof UglyWoman) {
+//					pauseGame();
+					endGame(true);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 新游戏
+	 */
+	public void newGame() {
+		// 产生男人
+		man = new Man();
+		man.setImage(manImage); // 设置图片
+		man.setLocation(new PointF(120, 150));
+
+		// 产生一个女人
+		women = new ArrayList<Woman>();
+		Woman woman = WomanFactory.getWoman();
+		woman.setImage(womanImage); // 设置图片
+		woman.lookPeople(man); // 让女人看向男人
+		women.add(woman);
+
+		// 计时
+		gameTime = 0;
+
+		// 创建一个时间提示器
+		msgScore = new MsgScore();
+		msgScore.setTime((int) gameTime);
+		msgScore.setScore(GameUtil.getHighScore(activity));
+
+		// 开始
+		startGame();
+	}
+
+	/**
+	 * 开始游戏
+	 */
+	public void startGame() {
+		handler.removeCallbacks(this);
+		handler.post(this);
+		live = true;
+	}
+
+	/**
+	 * 暂停游戏
+	 */
+	public void pauseGame() {
+		handler.removeCallbacks(this);
+		live = false;
+	}
+	
+	/**
+	 * 结束游戏
+	 * @param showDialog
+	 */
+	public void endGame(boolean showDialog) {
+		// 记录分数
+		int thisScore = (int) gameTime;
+		int highScore = GameUtil.getHighScore(activity);
+		if (thisScore > highScore) {
+			highScore = thisScore;
+			GameUtil.setHighScore(activity, thisScore);
+		}
+		
+		handler.removeCallbacks(this);
+		live = false;
+
+		if (showDialog) {
+			AlertGame alertGame = new AlertGame(context);
+			alertGame.setScore(thisScore);
+			alertGame.setHighScore(highScore);
+			alertGame.setBtnCallback(new AlertGame.BtnCallback(){
+				@Override
+				public void onRestart() {
+					newGame();
+				}
+				@Override
+				public void onBack() {
+					GameUtil.forward(activity, SceneMenu.class);
+				}
+			});
+			alertGame.show();
+		}
+	}
+	
+	/**
+	 * 是否正在运行
+	 * @return
+	 */
+	public boolean isLive() {
+		return live;
+	}
+}
