@@ -35,7 +35,7 @@ public class DownLoadDemo extends Activity {
 		});
 		// 点击下载
 		btnD = (Button) findViewById(R.id.btnDownLoad);
-		btnD.setText("点击后下载");
+		btnD.setText("点击下载");
 		btnD.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
