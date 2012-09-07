@@ -19,7 +19,7 @@ public class DownLoadDemo extends Activity {
 		// 下载配置
 		String downloadUrl = "http://116.211.21.79/files/GamePlus_v1.5.0.4_20120525.apk";
 //		String downloadUrl = "http://116.211.21.79/files/GamePlus.apk";
-		String saveFileName = "MoSecurity.apk";
+		String saveFileName = "GamePlus.apk";
 		final DownloadView dv = new DownloadView(this, downloadUrl, saveFileName);
 		dv.setDownloadListener(new DownloadView.DownloadListener(){
 			@Override
