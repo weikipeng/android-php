@@ -35,6 +35,7 @@ public class DownloadView extends AlertDialog {
 	private static final int MSG_HALT = 3;
 	
 	private String URL = null; // 下载地址
+	private int TIMEOUT = 10000; // 下载超时
 	private String SD_PATH = null; // 保存路径
 	private String SD_FILE = null; // 保存文件
 	private String downloadFile = null;
@@ -216,7 +217,7 @@ public class DownloadView extends AlertDialog {
 				// 打开下载地址
 				URL myUrl = new URL(URL);
 				URLConnection connection = myUrl.openConnection();
-				connection.setConnectTimeout(10000);
+				connection.setConnectTimeout(TIMEOUT);
 				connection.connect();
 				// 得到访问内容并保存在输入流中
 				is = connection.getInputStream();
