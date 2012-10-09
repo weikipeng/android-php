@@ -17,19 +17,19 @@ public class DownLoadDemo extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		// 下载配置
-		String downloadUrl = "http://116.211.21.79/files/GamePlus_v1.5.0.4_20120525.apk";
-//		String downloadUrl = "http://116.211.21.79/files/GamePlus.apk";
+		String downloadUrl = "http://116.211.28.9/d/gpall.apk";
+//		String downloadUrl = "http://116.211.28.9/d/unknown.apk";
 		String saveFileName = "GamePlus.apk";
 		final DownloadView dv = new DownloadView(this, downloadUrl, saveFileName);
 		dv.setDownloadListener(new DownloadView.DownloadListener(){
 			@Override
 			public void onComplete(String downloadFile) {
-				Log.e("DownloadDemo", downloadFile);
+				Log.e("DownloadDemo", "onComplete:" + downloadFile);
 //				dv.install();
 			}
 			@Override
 			public void onError(String errorMsg) {
-				Log.e("DownloadDemo", errorMsg);
+				Log.e("DownloadDemo", "onError:" + errorMsg);
 				dv.halt();
 			}
 		});

@@ -95,9 +95,6 @@ public class DownloadView extends AlertDialog {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// 初始化UI
-//		setContentView(R.layout.download_view);
-//		txtShow = (TextView) findViewById(R.id.txtStatus);
-//		barShow = (ProgressBar) findViewById(R.id.progressBar);
 		DownloadLayout layout = new DownloadLayout(context);
 		setContentView(layout);
 		txtShow = layout.getTextView();
@@ -219,6 +216,7 @@ public class DownloadView extends AlertDialog {
 				// 打开下载地址
 				URL myUrl = new URL(URL);
 				URLConnection connection = myUrl.openConnection();
+				connection.setConnectTimeout(10000);
 				connection.connect();
 				// 得到访问内容并保存在输入流中
 				is = connection.getInputStream();
