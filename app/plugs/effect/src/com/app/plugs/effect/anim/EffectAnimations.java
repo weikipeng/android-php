@@ -16,6 +16,10 @@ public class EffectAnimations {
 	// default duration time
 	private static int ti = 300;
 	
+	public static void setDuration(int ms) {
+		ti = ms;
+	}
+	
 	public static AnimationSet getUpIn() {
 		AnimationSet set = new AnimationSet(true);
 		Animation ta = new TranslateAnimation(rtp, 0f, rtp, 0f, rtp, 1.0f, rtp, 0f);
