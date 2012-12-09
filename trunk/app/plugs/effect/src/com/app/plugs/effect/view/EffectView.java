@@ -16,6 +16,8 @@ public class EffectView extends ViewFlipper {
 	public static int ANI_SCALE = 5;
 	public static int ANI_FADE = 6;
 	
+	private int currAnim = 0;
+	
 	public EffectView(Context context) {
 		super(context);
 	}
@@ -24,8 +26,9 @@ public class EffectView extends ViewFlipper {
 		super(context, attrs);
 	}
 	
-	public void setAnimation(int ani) {
-		switch (ani) {
+	public void setAnimation(int anim) {
+		currAnim = anim;
+		switch (anim) {
 			case 0:
 				this.setInAnimation(EffectAnimations.getUpIn());
 				this.setOutAnimation(EffectAnimations.getUpOut());
@@ -55,6 +58,11 @@ public class EffectView extends ViewFlipper {
 				this.setOutAnimation(EffectAnimations.getFadeOut());
 				break;
 		}
+	}
+	
+	public void setDuration(int ms) {
+		EffectAnimations.setDuration(ms);
+		setAnimation(currAnim);
 	}
 	
 	public void setInterval(int ms) {
