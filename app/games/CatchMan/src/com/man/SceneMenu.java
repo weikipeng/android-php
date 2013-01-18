@@ -22,6 +22,14 @@ public class SceneMenu extends Activity {
 			}
 		});
 		
+		Button btnEnter = (Button) this.findViewById(R.id.btn_enter);
+		btnEnter.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				enterHall();
+			}
+		});
+		
 		Button btnBack = (Button) this.findViewById(R.id.btn_back);
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -33,6 +41,10 @@ public class SceneMenu extends Activity {
 	
 	public void startGame() {
 		GameUtil.forward(this, SceneGame.class);
+	}
+	
+	public void enterHall() {
+		GameUtil.forward(this, SceneHall.class);
 	}
 	
 	public void quitGame() {

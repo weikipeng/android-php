@@ -34,6 +34,14 @@
         />
 
     <Button
+        android:id="@+id/btn_enter"
+        android:layout_width="80dip"
+        android:layout_height="40dip"
+        android:text="@string/netGame" 
+        android:textSize="12dip"
+        />
+    
+    <Button
         android:id="@+id/btn_back"
         android:layout_width="80dip"
         android:layout_height="40dip"
