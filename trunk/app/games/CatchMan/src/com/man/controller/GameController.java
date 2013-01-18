@@ -9,15 +9,26 @@ import android.view.View.OnTouchListener;
 /**
  * ¼üÅÌ¿ØÖÆÆ÷
  */
-public class ControllerKey extends Controller implements OnTouchListener {
+public class GameController extends BaseController implements OnTouchListener {
 
-	public ControllerKey(Activity activity) {
+	public GameController(Activity activity) {
 		super(activity);
 	}
-
+	
+	/**
+	 * ÓÎÏ·Ö÷Âß¼­
+	 */
+	@Override
+	public void run() {
+		runGame();
+	}
+	
+	/**
+	 * ÓÃ»§²Ù¿ØÂß¼­
+	 */
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		if (live) {
+		if (this.isLive()) {
 			float x = event.getX();
 			float y = event.getY();
 			PointF direction = new PointF(x, y);

@@ -27,12 +27,7 @@ import com.man.view.GameView;
 /**
  * 游戏控制器
  */
-public class Controller implements Runnable {
-
-	/**
-	 * 游戏是否运行
-	 */
-	protected boolean live = false;
+public class BaseController implements Runnable {
 	
 	/**
 	 * 男人
@@ -57,74 +52,63 @@ public class Controller implements Runnable {
 	/**
 	 * 游戏画布
 	 */
-	private GameView gameView;
+	protected GameView gameView;
 
 	/**
 	 * Handler
 	 */
-	private Handler handler;
+	protected Handler handler;
 
 	/**
 	 * Context
 	 */
-	private Context context;
+	protected Context context;
 	
 	/**
 	 * Handler
 	 */
-	private Activity activity;
+	protected Activity activity;
 	
 	/**
 	 * 时间提示器
 	 */
-	private MsgScore msgScore;
+	protected MsgScore msgScore;
 
+	/**
+	 * 游戏时间（秒）
+	 */
+	protected float gameTime = 0;
+	
+	/**
+	 * 游戏是否运行
+	 */
+	private boolean live = false;
+	
 	/**
 	 * 构造一个控制器
 	 */
-	public Controller(Activity activity) {
+	public BaseController(Activity activity) {
 		this.handler = new Handler();
 		this.activity = activity;
 		this.context = activity;
 	}
 
 	/**
-	 * 游戏时间<br/>
-	 * 单位：秒
+	 * 是否正在运行
+	 * @return
 	 */
-	private float gameTime = 0;
-
+	public void setLive(boolean value) {
+		live = value;
+	}
+	
 	/**
-	 * 画出所有人
-	 * 
-	 * @param canvas
-	 *            画布
+	 * 是否正在运行
+	 * @return
 	 */
-	public void drawAll(Canvas canvas) {
-		// 优化锯齿
-		PaintFlagsDrawFilter pfd = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
-		canvas.setDrawFilter(pfd);
-		
-		// 画出男人
-		man.drawMe(canvas);
-
-		// 画出女人们
-		for (Woman woman : women) {
-			woman.drawMe(canvas);
-		}
-
-		// 画出时间提示器
-		msgScore.drawMe(canvas);
+	public boolean isLive() {
+		return live;
 	}
-
-	public void setMan(Man man) {
-		this.man = man;
-	}
-
-	public void setWomen(List<Woman> women) {
-		this.women = women;
-	}
-
+	
 	public void setManImage(Bitmap bm) {
 		this.manImage = bm;
 	}
@@ -138,92 +122,183 @@ public class Controller implements Runnable {
 	}
 
 	/**
-	 * 这里放置女人移动的方法
+	 * 重绘所有人
+	 */
+	public void drawAll(Canvas canvas) {
+		// 优化锯齿
+		PaintFlagsDrawFilter pfd = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
+		canvas.setDrawFilter(pfd);
+		
+		// 画出男人
+		man.drawMe(canvas);
+
+		// 画出女人们
+		if (women.size() > 0) {
+			for (Woman woman : women) {
+				woman.drawMe(canvas);
+			}
+		}
+
+		// 画出时间提示器
+		msgScore.drawMe(canvas);
+	}
+	
+	/**
+	 * 游戏主逻辑
 	 */
 	@Override
 	public void run() {
+		// 在子类里实现
+	}
+
+	/**
+	 * 单机游戏主逻辑
+	 */
+	protected void runGame() {
+		// 定时执行
 		handler.postDelayed(this, CFG.DELAY_TIME);
 
-		// 计时
+		// 游戏计时
 		gameTime += CFG.DELAY_TIME / 1000.0;
 		msgScore.setTime((int) gameTime);
-
+		
 		// 移动男人
 		man.move();
 		
-		// 需要移除的
-		List<Woman> removeWomen = null;
+		// 移除出界女人
+		removeWomen();
+
+		// 产生若干个女人
+		createWomen();
 		
-		// 移动女人们
-		for (Woman woman : women) {
-			try {
-				woman.move();
-			} catch (PeopleMoveException e) {
-				// 如果这个女人出去了
-				if (removeWomen == null) {
-					removeWomen = new ArrayList<Woman>();
-				}
-				removeWomen.add(woman);
-			}
-		}
-
-		// 移除出界的
-		if (removeWomen != null) {
-			
-			women.removeAll(removeWomen);
-		}
-
-		// 再添加几个
-		if (women.size() < CFG.GAME_LEVEL[((int) (gameTime / 10))
-				% CFG.GAME_LEVEL.length]) {
-			int tmpCount = CFG.GAME_LEVEL[((int) (gameTime / 10))
-					% CFG.GAME_LEVEL.length]
-					- women.size();
-			for (int i = 0; i < tmpCount; i++) {
-				Woman woman = WomanFactory.getWoman();
-				woman.setImage(womanImage);
-				woman.lookPeople(man);
-				women.add(woman);
-			}
-		}
-
-		// 画面重画
+		// 重绘画面
+		// GameView.redraw -> GameView.onDraw -> Controller.drawAll
 		gameView.redraw();
 
 		// 检测碰撞
 		checkCollide();
 	}
+	
+	/**
+	 * 网络游戏主逻辑
+	 */
+	protected void runNetGame() {
+		// 定时执行
+		handler.postDelayed(this, CFG.DELAY_TIME);
 
+		// 游戏计时
+		gameTime += CFG.DELAY_TIME / 1000.0;
+		msgScore.setTime((int) gameTime);
+		
+		// 移动男人
+		man.move();
+		
+		// 移除出界女人
+		removeWomen();
+		
+		// 重绘画面
+		// GameView.redraw -> GameView.onDraw -> Controller.drawAll
+		gameView.redraw();
+
+		// 检测碰撞
+		checkCollide();
+	}
+	
 	/**
 	 * 对所有的人物检测碰撞
 	 */
 	private void checkCollide() {
 		// 如果丑女人碰撞了男人则游戏结束
-		for (Woman woman : women) {
-			if (woman.collide(man)) {
-				if (woman instanceof UglyWoman) {
-//					pauseGame();
-					endGame(true);
+		if (women.size() > 0) {
+			for (Woman woman : women) {
+				if (woman.collide(man)) {
+					if (woman instanceof UglyWoman) {
+						endGame(true);
+					}
 				}
 			}
 		}
 	}
-
-	/**
-	 * 新游戏
-	 */
-	public void newGame() {
+	
+	protected Man newMan() {
 		// 产生男人
 		man = new Man();
 		man.setImage(manImage); // 设置图片
 		man.setLocation(new PointF(120, 150));
-
-		// 产生一个女人
-		women = new ArrayList<Woman>();
+		return man;
+	}
+	
+	protected Man newMan(float x, float y) {
+		// 产生男人
+		man = new Man();
+		man.setImage(manImage); // 设置图片
+		man.setLocation(new PointF(x, y));
+		return man;
+	}
+	
+	protected Woman newWoman() {
 		Woman woman = WomanFactory.getWoman();
 		woman.setImage(womanImage); // 设置图片
 		woman.lookPeople(man); // 让女人看向男人
+		return woman;
+	}
+	
+	protected Woman newWoman(float x, float y) {
+		Woman woman = WomanFactory.getWoman(x, y);
+		woman.setImage(womanImage); // 设置图片
+		woman.lookPeople(man); // 让女人看向男人
+		return woman;
+	}
+	
+	protected void addWoman(Woman woman) {
 		women.add(woman);
+	}
+	
+	protected void createWomen() {
+		// AI逻辑：产生若干个女人
+		if (women.size() < CFG.GAME_LEVEL[((int) (gameTime / 10)) % CFG.GAME_LEVEL.length]) {
+			int tmpCount = CFG.GAME_LEVEL[((int) (gameTime / 10)) % CFG.GAME_LEVEL.length] - women.size();
+			for (int i = 0; i < tmpCount; i++) {
+				women.add(newWoman());
+			}
+		}
+	}
+	
+	protected void removeWomen() {
+		// 需要移除的
+		List<Woman> removeWomen = null;
+		
+		// 移动女人们
+		if (women.size() > 0) {
+			for (Woman woman : women) {
+				try {
+					woman.move();
+				} catch (PeopleMoveException e) {
+					// 如果这个女人出界了
+					if (removeWomen == null) {
+						removeWomen = new ArrayList<Woman>();
+					}
+					removeWomen.add(woman);
+				}
+			}
+		}
+		
+		// 移除出界的
+		if (removeWomen != null) {
+			women.removeAll(removeWomen);
+		}
+	}
+	
+	/**
+	 * 新游戏
+	 */
+	public void newGame() {
+		// 产生一个男人
+		man = newMan();
+
+		// 产生一个女人
+		women = new ArrayList<Woman>();
+//		women.add(newWoman());
 
 		// 计时
 		gameTime = 0;
@@ -243,7 +318,7 @@ public class Controller implements Runnable {
 	public void startGame() {
 		handler.removeCallbacks(this);
 		handler.post(this);
-		live = true;
+		setLive(true);
 	}
 
 	/**
@@ -251,7 +326,7 @@ public class Controller implements Runnable {
 	 */
 	public void pauseGame() {
 		handler.removeCallbacks(this);
-		live = false;
+		setLive(false);
 	}
 	
 	/**
@@ -268,7 +343,7 @@ public class Controller implements Runnable {
 		}
 		
 		handler.removeCallbacks(this);
-		live = false;
+		setLive(false);
 
 		if (showDialog) {
 			AlertGame alertGame = new AlertGame(context);
@@ -286,13 +361,5 @@ public class Controller implements Runnable {
 			});
 			alertGame.show();
 		}
-	}
-	
-	/**
-	 * 是否正在运行
-	 * @return
-	 */
-	public boolean isLive() {
-		return live;
 	}
 }

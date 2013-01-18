@@ -11,27 +11,27 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class AlertGame extends AlertDialog {
+public class AlertNetGame extends AlertDialog {
 
 	Window window;
 	Context context;
 	BtnCallback callback;
 	
-	int score = 0;
-	int hscore = 0;
+	String winner = "";
+	int wscore = 0;
 	
-	public AlertGame(Context context) {
+	public AlertNetGame(Context context) {
 		super(context);
 		this.context = context;
 		this.window = this.getWindow();
 	}
 	
-	public void setScore (int score) {
-		this.score = score;
+	public void setWinner (String winner) {
+		this.winner = winner;
 	}
 	
-	public void setHighScore (int hscore) {
-		this.hscore = hscore;
+	public void setWinScore (int wscore) {
+		this.wscore = wscore;
 	}
 	
 	public void setBtnCallback (BtnCallback callback) {
@@ -41,42 +41,28 @@ public class AlertGame extends AlertDialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.alert_game);
+		setContentView(R.layout.alert_netgame);
 		
-		TextView textScoreVal = (TextView) window.findViewById(R.id.text_score_val);
-		textScoreVal.setText("" + score);
+		TextView textWinnerVal = (TextView) window.findViewById(R.id.text_winner_val);
+		textWinnerVal.setText("" + winner);
 		
-		TextView textHScoreVal = (TextView) window.findViewById(R.id.text_hscore_val);
-		textHScoreVal.setText("" + hscore);
+		TextView textWScoreVal = (TextView) window.findViewById(R.id.text_wscore_val);
+		textWScoreVal.setText("" + wscore);
 		
-		Button btnRestart = (Button) window.findViewById(R.id.btn_restart);
+		Button btnRestart = (Button) window.findViewById(R.id.btn_quitgame);
 		btnRestart.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (callback != null) {
-					callback.onRestart();
+					callback.onQuit();
 				}
 				dismiss(); // ¹Ø±Õ
 			}
 		});
-		
-		Button btnBack = (Button) window.findViewById(R.id.btn_back);
-		btnBack.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (callback != null) {
-					callback.onBack();
-				}
-				dismiss(); // ¹Ø±Õ
-			}
-		});
-		
-		
 	}
 	
 	public interface BtnCallback {
-		public void onRestart();
-		public void onBack();
+		public void onQuit();
 	}
 	
 	@Override

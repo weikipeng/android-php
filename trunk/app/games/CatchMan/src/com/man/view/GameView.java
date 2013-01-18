@@ -1,6 +1,6 @@
 package com.man.view;
 
-import com.man.controller.ControllerKey;
+import com.man.controller.GameController;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -15,7 +15,7 @@ public class GameView extends View {
 	/**
 	 * 控制器
 	 */
-	private ControllerKey controller;
+	private GameController controller;
 	
 	/**
 	 * 处理画面更新的线程
@@ -38,7 +38,7 @@ public class GameView extends View {
 		updateThread = new Runnable() {
 			@Override
 			public void run() {
-				//更新画面
+				// 更新画面
 				postInvalidate();
 				handler.removeCallbacks(updateThread);
 			}
@@ -47,15 +47,16 @@ public class GameView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		// 重绘逻辑
 		controller.drawAll(canvas);
 		super.onDraw(canvas);
 	}
 
-	public ControllerKey getController() {
+	public GameController getController() {
 		return controller;
 	}
 
-	public void setController(ControllerKey controller) {
+	public void setController(GameController controller) {
 		this.controller = controller;
 	}
 	

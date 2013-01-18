@@ -1,6 +1,6 @@
 package com.man;
 
-import com.man.controller.GameController;
+import com.man.controller.NetGameController;
 import com.man.view.GameView;
 
 import android.app.Activity;
@@ -20,7 +20,7 @@ import android.view.WindowManager;
 /**
  * 主activity类
  */
-public class SceneGame extends Activity {
+public class SceneNetGame extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,7 +68,7 @@ public class SceneGame extends Activity {
 	/**
 	 * 控制器
 	 */
-	private GameController controller;
+	private NetGameController controller;
 
 	/**
 	 * 游戏面板
@@ -107,7 +107,8 @@ public class SceneGame extends Activity {
 	 */
 	private void initGame() {
 		// 创建控制器及游戏面板对象
-		controller = new GameController(this);
+		Bundle args = this.getIntent().getExtras();
+		controller = new NetGameController(this, args);
 		gameView = new GameView(this);
 		controller.setGameView(gameView);
 		// 设置控制器的初始资源

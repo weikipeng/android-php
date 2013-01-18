@@ -60,7 +60,7 @@
         android:layout_height="40dip"
         android:layout_below="@id/text_hscore_key"
         android:layout_marginRight="10dip"
-        android:text="@string/newGame" 
+        android:text="@string/restartGame" 
         android:textSize="12dip"
         />
 

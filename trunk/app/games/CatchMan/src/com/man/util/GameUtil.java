@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 
 public final class GameUtil {
 	
@@ -24,6 +25,17 @@ public final class GameUtil {
 		Intent intent = new Intent();
 		intent.setClass(activity, target);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		activity.startActivity(intent);
+		// 关闭切换动画效果
+		activity.overridePendingTransition(0, 0);
+		activity.finish();
+	}
+	
+	public static void forward (Activity activity, Class<?> classObj, Bundle params) {
+		Intent intent = new Intent();
+		intent.setClass(activity, classObj);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.putExtras(params);
 		activity.startActivity(intent);
 		// 关闭切换动画效果
 		activity.overridePendingTransition(0, 0);
