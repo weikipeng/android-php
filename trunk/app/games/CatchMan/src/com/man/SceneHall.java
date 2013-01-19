@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.man.net.GameClient;
+import com.man.net.GameClientListener;
 import com.man.util.GameUtil;
 
 import android.app.Activity;
@@ -19,7 +20,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SceneHall extends Activity {
 	
@@ -28,6 +28,7 @@ public class SceneHall extends Activity {
 	private GameClient client = null;
 	
 	private Button btnCreateRoom = null;
+	private TextView textUsername = null;
 	private LinearLayout listAllRooms = null;
 	
 	private LayoutInflater inflater = null;
@@ -38,76 +39,18 @@ public class SceneHall extends Activity {
 		setContentView(R.layout.scene_hall);
 		
 		inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+		textUsername = (TextView) this.findViewById(R.id.scene_hall_username);
 		listAllRooms = (LinearLayout) this.findViewById(R.id.list_all_rooms);
 		
 		// init game client
 		client = new GameClient();
-		client.setListener(new GameClient.Listener() {
-			@Override
-			public void onConnect() {
-				Log.w(TAG, "onConnect:" + client.getClientId());
-				client.login(client.getClientId());
-				client.updateRooms();
-			}
-			@Override
-			public void onMessage(String event, JSONArray arguments) {
-				Log.w(TAG, "onMessage:" + arguments.toString());
-			}
-			@Override
-			public void onDisconnect(int code, String reason) {
-				Log.w(TAG, "onDisconnect:" + code);
-			}
-			@Override
-			public void onError(Exception error) {
-				Log.w(TAG, "onError:" + error.getMessage());
-			}
-			@Override
-			public void onLogin(String event, JSONArray arguments) {
-				Log.w(TAG, "onConnect:" + arguments.toString());
-				Toast.makeText(SceneHall.this, arguments.toString(), Toast.LENGTH_SHORT).show();
-			}
-			@Override
-			public void onJoinRoom(String event, JSONArray arguments) {
-				Log.w(TAG, "onJoinRoom:" + arguments.toString());
-				client.updateRooms();
-				String userId = null;
-				String roomId = null;
-				try {
-					userId = arguments.getString(0);
-					roomId = arguments.getString(1);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				// create and enter the room
-				if (userId != null && roomId != null) {
-					if (roomId.equalsIgnoreCase(client.getClientId())) {
-						enterRoom(roomId);
-					}
-				}
-			}
-			@Override
-			public void onLeaveRoom(String event, JSONArray arguments) {
-				Log.w(TAG, "onLeaveRoom:" + arguments.toString());
-			}
-			@Override
-			public void onSendRoomMsg(String event, JSONArray arguments) {
-				Log.w(TAG, "onGetRoomMsg:" + arguments.toString());
-			}
-			@Override
-			public void onUpdateRooms(String event, JSONArray arguments) {
-				Log.w(TAG, "onUpdateRooms:" + arguments.toString());
-				// update room list
-				updateRoomList(arguments);
-			}
-			@Override
-			public void onGetRoomUsers(String event, JSONArray arguments) {
-				Log.w(TAG, "onGetRoomUsers:" + arguments.toString());
-			}
-		});
+		client.setListener(new SceneHallListener());
+		textUsername.setText("Welcome, User " + client.getClientId()); // set default user name
 		
 		// update room list
 		if (client.isConnected()) {
 			client.updateRooms();
+			client.updateRoomStatus();
 		}
 		
 		// create host
@@ -192,6 +135,84 @@ public class SceneHall extends Activity {
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void updateRoomStatus (JSONArray arguments) {
+		JSONObject roomStatus = null;
+		try {
+			roomStatus = new JSONObject((String) arguments.get(0));
+			if (roomStatus != null) {
+				int roomCount = listAllRooms.getChildCount();
+				for (int i=0; i<roomCount; i++) {
+					View view = listAllRooms.getChildAt(i);
+					TextView tv1 = (TextView) view.findViewById(R.id.scene_hall_room_name);
+					String roomId = tv1.getTag().toString();
+					TextView tv2 = (TextView) view.findViewById(R.id.scene_hall_room_status);
+					String status = roomStatus.getString(roomId);
+					if (status.equalsIgnoreCase("0")) {
+						tv2.setText("waiting");
+					} else if (status.equalsIgnoreCase("1")) {
+						tv2.setText("playing");
+						tv1.setOnClickListener(null); // prevent click
+					} else {
+						tv2.setText("--");
+					}
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private class SceneHallListener extends GameClientListener {
+		
+		@Override
+		public void onConnect() {
+			Log.w(TAG, "onConnect:" + client.getClientId());
+			client.login(client.getClientId());
+			client.updateRooms();
+			client.updateRoomStatus();
+		}
+		
+		@Override
+		public void onLogin(String event, JSONArray arguments) {
+			Log.w(TAG, "onConnect:" + arguments.toString());
+		}
+		
+		@Override
+		public void onJoinRoom(String event, JSONArray arguments) {
+			Log.w(TAG, "onJoinRoom:" + arguments.toString());
+			client.updateRooms();
+			client.updateRoomStatus();
+			String userId = null;
+			String roomId = null;
+			try {
+				userId = arguments.getString(0);
+				roomId = arguments.getString(1);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			// create and enter the room
+			if (userId != null && roomId != null) {
+				if (roomId.equalsIgnoreCase(client.getClientId())) {
+					enterRoom(roomId);
+				}
+			}
+		}
+		
+		@Override
+		public void onUpdateRooms(String event, JSONArray arguments) {
+			Log.w(TAG, "onUpdateRooms:" + arguments.toString());
+			// update room list
+			updateRoomList(arguments);
+		}
+		
+		@Override
+		public void onUpdateRoomStatus(String event, JSONArray arguments) {
+			Log.w(TAG, "onUpdateRooms:" + arguments.toString());
+			// update room list status
+			updateRoomStatus(arguments);
 		}
 	}
 }

@@ -3,6 +3,7 @@ package com.man;
 import org.json.JSONArray;
 import org.json.JSONException;
 import com.man.net.GameClient;
+import com.man.net.GameClientListener;
 import com.man.util.GameUtil;
 
 import android.app.Activity;
@@ -51,66 +52,7 @@ public class SceneRoom extends Activity {
 		
 		// init game client
 		client = new GameClient();
-		client.setListener(new GameClient.Listener() {
-			@Override
-			public void onConnect() {
-				Log.w(TAG, "onConnect:" + userId);
-			}
-			@Override
-			public void onMessage(String event, JSONArray arguments) {
-				Log.w(TAG, "onMessage:" + arguments.toString());
-			}
-			@Override
-			public void onDisconnect(int code, String reason) {
-				Log.w(TAG, "onDisconnect:" + code);
-			}
-			@Override
-			public void onError(Exception error) {
-				Log.w(TAG, "onError:" + error.getMessage());
-			}
-			@Override
-			public void onLogin(String event, JSONArray arguments) {
-				Log.w(TAG, "onConnect:" + arguments.toString());
-			}
-			@Override
-			public void onJoinRoom(String event, JSONArray arguments) {
-				Log.w(TAG, "onJoinRoom:" + arguments.toString());
-				client.getRoomUsers(roomId);
-				
-			}
-			@Override
-			public void onLeaveRoom(String event, JSONArray arguments) {
-				Log.w(TAG, "onLeaveRoom:" + arguments.toString());
-				client.getRoomUsers(roomId);
-			}
-			@Override
-			public void onSendRoomMsg(String event, JSONArray arguments) {
-				Log.w(TAG, "onSendRoomMsg:" + arguments.toString());
-				try {
-					JSONArray msg = new JSONArray(arguments.getString(2));
-					int action = msg.getInt(0);
-					// 游戏状态
-					if (action == 0) {
-						int command = msg.getInt(1);
-						if (command == 1) {
-							enterGame();
-						}
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-			@Override
-			public void onUpdateRooms(String event, JSONArray arguments) {
-				Log.w(TAG, "onUpdateRooms:" + arguments.toString());
-			}
-			@Override
-			public void onGetRoomUsers(String event, JSONArray arguments) {
-				Log.w(TAG, "onGetRoomUsers:" + arguments.toString());
-				// update player list
-				updatePlayers(arguments);
-			}
-		});
+		client.setListener(new SceneRoomListener());
 		
 		// get room users
 		if (client.isConnected()) {
@@ -122,7 +64,10 @@ public class SceneRoom extends Activity {
 		btnStartGame.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-//				enterGame();
+				// change room status to playing
+				// status 0:waiting,1:playing
+				client.updateRoomStatus("1");
+				// enter game together
 				String msg = "[0,1]";
 				client.sendRoomMsg(msg);
 			}
@@ -193,4 +138,44 @@ public class SceneRoom extends Activity {
 		return this.getResources().getDrawable(R.drawable.w1);
 	}
 	
+	private class SceneRoomListener extends GameClientListener {
+		
+		@Override
+		public void onJoinRoom(String event, JSONArray arguments) {
+			Log.w(TAG, "onJoinRoom:" + arguments.toString());
+			client.getRoomUsers(roomId);
+			
+		}
+		
+		@Override
+		public void onLeaveRoom(String event, JSONArray arguments) {
+			Log.w(TAG, "onLeaveRoom:" + arguments.toString());
+			client.getRoomUsers(roomId);
+		}
+		
+		@Override
+		public void onSendRoomMsg(String event, JSONArray arguments) {
+			Log.w(TAG, "onSendRoomMsg:" + arguments.toString());
+			try {
+				JSONArray msg = new JSONArray(arguments.getString(2));
+				int action = msg.getInt(0);
+				// 玩家同时进入游戏
+				if (action == 0) {
+					int command = msg.getInt(1);
+					if (command == 1) {
+						enterGame();
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@Override
+		public void onGetRoomUsers(String event, JSONArray arguments) {
+			Log.w(TAG, "onGetRoomUsers:" + arguments.toString());
+			// update player list
+			updatePlayers(arguments);
+		}
+	}
 }

@@ -20,6 +20,7 @@ import com.man.entity.UglyWoman;
 import com.man.entity.Woman;
 import com.man.entity.WomanFactory;
 import com.man.plug.AlertGame;
+import com.man.plug.MsgNetScore;
 import com.man.plug.MsgScore;
 import com.man.util.GameUtil;
 import com.man.view.GameView;
@@ -37,7 +38,7 @@ public class BaseController implements Runnable {
 	/**
 	 * 女人们
 	 */
-	private List<Woman> women;
+	protected List<Woman> women;
 
 	/**
 	 * 男人图片
@@ -70,10 +71,15 @@ public class BaseController implements Runnable {
 	protected Activity activity;
 	
 	/**
-	 * 时间提示器
+	 * 单机游戏提示器
 	 */
 	protected MsgScore msgScore;
 
+	/**
+	 * 网络游戏提示器
+	 */
+	protected MsgNetScore msgNetScore;
+	
 	/**
 	 * 游戏时间（秒）
 	 */
@@ -139,8 +145,14 @@ public class BaseController implements Runnable {
 			}
 		}
 
-		// 画出时间提示器
-		msgScore.drawMe(canvas);
+		// 画出单机游戏提示器
+		if (msgScore != null) {
+			msgScore.drawMe(canvas);
+		}
+		// 画出网络游戏提示器
+		else if(msgNetScore != null) {
+			msgNetScore.drawMe(canvas);
+		}
 	}
 	
 	/**
@@ -162,52 +174,26 @@ public class BaseController implements Runnable {
 		gameTime += CFG.DELAY_TIME / 1000.0;
 		msgScore.setTime((int) gameTime);
 		
-		// 移动男人
-		man.move();
-		
-		// 移除出界女人
-		removeWomen();
-
-		// 产生若干个女人
-		createWomen();
-		
-		// 重绘画面
-		// GameView.redraw -> GameView.onDraw -> Controller.drawAll
-		gameView.redraw();
-
-		// 检测碰撞
-		checkCollide();
-	}
-	
-	/**
-	 * 网络游戏主逻辑
-	 */
-	protected void runNetGame() {
-		// 定时执行
-		handler.postDelayed(this, CFG.DELAY_TIME);
-
-		// 游戏计时
-		gameTime += CFG.DELAY_TIME / 1000.0;
-		msgScore.setTime((int) gameTime);
-		
-		// 移动男人
-		man.move();
-		
-		// 移除出界女人
-		removeWomen();
-		
-		// 重绘画面
-		// GameView.redraw -> GameView.onDraw -> Controller.drawAll
-		gameView.redraw();
-
-		// 检测碰撞
-		checkCollide();
+		// 游戏执行
+		if (isLive()) {
+			// 移动男人
+			man.move();
+			// 移除出界女人
+			removeWomen();
+			// 产生若干个女人
+			createWomen();
+			// 重绘画面
+			// GameView.redraw -> GameView.onDraw -> Controller.drawAll
+			gameView.redraw();
+			// 检测碰撞
+			checkCollide();
+		}
 	}
 	
 	/**
 	 * 对所有的人物检测碰撞
 	 */
-	private void checkCollide() {
+	protected void checkCollide() {
 		// 如果丑女人碰撞了男人则游戏结束
 		if (women.size() > 0) {
 			for (Woman woman : women) {
@@ -298,7 +284,6 @@ public class BaseController implements Runnable {
 
 		// 产生一个女人
 		women = new ArrayList<Woman>();
-//		women.add(newWoman());
 
 		// 计时
 		gameTime = 0;
@@ -311,7 +296,7 @@ public class BaseController implements Runnable {
 		// 开始
 		startGame();
 	}
-
+	
 	/**
 	 * 开始游戏
 	 */

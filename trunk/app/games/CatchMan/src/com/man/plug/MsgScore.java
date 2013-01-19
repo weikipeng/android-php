@@ -36,7 +36,7 @@ public class MsgScore {
 		String highScoreStr = "最高分：" + score;
 		int textWidth = (int) paint.measureText(highScoreStr);
 		int leftPos = canvas.getWidth() - textWidth - 10;
-		canvas.drawText("最高分：" + score, leftPos, 20, paint);
+		canvas.drawText(highScoreStr, leftPos, 20, paint);
 	}
 
 	public int getTime() {
