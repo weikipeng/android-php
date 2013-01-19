@@ -25,6 +25,7 @@ public class GameClient {
 		public void onSendRoomMsg(String event, JSONArray arguments);
 		public void onUpdateRooms(String event, JSONArray arguments);
 		public void onGetRoomUsers(String event, JSONArray arguments);
+		public void onUpdateRoomStatus(String event, JSONArray arguments);
 	}
 	
 	private static String clientId = null;
@@ -35,7 +36,8 @@ public class GameClient {
 	private Listener mListener;
 	private String mServer;
 	
-	private String defaultServer = "http://10.240.53.23:8080";
+//	private String defaultServer = "http://10.240.53.23:8080";
+	private String defaultServer = "http://115.182.82.189";
 	
 	public GameClient() {
 		mServer = defaultServer;
@@ -50,6 +52,11 @@ public class GameClient {
 	public void setListener(Listener listener) {
 		mHandler = new GameClientHandler();
 		mListener = listener;
+	}
+	
+	public void removeListener() {
+		mHandler = null;
+		mListener = null;
 	}
 	
 	public String getClientId() {
@@ -74,7 +81,7 @@ public class GameClient {
 	}
 	
 	private void connect() {
-		// connect only once
+		// connect or reconnect 
 		if (client == null) {
 			client = new SocketIOClient(URI.create(mServer), new SocketIOHandler());
 			client.connect();
@@ -90,6 +97,7 @@ public class GameClient {
 	}
 	
 	public void disconnect(){
+		// remove client
 		if (client != null) {
 			try {
 				client.disconnect();
@@ -99,7 +107,7 @@ public class GameClient {
 			client = null;
 		}
 		// avoid memory leak
-		mHandler = null;
+		this.removeListener();
 	}
 	
 	public void login(String id) {
@@ -152,6 +160,28 @@ public class GameClient {
 		}
 	}
 	
+	// get room status
+	public void updateRoomStatus() {
+		if (client != null) {
+			try {
+				client.emit("updateRoomStatus");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	// set and get room status
+	public void updateRoomStatus(String status) {
+		if (client != null) {
+			try {
+				client.emit("updateRoomStatus", status);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void getRoomUsers(String roomId) {
 		if (client != null) {
 			try {
@@ -183,6 +213,7 @@ public class GameClient {
 		final public static int TASK_SENDROOMMSG = 8;
 		final public static int TASK_UPDATEROOMS = 9;
 		final public static int TASK_GETROOMUSERS = 10;
+		final public static int TASK_UPDATEROOMSTATUS = 11;
 	}
 	
 	@SuppressLint("HandlerLeak")
@@ -239,6 +270,11 @@ public class GameClient {
 								data.getString("event"), 
 								new JSONArray(data.getString("args")));
 						break;
+					case GameClientTask.TASK_UPDATEROOMSTATUS:
+						mListener.onUpdateRoomStatus(
+								data.getString("event"), 
+								new JSONArray(data.getString("args")));
+						break;
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -278,9 +314,13 @@ public class GameClient {
 			if ("getRoomUsers".equals(event)) {
 				handle(GameClientTask.TASK_GETROOMUSERS, data);
 			}
+			if ("updateRoomStatus".equals(event)) {
+				handle(GameClientTask.TASK_UPDATEROOMSTATUS, data);
+			}
 		}
 		@Override
 		public void onDisconnect(int code, String reason) {
+			disconnect(); // stop all
 			Bundle data = new Bundle();
 			data.putInt("code", code);
 			data.putString("reason", reason);
@@ -289,6 +329,7 @@ public class GameClient {
 		}
 		@Override
 		public void onError(Exception error) {
+			disconnect(); // stop all
 			Bundle data = new Bundle();
 			data.putString("error", error.getMessage());
 			handle(GameClientTask.TASK_ERROR, data);

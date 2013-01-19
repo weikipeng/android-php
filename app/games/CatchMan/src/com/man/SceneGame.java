@@ -1,6 +1,7 @@
 package com.man;
 
 import com.man.controller.GameController;
+import com.man.util.GameUtil;
 import com.man.view.GameView;
 
 import android.app.Activity;
@@ -14,8 +15,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
 /**
  * 主activity类
@@ -41,7 +40,8 @@ public class SceneGame extends Activity {
 				}
 				break;
 			case R.id.quitGame:
-				this.finish();
+				controller.endGame(false);
+				GameUtil.forward(this, SceneMenu.class);
 				break;
 			default:
 				break;
@@ -90,16 +90,9 @@ public class SceneGame extends Activity {
 	 * 系统初始化
 	 */
 	private void initActivity() {
-		// 设置无标题
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// 设置全屏
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// 屏幕常亮所需的代码
 		PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
-		mWakeLock = pm.newWakeLock(
-				PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-		
+		mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
 	}
 
 	/**
