@@ -1,7 +1,7 @@
 package com.man.net;
 
 import android.text.TextUtils;
-import android.util.Base64;
+//import android.util.Base64;
 import android.util.Log;
 import org.apache.http.*;
 import org.apache.http.client.HttpResponseException;
@@ -178,7 +178,8 @@ public class WebSocketClient {
         for (int i = 0; i < 16; i++) {
             nonce[i] = (byte) (Math.random() * 256);
         }
-        return Base64.encodeToString(nonce, Base64.DEFAULT).trim();
+        //return Base64.encodeToString(nonce, Base64.DEFAULT).trim();
+        return Base64.encodeToString(nonce).trim();
     }
 
     void sendFrame(byte[] frame) {

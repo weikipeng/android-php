@@ -62,4 +62,9 @@ public class GameClientListener implements GameClient.Listener {
 	public void onUpdateRoomStatus(String event, JSONArray arguments) {
 		Log.w(tag, "onUpdateRoomStatus:" + arguments.toString());
 	}
+
+	@Override
+	public void onGetUserStatus(String event, JSONArray arguments) {
+		Log.w(tag, "onGetUserStatus:" + arguments.toString());
+	}
 }

@@ -1,4 +1,4 @@
-package com.man.entity;
+package com.man.module;
 
 import com.man.cfg.CFG;
 
