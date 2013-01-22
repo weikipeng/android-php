@@ -9,8 +9,9 @@
 
     <ImageView
         android:id="@+id/scene_room_player_face"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:contentDescription="@null"
         android:src="@drawable/w2"
         android:padding="5dip"
@@ -18,10 +19,18 @@
     
     <TextView 
         android:id="@+id/scene_room_player_name"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:padding="10dip"
+        android:layout_weight="1"
+        />
+    
+    <TextView 
+        android:id="@+id/scene_room_player_status"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="2"
         />
     
 </LinearLayout>
