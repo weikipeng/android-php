@@ -16,6 +16,12 @@ public class CFG {
 	public static final int SCREEN_HEIGHT = 480;
 
 	/**
+	 * 可点击的边界值
+	 * 用于女人角色（NetGameController）
+	 */
+	public static final float CLICK_MARGIN = 50;
+
+	/**
 	 * 人物大小
 	 */
 	public static final float PEOPLE_RADIUS = 24;
@@ -31,7 +37,7 @@ public class CFG {
 	public static final float MAN_SPEED = 15;
 	
 	/**
-	 * 游戏延迟<br/>
+	 * 游戏延迟
 	 * 越小画面越细质
 	 */
 	public static final int DELAY_TIME = 50;

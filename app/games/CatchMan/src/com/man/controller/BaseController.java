@@ -14,11 +14,11 @@ import android.os.Handler;
 
 import com.man.SceneMenu;
 import com.man.cfg.CFG;
-import com.man.entity.Man;
-import com.man.entity.PeopleMoveException;
-import com.man.entity.UglyWoman;
-import com.man.entity.Woman;
-import com.man.entity.WomanFactory;
+import com.man.module.Man;
+import com.man.module.PeopleMoveException;
+import com.man.module.UglyWoman;
+import com.man.module.Woman;
+import com.man.module.WomanFactory;
 import com.man.plug.AlertGame;
 import com.man.plug.MsgNetScore;
 import com.man.plug.MsgScore;
@@ -83,12 +83,12 @@ public class BaseController implements Runnable {
 	/**
 	 * 游戏时间（秒）
 	 */
-	protected float gameTime = 0;
+	protected volatile float gameTime = 0;
 	
 	/**
 	 * 游戏是否运行
 	 */
-	private boolean live = false;
+	private volatile boolean live = false;
 	
 	/**
 	 * 构造一个控制器
@@ -241,7 +241,7 @@ public class BaseController implements Runnable {
 	}
 	
 	protected void createWomen() {
-		// AI逻辑：产生若干个女人
+		// AI：产生若干个女人
 		if (women.size() < CFG.GAME_LEVEL[((int) (gameTime / 10)) % CFG.GAME_LEVEL.length]) {
 			int tmpCount = CFG.GAME_LEVEL[((int) (gameTime / 10)) % CFG.GAME_LEVEL.length] - women.size();
 			for (int i = 0; i < tmpCount; i++) {
@@ -281,18 +281,14 @@ public class BaseController implements Runnable {
 	public void newGame() {
 		// 产生一个男人
 		man = newMan();
-
 		// 产生一个女人
 		women = new ArrayList<Woman>();
-
 		// 计时
 		gameTime = 0;
-
 		// 创建一个时间提示器
 		msgScore = new MsgScore();
 		msgScore.setTime((int) gameTime);
 		msgScore.setScore(GameUtil.getHighScore(activity));
-
 		// 开始
 		startGame();
 	}
@@ -319,6 +315,8 @@ public class BaseController implements Runnable {
 	 * @param showDialog
 	 */
 	public void endGame(boolean showDialog) {
+		// 设置标志
+		setLive(false);
 		// 记录分数
 		int thisScore = (int) gameTime;
 		int highScore = GameUtil.getHighScore(activity);
@@ -326,10 +324,9 @@ public class BaseController implements Runnable {
 			highScore = thisScore;
 			GameUtil.setHighScore(activity, thisScore);
 		}
-		
+		// 停止监听
 		handler.removeCallbacks(this);
-		setLive(false);
-
+		// 显示结果
 		if (showDialog) {
 			AlertGame alertGame = new AlertGame(context);
 			alertGame.setScore(thisScore);

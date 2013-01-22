@@ -1,4 +1,4 @@
-package com.man.entity;
+package com.man.module;
 
 /**
  * 人物移动异常

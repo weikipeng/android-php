@@ -1,7 +1,6 @@
 package com.man;
 
 import com.man.controller.NetGameController;
-import com.man.util.GameUtil;
 import com.man.view.GameView;
 
 import android.app.Activity;
@@ -12,9 +11,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 /**
  * Ö÷activityÀà
@@ -22,40 +18,9 @@ import android.view.MenuItem;
 public class SceneNetGame extends Activity {
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.menu, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.restartGame:
-				controller.newGame();
-				break;
-			case R.id.resumeGame:
-				if (!controller.isLive()){
-					controller.startGame();
-				}
-				break;
-			case R.id.quitGame:
-				controller.endGame(false);
-				GameUtil.forward(this, SceneMenu.class);
-				break;
-			default:
-				break;
-		}
-		return super.onMenuItemSelected(featureId, item);
-	}
-
-	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_MENU:
-				if (controller.isLive()){
-					controller.pauseGame();
-				}
 				break;
 			case KeyEvent.KEYCODE_BACK:
 				break;

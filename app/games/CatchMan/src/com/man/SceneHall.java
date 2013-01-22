@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SceneHall extends Activity {
 	
@@ -45,12 +46,14 @@ public class SceneHall extends Activity {
 		// init game client
 		client = new GameClient();
 		client.setListener(new SceneHallListener());
-		textUsername.setText("Welcome, User " + client.getClientId()); // set default user name
 		
 		// update room list
 		if (client.isConnected()) {
+			textUsername.setText("Welcome, User " + client.getClientId());
 			client.updateRooms();
 			client.updateRoomStatus();
+		} else {
+			textUsername.setText("Connecting ..."); // set user name after connected
 		}
 		
 		// create host
@@ -58,8 +61,13 @@ public class SceneHall extends Activity {
 		btnCreateRoom.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				String roomId = client.getClientId();
-				client.joinRoom(roomId);
+				if (client.isConnected()) {
+					String roomId = client.getClientId();
+					client.joinRoom(roomId);
+				} else {
+					String msg = "Please login first";
+					Toast.makeText(SceneHall.this, msg, Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
@@ -157,6 +165,7 @@ public class SceneHall extends Activity {
 						tv1.setOnClickListener(null); // prevent click
 					} else {
 						tv2.setText("--");
+						tv1.setOnClickListener(null); // prevent click
 					}
 				}
 			}
@@ -177,7 +186,8 @@ public class SceneHall extends Activity {
 		
 		@Override
 		public void onLogin(String event, JSONArray arguments) {
-			Log.w(TAG, "onConnect:" + arguments.toString());
+			Log.w(TAG, "onLogin:" + arguments.toString());
+			textUsername.setText("Welcome, User " + client.getClientId()); // set default user name
 		}
 		
 		@Override

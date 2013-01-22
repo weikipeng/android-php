@@ -1,4 +1,4 @@
-package com.man.entity;
+package com.man.module;
 
 import com.man.cfg.CFG;
 
@@ -25,7 +25,7 @@ public class WomanFactory {
 		if (rnd1 > 0.5){
 			//左右两边
 			point.x = CFG.SCREEN_WIDTH * rnd3;
-			point.y = (rnd2 > 0.5)? 0 : CFG.SCREEN_HEIGHT;
+			point.y = (rnd2 > 0.5) ? 0 : CFG.SCREEN_HEIGHT;
 		} else {
 			//上下两边
 			point.y = CFG.SCREEN_HEIGHT * rnd3;

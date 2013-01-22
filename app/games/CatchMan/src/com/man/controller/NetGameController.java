@@ -7,7 +7,7 @@ import org.json.JSONException;
 
 import com.man.SceneHall;
 import com.man.cfg.CFG;
-import com.man.entity.Woman;
+import com.man.module.Woman;
 import com.man.net.GameClient;
 import com.man.net.GameClientListener;
 import com.man.plug.AlertNetGame;
@@ -35,6 +35,13 @@ public class NetGameController extends GameController {
 	private String roleId = null;
 	private String winner = null;
 	
+	private int winTime = 30; // win after these seconds
+	
+	float xRange1;
+	float xRange2;
+	float yRange1;
+	float yRange2;
+	
 	public NetGameController(Activity activity, Bundle args) {
 		super(activity);
 
@@ -44,6 +51,11 @@ public class NetGameController extends GameController {
 		
 		client = new GameClient();
 		client.setListener(new NetGameControllerListener());
+		
+		xRange1 = CFG.CLICK_MARGIN;
+		yRange1 = CFG.CLICK_MARGIN;
+		xRange2 = CFG.SCREEN_WIDTH - CFG.CLICK_MARGIN;
+		yRange2 = CFG.SCREEN_HEIGHT - CFG.CLICK_MARGIN;
 	}
 	
 	/**
@@ -54,22 +66,19 @@ public class NetGameController extends GameController {
 		handler.postDelayed(this, CFG.DELAY_TIME);
 
 		// 游戏计时
-		int winTime = 10;
 		gameTime += CFG.DELAY_TIME / 1000.0;
 		msgNetScore.setTime((int) gameTime);
 		if (gameTime >= winTime) {
+			// 设置标志
+			setLive(false);
 			// 此模式下男人胜利
 			if (roleId.equalsIgnoreCase("0")) {
 				winner = "User " + userId;
-				String msg = "[2,\"" + winner + "\"," + gameTime + "]";
+				String msg = "[2,\"" + winner + "\"," + winTime + "]";
 				client.sendRoomMsg(msg);
 			}
 			// 停止监听
 			handler.removeCallbacks(this);
-			// 离开房间
-			client.leaveRoom();
-			// 设置标志
-			setLive(false);
 		}
 		
 		// 游戏执行
@@ -94,8 +103,16 @@ public class NetGameController extends GameController {
 		if (this.isLive()) {
 			float x = event.getX();
 			float y = event.getY();
-			String msg = "[1," + roleId + "," + x + "," + y + "]";
-			client.sendRoomMsg(msg);
+			// 男人玩家
+			if (roleId.equalsIgnoreCase("0")) {
+				client.sendRoomMsg("[1,0," + x + "," + y + "]");
+			}
+			// 女人玩家
+			if (roleId.equalsIgnoreCase("1")) {
+				if (checkAddWoman(x, y)) {
+					client.sendRoomMsg("[1,1," + x + "," + y + "]");
+				}
+			}
 		}
 		return false;
 	}
@@ -118,6 +135,7 @@ public class NetGameController extends GameController {
 		msgNetScore = new MsgNetScore();
 		msgNetScore.setUser(userId);
 		msgNetScore.setRole(roleId);
+		msgNetScore.setWinTime(winTime);
 		msgNetScore.setTime((int) gameTime);
 
 		// 开始
@@ -126,20 +144,16 @@ public class NetGameController extends GameController {
 	
 	@Override
 	public void endGame(boolean showDialog) {
-		// 记录分数
-		int thisScore = (int) gameTime;
+		// 设置标志
+		setLive(false);
 		// 此模式下女人胜利
 		if (roleId.equalsIgnoreCase("1")) {
 			winner = "User " + userId;
-			String msg = "[2,\"" + winner + "\"," + thisScore + "]";
+			String msg = "[2,\"" + winner + "\"," + winTime + "]";
 			client.sendRoomMsg(msg);
 		}
 		// 停止监听
 		handler.removeCallbacks(this);
-		// 离开房间
-		client.leaveRoom();
-		// 设置标志
-		setLive(false);
 	}
 	
 	private void showAlert(String winner, int wscore) {
@@ -149,6 +163,7 @@ public class NetGameController extends GameController {
 		alertNetGame.setBtnCallback(new AlertNetGame.BtnCallback(){
 			@Override
 			public void onQuit() {
+				client.leaveRoom(); // 离开房间
 				GameUtil.forward(activity, SceneHall.class);
 			}
 		});
@@ -191,5 +206,14 @@ public class NetGameController extends GameController {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private boolean checkAddWoman(float x, float y) {
+		// 屏幕中间的方形部分不允许添加女人
+		if (x > xRange1 && x < xRange2 && y > yRange1 && y < yRange2) {
+			return false;
+		}
+		// 四周才可以添加
+		return true;
 	}
 }

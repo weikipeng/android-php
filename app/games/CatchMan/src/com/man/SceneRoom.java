@@ -2,8 +2,10 @@ package com.man;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import com.man.net.GameClient;
 import com.man.net.GameClientListener;
+import com.man.plug.AlertLoading;
 import com.man.util.GameUtil;
 
 import android.app.Activity;
@@ -18,10 +20,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SceneRoom extends Activity {
 	
 	private String TAG = this.getClass().getSimpleName();
+	
+	private boolean isReady;
 	
 	private String userId = null;
 	private String roomId = null;
@@ -46,8 +51,8 @@ public class SceneRoom extends Activity {
 		} else {
 			roleId = "1"; // 女人角色
 		}
-		inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		
+		inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 		listAllPlayers = (LinearLayout) this.findViewById(R.id.list_all_players);
 		
 		// init game client
@@ -64,12 +69,16 @@ public class SceneRoom extends Activity {
 		btnStartGame.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				// change room status to playing
-				// status 0:waiting,1:playing
-				client.updateRoomStatus("1");
-				// enter game together
-				String msg = "[0,1]";
-				client.sendRoomMsg(msg);
+				// when all player ready
+				if (!isReady) {
+					// toast message
+					String msg = "Waiting other players";
+					Toast.makeText(SceneRoom.this, msg, Toast.LENGTH_SHORT).show();
+				}
+				// have myself be ready
+				client.updateUserStatus("1");
+				// update player list
+				client.getRoomUsers(roomId);
 			}
 		});
 	}
@@ -103,18 +112,19 @@ public class SceneRoom extends Activity {
 	
 	public void quitRoom() {
 		client.leaveRoom();
+		client.updateUserStatus("0");
 		GameUtil.forward(this, SceneHall.class);
 	}
 	
 	private void updatePlayers(JSONArray arguments) {
-		JSONArray users = null;
+		JSONArray players = null;
 		try {
 			// remove all rooms
 			listAllPlayers.removeAllViews();
 			// add online rooms
-			users = new JSONArray((String) arguments.get(0));
-			for (int i = 0; i < users.length(); i++) {
-				String playerId = users.getString(i);
+			players = new JSONArray((String) arguments.get(0));
+			for (int i = 0; i < players.length(); i++) {
+				String playerId = players.getString(i);
 				String playerName = "User " + playerId;
 				// create player
 				View playerView = inflater.inflate(R.layout.scene_room_player, null);
@@ -124,8 +134,55 @@ public class SceneRoom extends Activity {
 				tv.setText(playerName);
 				listAllPlayers.addView(playerView);
 			}
+			// get & update user status
+			client.getUserStatus(players);
 		} catch (JSONException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void updatePlayerStatus (JSONArray arguments) {
+		JSONArray playerStatus = null;
+		boolean isWaiting = false;
+		try {
+			playerStatus = new JSONArray((String) arguments.get(0));
+			if (playerStatus != null) {
+				int playerCount = listAllPlayers.getChildCount();
+				for (int i=0; i<playerCount; i++) {
+					View view = listAllPlayers.getChildAt(i);
+					TextView tv = (TextView) view.findViewById(R.id.scene_room_player_status);
+					String status = playerStatus.getString(i);
+					if (status.equalsIgnoreCase("1")) {
+						tv.setText("ready");
+					} else {
+						tv.setText("waiting");
+						isWaiting = true;
+					}
+				}
+				if (playerCount < 2) {
+					isWaiting = true;
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			isWaiting = true;
+		}
+		// update isReady status
+		isReady = !isWaiting;
+		// auto start together
+		if (isReady) {
+			AlertLoading alert = new AlertLoading(SceneRoom.this, new AlertLoading.Listener() {
+				@Override
+				public void onComplete() {
+					// change room status to playing
+					// status 0:waiting,1:playing
+					client.updateRoomStatus("1");
+					// enter game together
+					client.sendRoomMsg("[0,1]");
+					
+				}
+			});
+			alert.show();
 		}
 	}
 	
@@ -159,9 +216,10 @@ public class SceneRoom extends Activity {
 			try {
 				JSONArray msg = new JSONArray(arguments.getString(2));
 				int action = msg.getInt(0);
-				// 玩家同时进入游戏
+				// 操作命令
 				if (action == 0) {
 					int command = msg.getInt(1);
+					// 玩家同时进入游戏
 					if (command == 1) {
 						enterGame();
 					}
@@ -176,6 +234,13 @@ public class SceneRoom extends Activity {
 			Log.w(TAG, "onGetRoomUsers:" + arguments.toString());
 			// update player list
 			updatePlayers(arguments);
+		}
+		
+		@Override
+		public void onGetUserStatus(String event, JSONArray arguments) {
+			Log.w(tag, "onGetUserStatus:" + arguments.toString());
+			// update player status
+			updatePlayerStatus(arguments);
 		}
 	}
 }

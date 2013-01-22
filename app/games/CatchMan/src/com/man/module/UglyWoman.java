@@ -1,4 +1,4 @@
-package com.man.entity;
+package com.man.module;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

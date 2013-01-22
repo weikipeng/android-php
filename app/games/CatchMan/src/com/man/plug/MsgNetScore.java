@@ -27,7 +27,7 @@ public class MsgNetScore {
 	/**
 	 * 赢时间
 	 */
-	private int winTime = 10;
+	private int winTime = 30;
 	
 	/**
 	 * 画自己
