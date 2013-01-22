@@ -27,8 +27,8 @@ public class EffectTextView extends EffectView {
 		for (String text : texts) {
 			// add text view
 			TextView tv = new TextView(ctx);
-			LayoutParams tvParams = new LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
-//			tvParams.bottomMargin = 5;
+			LayoutParams tvParams = new LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT, android.view.ViewGroup.LayoutParams.FILL_PARENT);
+			tvParams.gravity = Gravity.CENTER;
 			tv.setLayoutParams(tvParams);
 			tv.setTextSize(ts);
 			tv.setGravity(Gravity.CENTER_HORIZONTAL);
