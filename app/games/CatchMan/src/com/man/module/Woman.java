@@ -34,14 +34,13 @@ public abstract class Woman extends People{
 	}
 
 	/**
-	 * 移动<br/>
-	 * 根据自身方向
+	 * 根据自身方向移动
 	 */
 	public void move() throws PeopleMoveException{
 		//如果出了边界就抛异常
 		float x = location.x + direction.x;
 		float y = location.y + direction.y;
-		if ((x < 0 || x > CFG.SCREEN_WIDTH) || (y < 0 || y > CFG.SCREEN_HEIGHT)){
+		if ((x < CFG.SCREEN_LTX || x > CFG.SCREEN_RBX) || (y < CFG.SCREEN_LTY || y > CFG.SCREEN_RBY)){
 			throw new PeopleMoveException();
 		}
 		location.x = x;

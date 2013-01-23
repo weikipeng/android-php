@@ -1,5 +1,6 @@
 package com.man;
 
+import com.man.cfg.CFG;
 import com.man.util.GameUtil;
 
 import android.app.Activity;
@@ -13,6 +14,8 @@ public class SceneMenu extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_menu);
+		
+		CFG.autoScreenAdaption(this);
 		
 		Button btnStart = (Button) this.findViewById(R.id.btn_start);
 		btnStart.setOnClickListener(new View.OnClickListener() {
