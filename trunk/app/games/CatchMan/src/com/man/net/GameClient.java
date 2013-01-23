@@ -38,8 +38,8 @@ public class GameClient {
 	private static Listener mListener;
 	private String mServer;
 	
-	private String defaultServer = "http://10.240.53.23:8080";
-//	private String defaultServer = "http://115.182.82.189";
+//	private String defaultServer = "http://10.240.53.23:8080";
+	private String defaultServer = "http://115.182.82.189";
 	
 	public GameClient() {
 		mServer = defaultServer;

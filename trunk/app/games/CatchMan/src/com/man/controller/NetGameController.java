@@ -15,6 +15,12 @@ import com.man.plug.MsgNetScore;
 import com.man.util.GameUtil;
 
 import android.app.Activity;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ComposePathEffect;
+import android.graphics.CornerPathEffect;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +48,8 @@ public class NetGameController extends GameController {
 	float yRange1;
 	float yRange2;
 	
+	private Paint mPaint = new Paint();
+	
 	public NetGameController(Activity activity, Bundle args) {
 		super(activity);
 
@@ -52,15 +60,34 @@ public class NetGameController extends GameController {
 		client = new GameClient();
 		client.setListener(new NetGameControllerListener());
 		
-		xRange1 = CFG.CLICK_MARGIN;
-		yRange1 = CFG.CLICK_MARGIN;
-		xRange2 = CFG.SCREEN_WIDTH - CFG.CLICK_MARGIN;
-		yRange2 = CFG.SCREEN_HEIGHT - CFG.CLICK_MARGIN;
+		xRange1 = CFG.getRealX(CFG.SCREEN_MARGIN);
+		yRange1 = CFG.getRealY(CFG.SCREEN_MARGIN);
+		xRange2 = CFG.getRealX(CFG.SCREEN_WIDTH - CFG.SCREEN_MARGIN);
+		yRange2 = CFG.getRealY(CFG.SCREEN_HEIGHT - CFG.SCREEN_MARGIN);
+	}
+	
+	/**
+	 * 重绘场景
+	 */
+	@Override
+	public void drawAll(Canvas canvas) {
+		// 画出背景
+		mPaint.setAntiAlias(true);
+		mPaint.setColor(Color.YELLOW);
+		mPaint.setStyle(Paint.Style.STROKE);
+		CornerPathEffect e1 = new CornerPathEffect(5);
+		DashPathEffect e2 = new DashPathEffect(new float[]{3,3}, 1);
+		ComposePathEffect effect = new ComposePathEffect(e1, e2);
+		mPaint.setPathEffect(effect); // 绘制虚线
+		canvas.drawRect(xRange1, yRange1, xRange2, yRange2, mPaint);
+		// 画出场景
+		super.drawAll(canvas);
 	}
 	
 	/**
 	 * 网络游戏主逻辑
 	 */
+	@Override
 	protected void runGame() {
 		// 定时执行
 		handler.postDelayed(this, CFG.DELAY_TIME);
@@ -71,14 +98,14 @@ public class NetGameController extends GameController {
 		if (gameTime >= winTime) {
 			// 设置标志
 			setLive(false);
+			// 停止监听
+			handler.removeCallbacks(this);
 			// 此模式下男人胜利
 			if (roleId.equalsIgnoreCase("0")) {
 				winner = "User " + userId;
 				String msg = "[2,\"" + winner + "\"," + winTime + "]";
 				client.sendRoomMsg(msg);
 			}
-			// 停止监听
-			handler.removeCallbacks(this);
 		}
 		
 		// 游戏执行
@@ -105,11 +132,15 @@ public class NetGameController extends GameController {
 			float y = event.getY();
 			// 男人玩家
 			if (roleId.equalsIgnoreCase("0")) {
+				x = x - CFG.SCREEN_OFFSET_X;
+				y = y - CFG.SCREEN_OFFSET_Y;
 				client.sendRoomMsg("[1,0," + x + "," + y + "]");
 			}
 			// 女人玩家
 			if (roleId.equalsIgnoreCase("1")) {
 				if (checkAddWoman(x, y)) {
+					x = x - CFG.SCREEN_OFFSET_X;
+					y = y - CFG.SCREEN_OFFSET_Y;
 					client.sendRoomMsg("[1,1," + x + "," + y + "]");
 				}
 			}
@@ -146,17 +177,20 @@ public class NetGameController extends GameController {
 	public void endGame(boolean showDialog) {
 		// 设置标志
 		setLive(false);
+		// 停止监听
+		handler.removeCallbacks(this);
 		// 此模式下女人胜利
 		if (roleId.equalsIgnoreCase("1")) {
 			winner = "User " + userId;
 			String msg = "[2,\"" + winner + "\"," + winTime + "]";
 			client.sendRoomMsg(msg);
 		}
-		// 停止监听
-		handler.removeCallbacks(this);
 	}
 	
 	private void showAlert(String winner, int wscore) {
+		// 设置标志
+		setLive(false);
+		// 弹出提示框
 		AlertNetGame alertNetGame = new AlertNetGame(context);
 		alertNetGame.setWinner(winner);
 		alertNetGame.setWinScore(wscore);
@@ -182,17 +216,15 @@ public class NetGameController extends GameController {
 				if (action == 1) {
 					// 获取角色
 					int roleId = msg.getInt(1);
+					float x = CFG.getRealX((float) msg.getDouble(2));
+					float y = CFG.getRealY((float) msg.getDouble(3));
 					// 男人玩家
 					if (roleId == 0) {
-						float x = (float) msg.getDouble(2);
-						float y = (float) msg.getDouble(3);
 						PointF direction = new PointF(x, y);
 						man.forwardTo(direction);
 					}
 					// 女人玩家
 					if (roleId == 1) {
-						float x = (float) msg.getDouble(2);
-						float y = (float) msg.getDouble(3);
 						addWoman(newWoman(x, y));
 					}
 				}
@@ -211,6 +243,10 @@ public class NetGameController extends GameController {
 	private boolean checkAddWoman(float x, float y) {
 		// 屏幕中间的方形部分不允许添加女人
 		if (x > xRange1 && x < xRange2 && y > yRange1 && y < yRange2) {
+			return false;
+		}
+		// 只允许同时出现一个女人
+		if (women.size() > 0) {
 			return false;
 		}
 		// 四周才可以添加

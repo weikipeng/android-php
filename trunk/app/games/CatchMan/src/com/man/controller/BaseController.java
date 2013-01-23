@@ -83,12 +83,12 @@ public class BaseController implements Runnable {
 	/**
 	 * 游戏时间（秒）
 	 */
-	protected volatile float gameTime = 0;
+	protected float gameTime = 0;
 	
 	/**
 	 * 游戏是否运行
 	 */
-	private volatile boolean live = false;
+	private volatile boolean isLive = false;
 	
 	/**
 	 * 构造一个控制器
@@ -104,7 +104,7 @@ public class BaseController implements Runnable {
 	 * @return
 	 */
 	public void setLive(boolean value) {
-		live = value;
+		isLive = value;
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public class BaseController implements Runnable {
 	 * @return
 	 */
 	public boolean isLive() {
-		return live;
+		return isLive;
 	}
 	
 	public void setManImage(Bitmap bm) {
@@ -128,23 +128,20 @@ public class BaseController implements Runnable {
 	}
 
 	/**
-	 * 重绘所有人
+	 * 重绘场景
 	 */
 	public void drawAll(Canvas canvas) {
 		// 优化锯齿
 		PaintFlagsDrawFilter pfd = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
 		canvas.setDrawFilter(pfd);
-		
 		// 画出男人
 		man.drawMe(canvas);
-
 		// 画出女人们
 		if (women.size() > 0) {
 			for (Woman woman : women) {
 				woman.drawMe(canvas);
 			}
 		}
-
 		// 画出单机游戏提示器
 		if (msgScore != null) {
 			msgScore.drawMe(canvas);
@@ -210,7 +207,9 @@ public class BaseController implements Runnable {
 		// 产生男人
 		man = new Man();
 		man.setImage(manImage); // 设置图片
-		man.setLocation(new PointF(120, 150));
+		float centerX = CFG.getRealX(CFG.SCREEN_WIDTH / 2);
+		float centerY = CFG.getRealY(CFG.SCREEN_HEIGHT / 2);
+		man.setLocation(new PointF(centerX, centerY));
 		return man;
 	}
 	
@@ -317,6 +316,8 @@ public class BaseController implements Runnable {
 	public void endGame(boolean showDialog) {
 		// 设置标志
 		setLive(false);
+		// 停止监听
+		handler.removeCallbacks(this);
 		// 记录分数
 		int thisScore = (int) gameTime;
 		int highScore = GameUtil.getHighScore(activity);
@@ -324,8 +325,6 @@ public class BaseController implements Runnable {
 			highScore = thisScore;
 			GameUtil.setHighScore(activity, thisScore);
 		}
-		// 停止监听
-		handler.removeCallbacks(this);
 		// 显示结果
 		if (showDialog) {
 			AlertGame alertGame = new AlertGame(context);

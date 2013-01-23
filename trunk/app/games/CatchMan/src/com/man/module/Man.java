@@ -71,10 +71,10 @@ public class Man extends People {
 			y = location.y;
 		}
 		// 到边界了就不移动，也不抛异常
-		if (x > 0 && x < CFG.SCREEN_WIDTH){
+		if (x > CFG.SCREEN_LTX && x < CFG.SCREEN_RBX){
 			location.x = x;
 		}
-		if (y > 0 && y < CFG.SCREEN_HEIGHT){
+		if (y > CFG.SCREEN_LTY && y < CFG.SCREEN_RBY){
 			location.y = y;
 		}
 	}

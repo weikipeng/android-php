@@ -84,12 +84,6 @@ public class SceneNetGame extends Activity {
 	}
 	
 	@Override
-	protected void onStop() {
-		controller.endGame(false);
-		super.onStop();
-	}
-	
-	@Override
 	protected void onPause() {
 		mWakeLock.release();
 		super.onPause();
