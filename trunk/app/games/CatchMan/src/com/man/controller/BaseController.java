@@ -165,10 +165,10 @@ public class BaseController implements Runnable {
 	 */
 	protected void runGame() {
 		// 定时执行
-		handler.postDelayed(this, CFG.DELAY_TIME);
+		handler.postDelayed(this, CFG.SCREEN_DELAY);
 
 		// 游戏计时
-		gameTime += CFG.DELAY_TIME / 1000.0;
+		gameTime += CFG.SCREEN_STIME / 1000.0;
 		msgScore.setTime((int) gameTime);
 		
 		// 游戏执行

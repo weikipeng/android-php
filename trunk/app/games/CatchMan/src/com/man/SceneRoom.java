@@ -37,6 +37,7 @@ public class SceneRoom extends Activity {
 	private LinearLayout listAllPlayers = null;
 	
 	private LayoutInflater inflater = null;
+	private AlertLoading loadingWindow = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,19 @@ public class SceneRoom extends Activity {
 		if (client.isConnected()) {
 			client.getRoomUsers(roomId);
 		}
+		
+		// init loading window
+		loadingWindow = new AlertLoading(SceneRoom.this, new AlertLoading.Listener() {
+			@Override
+			public void onComplete() {
+				// change room status to playing
+				// status 0:waiting,1:playing
+				client.updateRoomStatus("1");
+				// enter game together
+				client.sendRoomMsg("[0,1]");
+				
+			}
+		});
 		
 		// start net game
 		btnStartGame = (Button) this.findViewById(R.id.btn_start_game);
@@ -171,18 +185,7 @@ public class SceneRoom extends Activity {
 		isReady = !isWaiting;
 		// auto start together
 		if (isReady) {
-			AlertLoading alert = new AlertLoading(SceneRoom.this, new AlertLoading.Listener() {
-				@Override
-				public void onComplete() {
-					// change room status to playing
-					// status 0:waiting,1:playing
-					client.updateRoomStatus("1");
-					// enter game together
-					client.sendRoomMsg("[0,1]");
-					
-				}
-			});
-			alert.show();
+			loadingWindow.show();
 		}
 	}
 	

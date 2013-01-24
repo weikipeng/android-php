@@ -90,10 +90,10 @@ public class NetGameController extends GameController {
 	@Override
 	protected void runGame() {
 		// 定时执行
-		handler.postDelayed(this, CFG.DELAY_TIME);
+		handler.postDelayed(this, CFG.SCREEN_DELAY);
 
 		// 游戏计时
-		gameTime += CFG.DELAY_TIME / 1000.0;
+		gameTime += CFG.SCREEN_STIME / 1000.0;
 		msgNetScore.setTime((int) gameTime);
 		if (gameTime >= winTime) {
 			// 设置标志
@@ -155,20 +155,16 @@ public class NetGameController extends GameController {
 	public void newGame() {
 		// 产生一个男人
 		man = newMan();
-
 		// 产生一个女人
 		women = new ArrayList<Woman>();
-
 		// 计时
 		gameTime = 0;
-
 		// 创建一个时间提示器
 		msgNetScore = new MsgNetScore();
 		msgNetScore.setUser(userId);
 		msgNetScore.setRole(roleId);
 		msgNetScore.setWinTime(winTime);
 		msgNetScore.setTime((int) gameTime);
-
 		// 开始
 		startGame();
 	}
