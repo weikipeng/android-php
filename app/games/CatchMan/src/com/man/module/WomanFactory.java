@@ -24,12 +24,12 @@ public class WomanFactory {
 		PointF point = new PointF();
 		if (rnd1 > 0.5){
 			//左右两边
-			point.x = CFG.getRealX(CFG.SCREEN_WIDTH * rnd3);
-			point.y = (rnd2 > 0.5) ? 0 : CFG.getRealY(CFG.SCREEN_HEIGHT);
+			point.x = CFG.SCREEN_WIDTH * rnd3;
+			point.y = (rnd2 > 0.5) ? 0 : CFG.SCREEN_HEIGHT;
 		} else {
 			//上下两边
-			point.x = (rnd2 > 0.5) ? 0 : CFG.getRealX(CFG.SCREEN_WIDTH);
-			point.y = CFG.getRealY(CFG.SCREEN_HEIGHT * rnd3);
+			point.x = (rnd2 > 0.5) ? 0 : CFG.SCREEN_WIDTH;
+			point.y = CFG.SCREEN_HEIGHT * rnd3;
 		}
 		//获得实际坐标
 		point.x = CFG.getRealX(point.x);

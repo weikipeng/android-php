@@ -15,7 +15,7 @@ public class SceneMenu extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scene_menu);
 		
-		CFG.autoScreenAdaption(this);
+		CFG.autoAdaption(this); // device adaption
 		
 		Button btnStart = (Button) this.findViewById(R.id.btn_start);
 		btnStart.setOnClickListener(new View.OnClickListener() {

@@ -107,6 +107,9 @@ public class SceneGame extends Activity {
 		Resources res = getResources();
 		Bitmap bmw1 = BitmapFactory.decodeResource(res, R.drawable.w1);
 		Bitmap bmw2 = BitmapFactory.decodeResource(res, R.drawable.w2);
+		// 保持图片的原始尺寸
+		bmw1 = Bitmap.createScaledBitmap(bmw1, 48, 48, true);
+		bmw2 = Bitmap.createScaledBitmap(bmw2, 48, 48, true);
 		controller.setWomanImage(bmw1);
 		controller.setManImage(bmw2);
 		// 设置控制器的游戏逻辑
