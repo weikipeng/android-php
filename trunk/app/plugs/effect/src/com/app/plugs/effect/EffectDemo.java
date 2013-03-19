@@ -73,12 +73,12 @@ public class EffectDemo extends Activity implements OnItemSelectedListener {
 			container.removeAllViews();
 			switch (position) {
 				case 0:
-					mView = EffectUtil.buildTextView(this, EffectTextView.ANI_UP, 30, mTexts);
+					mView = EffectUtil.fillTexts(this, EffectTextView.ANI_UP, 30, mTexts);
 					container.addView(mView);
 					mView.start();
 					break;
 				default:
-					mView = EffectUtil.buildImageView(this, EffectView.ANI_UP, mImages);
+					mView = EffectUtil.fillImages(this, EffectView.ANI_UP, mImages);
 					container.addView(mView);
 					mView.start();
 					break;
