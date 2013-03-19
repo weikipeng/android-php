@@ -1,6 +1,5 @@
 package com.app.plugs.effect;
 
-import com.app.plugs.effect.view.EffectTextView;
 import com.app.plugs.effect.view.EffectView;
 
 import android.os.Bundle;
@@ -73,7 +72,7 @@ public class EffectDemo extends Activity implements OnItemSelectedListener {
 			container.removeAllViews();
 			switch (position) {
 				case 0:
-					mView = EffectUtil.fillTexts(this, EffectTextView.ANI_UP, 30, mTexts);
+					mView = EffectUtil.fillTexts(this, EffectView.ANI_UP, 30, mTexts);
 					container.addView(mView);
 					mView.start();
 					break;
